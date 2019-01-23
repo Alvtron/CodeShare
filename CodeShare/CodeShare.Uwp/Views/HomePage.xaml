@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="CodeShare.Uwp.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CodeShare.Uwp.Views"
+    xmlns:xaml="using:CodeShare.Uwp.Xaml"
+    xmlns:controls="using:CodeShare.Uwp.Controls"
+    xmlns:converters="using:CodeShare.Uwp.Converters"
+    xmlns:model="using:CodeShare.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Page.Resources>
+        <converters:ImageConverter x:Key="ImageConverter" />
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:VisibilityConverter x:Key="VisibillityConverter" />
+    </Page.Resources>
+    
+    <StackPanel Padding="48" Spacing="20">
+        <Button Content="Add code" Click="AddCode_Click" />
+        <Button Content="Add question" Click="AddQuestion_Click" />
+        <controls:CodeGridView Header="Most popular Codes" Codes="{x:Bind ViewModel.MostPopularCodes, Mode=OneWay}" Loaded="MostPopularCodesGridView_Loaded" />
+        <controls:QuestionGridView Header="New Questions" Questions="{x:Bind ViewModel.NewestQuestions, Mode=OneWay}" Loaded="NewQuestionsGridView_Loaded" />
+        <controls:UserGridView Header="New Users" Users="{x:Bind ViewModel.NewestUsers, Mode=OneWay}" Loaded="NewUsersGridView_Loaded" />
+    </StackPanel>
+</Page>

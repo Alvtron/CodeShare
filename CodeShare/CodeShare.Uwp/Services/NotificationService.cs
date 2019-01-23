@@ -1,0 +1,79 @@
+﻿using CodeShare.Uwp.Dialogs;
+using System;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+
+namespace CodeShare.Uwp.Services
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class NotificationService
+    {
+        /// <summary>
+        /// Displays the general message.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="buttonText">The button text.</param>
+        /// <returns></returns>
+        public static async Task<ContentDialogResult> DisplayGeneralMessage(string title, string message, string buttonText)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = title,
+                Content = message,
+                PrimaryButtonText = buttonText
+            };
+
+            return await dialog.ShowAsync();
+        }
+
+        public static async Task<ContentDialogResult> DisplayLoadingDialog(int timeInSeconds)
+        {
+            var dialog = new LoadingDialog(timeInSeconds);
+            return await dialog.ShowAsync();
+        }
+
+        public static async Task<LoadingDialog> CreateAndDisplayLoadingDialog()
+        {
+            var dialog = new LoadingDialog();
+            await dialog.ShowAsync();
+            return dialog;
+        }
+
+        /// <summary>
+        /// Displays the error message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
+        public static async Task<ContentDialogResult> DisplayErrorMessage(string message)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Woah, there!",
+                Content = message,
+                PrimaryButtonText = "OK"
+            };
+
+            return await dialog.ShowAsync();
+        }
+
+        /// <summary>
+        /// Displays the thank you message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
+        public static async Task<ContentDialogResult> DisplayThankYouMessage(string message)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Thank you!",
+                Content = message,
+                PrimaryButtonText = "OK"
+            };
+
+            return await dialog.ShowAsync();
+        }
+    }
+}

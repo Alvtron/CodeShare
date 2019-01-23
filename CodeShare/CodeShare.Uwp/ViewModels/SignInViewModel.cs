@@ -1,0 +1,246 @@
+﻿using CodeShare.Model;
+using CodeShare.Uwp.Services;
+using CodeShare.Uwp.Utilities;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Windows.Security.Credentials;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
+using CodeShare.Model.Services;
+using System.Diagnostics;
+
+namespace CodeShare.Uwp.ViewModels
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="CodeShare.Uwp.ViewModels.BaseViewModel" />
+    public class SignInViewModel : DialogViewModel
+    {
+        public ObservableCollection<PasswordCredential> Credentials => CredentialService.All;
+
+        private RelayCommand<PasswordCredential> _logInCommand;
+        public ICommand LogInCommand => _logInCommand = _logInCommand ?? new RelayCommand<PasswordCredential>(async param => await LogIn(param));
+        public async Task LogIn(PasswordCredential credential)
+        {
+            ErrorMessage = "";
+
+            credential.RetrievePassword();
+            Debug.WriteLine($"Logging in with credential (User name: {credential.UserName}, password:{credential.Password})...");
+
+            if (await AuthService.SignInAsync(credential.UserName, credential.Password) == false)
+            {
+                Debug.WriteLine($"Login failed. The credential does not match any user from the database.");
+                ErrorMessage = "That user is no longer registered. Sorry about that.";
+                CredentialService.Delete(credential);
+                Debug.WriteLine($"Credential (User name: {credential.UserName}, password:{credential.Password}) was deleted.");
+                return;
+            }
+
+            CanClose = true;
+        }
+
+        private RelayCommand _deleteUsersCommand;
+        public ICommand DeleteUsersCommand => _deleteUsersCommand = _deleteUsersCommand ?? new RelayCommand(param => DeleteUsers());
+        private void DeleteUsers()
+        {
+            CredentialService.DeleteAll();
+            NotifyPropertyChanged(nameof(Credentials));
+        }
+
+        private RelayCommand _signInCommand;
+        public ICommand SignInCommand => _signInCommand = _signInCommand ?? new RelayCommand(async param => await SignIn());
+
+        private async Task SignIn()
+        {
+            Debug.WriteLine($"Sign in in user with entered user name: '{SignInName}' and password: '{SignInPassword}'");
+
+            ErrorMessage = "";
+
+            if (string.IsNullOrWhiteSpace(SignInName) || string.IsNullOrWhiteSpace(SignInPassword))
+            {
+                Debug.WriteLine($"Sign in failed. Username or password are empty.");
+                ErrorMessage = "Username or password are empty!";
+                return;
+            }
+
+            if (await AuthService.SignInAsync(SignInName, SignInPassword) == false)
+            {
+                Debug.WriteLine($"Sign in failed. Username and password does not match anything.");
+                ErrorMessage = "Wrong username or password.";
+                return;
+            }
+
+            CanClose = true;
+        }
+        
+        private RelayCommand _signUpCommand;
+        public ICommand SignUpCommand => _signUpCommand = _signUpCommand ?? new RelayCommand(async param => await SignUp());
+        private async Task SignUp()
+        {
+            ErrorMessage = "";
+
+            if (!ValidSignUp)
+            {
+                ErrorMessage = "Some of the fields are invalid.";
+                return;
+            }
+
+            var newUser = await AuthService.SignUpAsync(SignUpName, SignUpEmail, SignUpPassword);
+
+            if (newUser == null)
+            {
+                ErrorMessage = "Could not sign up user.";
+                return;
+            }
+
+            CanClose = true;
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetField(ref _errorMessage, value);
+        }
+
+        private string _signInName;
+        public string SignInName
+        {
+            get => _signInName;
+            set => SetField(ref _signInName, value);
+        }
+
+        private string _signInPassword;
+        public string SignInPassword
+        {
+            get => _signInPassword;
+            set => SetField(ref _signInPassword, value);
+        }
+
+        private string _signUpEmail;
+        public string SignUpEmail
+        {
+            get => _signUpEmail;
+            set
+            {
+                SetField(ref _signUpEmail, value);
+                ValidateEmail();
+            }
+        }
+        
+        private string _signUpName;
+        public string SignUpName
+        {
+            get => _signUpName;
+            set
+            {
+                SetField(ref _signUpName, value);
+                ValidateName();
+            }
+        }
+        
+        private string _signUpPassword;
+        public string SignUpPassword
+        {
+            get => _signUpPassword;
+            set
+            {
+                SetField(ref _signUpPassword, value);
+                ValidatePassword();
+                ValidateReEnteredPassword();
+            }
+        }
+        
+        private string _signUpReEnterPassword;
+        public string SignUpReEnterPassword
+        {
+            get => _signUpReEnterPassword;
+            set
+            {
+                SetField(ref _signUpReEnterPassword, value);
+                ValidatePassword();
+                ValidateReEnteredPassword();
+            }
+        }
+
+        private SolidColorBrush _signUpEmailBorder = new SolidColorBrush(Colors.DimGray);
+        public SolidColorBrush SignUpEmailBorder
+        {
+            get => _signUpEmailBorder;
+            set => SetField(ref _signUpEmailBorder, value);
+        }
+
+        private SolidColorBrush _signUpNameBorder = new SolidColorBrush(Colors.DimGray);
+        public SolidColorBrush SignUpNameBorder
+        {
+            get => _signUpNameBorder;
+            set => SetField(ref _signUpNameBorder, value);
+        }
+
+        private SolidColorBrush _signUpPasswordBorder = new SolidColorBrush(Colors.DimGray);
+        public SolidColorBrush SignUpPasswordBorder
+        {
+            get => _signUpPasswordBorder;
+            set => SetField(ref _signUpPasswordBorder, value);
+        }
+
+        private SolidColorBrush _signUpReEnterPasswordBorder = new SolidColorBrush(Colors.DimGray);
+        public SolidColorBrush SignUpReEnterPasswordBorder
+        {
+            get => _signUpReEnterPasswordBorder;
+            set => SetField(ref _signUpReEnterPasswordBorder, value);
+        }
+
+        public SignInViewModel()
+        {
+        }
+
+        private bool ValidSignUp => ValidateEmail() && ValidateName() && ValidatePassword() && ValidateReEnteredPassword();
+        
+        private bool ValidateEmail()
+        {
+            if (ValidationService.ValidateEmail(SignUpEmail) != ValidationService.Response.Valid)
+            {
+                SignUpEmailBorder = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            SignUpEmailBorder = new SolidColorBrush(Colors.Green);
+            return true;
+        }
+
+        private bool ValidateName()
+        {
+            if (ValidationService.ValidateName(SignUpName) != ValidationService.Response.Valid)
+            {
+                SignUpNameBorder = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            SignUpNameBorder = new SolidColorBrush(Colors.Green);
+            return true;
+        }
+        
+        private bool ValidatePassword()
+        {
+            if (ValidationService.ValidatePassword(SignUpPassword) != ValidationService.Response.Valid)
+            {
+                SignUpPasswordBorder = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            SignUpPasswordBorder = new SolidColorBrush(Colors.Green);
+            return true;
+        }
+
+        private bool ValidateReEnteredPassword()
+        {
+            if (SignUpPassword != SignUpReEnterPassword)
+            {
+                SignUpReEnterPasswordBorder = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            SignUpReEnterPasswordBorder = new SolidColorBrush(Colors.Green);
+            return true;
+        }
+    }
+}

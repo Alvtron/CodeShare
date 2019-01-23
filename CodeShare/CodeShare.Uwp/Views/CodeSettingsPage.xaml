@@ -1,0 +1,128 @@
+﻿<Page
+    x:Class="CodeShare.Uwp.Views.CodeSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CodeShare.Uwp"
+    xmlns:model="using:CodeShare.Model"
+    xmlns:converters="using:CodeShare.Uwp.Converters"
+    xmlns:xaml="using:CodeShare.Uwp.Xaml"
+    xmlns:controls="using:CodeShare.Uwp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    x:Name="ViewModelRoot">
+
+    <Page.Resources>
+        <converters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeConverter" />
+        <converters:ImageConverter x:Key="ImageConverter" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Padding="48,48,48,0" Grid.ColumnSpan="3">
+            <Pivot>
+                <!-- General -->
+                <PivotItem Header="General" Padding="0,24">
+                    <StackPanel Spacing="8">
+                        <!-- Banner -->
+                        <TextBlock Text="Banner" />
+                        <controls:EditableBanner Content="{x:Bind ViewModel.Code}" Width="800" HorizontalAlignment="Left" IsEditable="True" />
+                        <!-- Other -->
+                        <TextBox Header="Title" Text="{x:Bind ViewModel.Code.Name, Mode=TwoWay}" />
+                        <TextBox Header="Description" Text="{x:Bind ViewModel.Code.Description, Mode=TwoWay}" />
+                        <TextBox Header="Version" Text="{x:Bind ViewModel.Code.Version, Mode=TwoWay}" />
+                    </StackPanel>
+                </PivotItem>
+                <!-- Files -->
+                <PivotItem Header="Files" Padding="0,24">
+                    <StackPanel Spacing="24">
+                        <Button Name="UploadCodeToggleButton" Content="Upload files" Command="{x:Bind ViewModel.UploadCodeCommand}" CommandParameter="{x:Bind UploadCodeToggleButton}" VerticalAlignment="Center" />
+                        <controls:CodeFileView Files="{x:Bind ViewModel.Code.FilesSorted, Mode=OneWay}" />
+                    </StackPanel>
+                </PivotItem>
+                <!-- About -->
+                <PivotItem Header="About" Padding="0,24">
+                    <StackPanel>
+                        <controls:Editor Height="300" Rtf="{x:Bind ViewModel.Code.About, Mode=TwoWay}" />
+                    </StackPanel>
+                </PivotItem>
+                <!-- Screenshots -->
+                <PivotItem Header="Screenshots" Padding="0,24">
+                    <StackPanel Spacing="8">
+                        <Button Content="Upload" Command="{x:Bind ViewModel.UploadImagesCommand, Mode=OneWay}" />
+                        <GridView ItemsSource="{x:Bind ViewModel.Code.Screenshots, Mode=OneWay}">
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="model:Screenshot">
+                                    <RelativePanel Height="108" Width="192">
+                                        <Grid>
+                                            <Image Stretch="UniformToFill" Source="{x:Bind Url, Mode=OneWay, Converter={StaticResource ImageConverter}}" />
+                                            <HyperlinkButton Command="{Binding DataContext.DeleteScreenshotCommand, ElementName=ViewModelRoot}" CommandParameter="{Binding}" Background="{StaticResource Acryllic60}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Padding="2">
+                                                <SymbolIcon Symbol="Delete" />
+                                            </HyperlinkButton>
+                                        </Grid>
+                                    </RelativePanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </StackPanel>
+                </PivotItem>
+                <!-- Videos -->
+                <PivotItem Header="Videos" Padding="0,24">
+                    <StackPanel Spacing="8">
+                        <Button Content="Add video" Command="{x:Bind ViewModel.UploadVideoCommand}" />
+                        <GridView ItemsSource="{x:Bind ViewModel.Code.Videos, Mode=OneWay}">
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="model:Video">
+                                    <RelativePanel>
+                                        <HyperlinkButton Content="X" RelativePanel.AlignRightWithPanel="True" />
+                                        <WebView Source="{x:Bind YouTubeUri, Mode=OneWay}" Width="192" Height="108" />
+                                    </RelativePanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </StackPanel>
+                </PivotItem>
+                <PivotItem Header="Details" Padding="0,24">
+                    <StackPanel Spacing="8">
+                        <!-- Info -->
+                        <TextBlock Foreground="Gray">
+                            <Run Text="ID:" />
+                            <Run Text="{x:Bind ViewModel.Code.Uid}" />
+                        </TextBlock>
+                        <TextBlock Foreground="Gray">
+                            <Run Text="Author:" />
+                            <Run Text="{x:Bind ViewModel.Code.User.Name}" />
+                        </TextBlock>
+                        <TextBlock Foreground="Gray">
+                            <Run Text="Created:" />
+                            <Run Text="{x:Bind ViewModel.Code.Created}" />
+                        </TextBlock>
+                        <TextBlock Foreground="Gray">
+                            <Run Text="Updated:" />
+                            <Run Text="{x:Bind ViewModel.Code.Updated}" />
+                        </TextBlock>
+                    </StackPanel>
+                </PivotItem>
+            </Pivot>
+        </ScrollViewer>
+        <RelativePanel Grid.Column="1" Background="DimGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,16" MinWidth="400" Padding="8" Visibility="{x:Bind ViewModel.Changed, Mode=OneWay}">
+            <TextBlock Name="SaveChangesMessage" Text="You have unsaved changes!" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+            <HyperlinkButton Name="ResetButton" Command="{x:Bind ViewModel.ResetCommand}" RelativePanel.LeftOf="SaveButton" Margin="0,0,24,0" RelativePanel.AlignVerticalCenterWithPanel="True">
+                <TextBlock Text="Reset" Foreground="White" />
+            </HyperlinkButton>
+            <Button
+                Name="SaveButton"
+                Background="{StaticResource SaveButtonColor}"
+                Foreground="White"
+                Content="Save Changes"
+                Command="{x:Bind ViewModel.SaveCommand}"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True" />
+        </RelativePanel>
+    </Grid>
+</Page>
