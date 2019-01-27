@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -34,6 +36,8 @@ namespace CodeShare.Model
 
         public DateTime? DateTimeSolved { get; set; }
 
+        public ICollection<QuestionLog> Logs { get; set; } = new ObservableCollection<QuestionLog>();
+
         [NotMapped, JsonIgnore]
         public bool IsValid => UserUid != Guid.Empty && !string.IsNullOrWhiteSpace(Title) && !string.IsNullOrWhiteSpace(Text) && CodeLanguageUid != null && CodeLanguageUid != Guid.Empty;
         [NotMapped, JsonIgnore]
@@ -49,11 +53,37 @@ namespace CodeShare.Model
             Title = title;
             Text = text;
             CodeLanguageUid = codeLanguage.Uid;
+            Logs.Add(new QuestionLog(this, user, "created this"));
         }
 
         public override string ToString()
         {
             return GetType().Name;
+        }
+
+        public new void SetBanner(User user, Banner banner)
+        {
+            base.SetBanner(user, banner);
+            Logs.Add(new QuestionLog(this, user, "uploaded", banner));
+        }
+
+        public new void AddVideo(User user, Video video)
+        {
+            base.AddVideo(user, video);
+
+            Logs.Add(new QuestionLog(this, user, "added", video));
+        }
+
+        public new void Reply(Comment comment)
+        {
+            base.Reply(comment);
+            Logs.Add(new QuestionLog(this, comment.User, "added", comment));
+        }
+
+        public new void AddScreenshot(Screenshot screenshot, User user)
+        {
+            base.AddScreenshot(screenshot, user);
+            Logs.Add(new QuestionLog(this, user, "added", screenshot));
         }
     }
 }

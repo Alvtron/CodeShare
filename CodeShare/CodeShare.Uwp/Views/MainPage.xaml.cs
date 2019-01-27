@@ -60,7 +60,7 @@ namespace CodeShare.Uwp.Views
             NavigationService.GoBack();
         }
 
-        private void NavigationView_Invoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private async void NavigationView_Invoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (!(args.InvokedItem is string viewItemContent))
             {
@@ -74,7 +74,7 @@ namespace CodeShare.Uwp.Views
                 SearchBox.Focus(FocusState.Keyboard);
             }
 
-            NavigationService.Navigate(viewItemContent);
+            await NavigationService.Navigate(viewItemContent);
         }
 
         public async void ASB_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

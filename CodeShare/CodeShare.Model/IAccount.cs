@@ -4,7 +4,7 @@ namespace CodeShare.Model
 {
     public interface IAccount
     {
-        string Email { get; set; }
+        Email Email { get; set; }
 
         Password Password { get; set; }
 

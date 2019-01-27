@@ -15,22 +15,19 @@
         <converters:DateTimeToDurationString x:Key="DateTimeToDurationString" />
     </UserControl.Resources>
 
-    <ListView ItemsSource="{x:Bind Logs, Mode=OneWay}" IsItemClickEnabled="False" SelectionMode="None">
+    <ListView ItemsSource="{x:Bind LogsSource, Mode=OneWay}" IsItemClickEnabled="False" SelectionMode="None">
         <ListView.ItemTemplate>
-            <DataTemplate x:DataType="model:ContentLog">
-                <ListViewItem IsFocusEngaged="False">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <TextBlock VerticalAlignment="Center">
-                            <Run Text="{x:Bind Content.Name, Mode=OneWay}" />
-                            <Run Text="{x:Bind Action, Mode=OneWay}" />
-                        </TextBlock>
-                        <HyperlinkButton Tag="{x:Bind Actor, Mode=OneWay}" Content="{x:Bind Actor.Name, Mode=OneWay}" VerticalAlignment="Center" Click="HyperlinkButton_Click" Foreground="White" />
-                        <TextBlock VerticalAlignment="Center">
-                            <Run Text="•" Foreground="Gray" />
-                            <Run Text="{x:Bind Created, Mode=OneWay, Converter={StaticResource DateTimeToDurationString}}" Foreground="Gray" />
-                        </TextBlock>
-                    </StackPanel>
-                </ListViewItem>
+            <DataTemplate x:DataType="model:Log">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <HyperlinkButton Tag="{x:Bind}" Content="{x:Bind ActorType, Mode=OneWay}" VerticalAlignment="Center" Loaded="Actor_Loaded" Click="Actor_Click" Foreground="White" />
+                    <TextBlock Text="{x:Bind Action, Mode=OneWay}" VerticalAlignment="Center">
+                    </TextBlock>
+                    <HyperlinkButton Tag="{x:Bind}" Content="{x:Bind SubjectType, Mode=OneWay}" VerticalAlignment="Center" Loaded="Subject_Loaded" Click="Subject_Click" Foreground="White" />
+                    <TextBlock VerticalAlignment="Center">
+                        <Run Text="•" Foreground="Gray" />
+                        <Run Text="{x:Bind Created, Mode=OneWay, Converter={StaticResource DateTimeToDurationString}}" Foreground="Gray" />
+                    </TextBlock>
+                </StackPanel>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

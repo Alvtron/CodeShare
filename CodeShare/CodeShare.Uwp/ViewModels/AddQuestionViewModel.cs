@@ -38,7 +38,14 @@ namespace CodeShare.Uwp.ViewModels
 
         public async Task Initialize()
         {
-            UnfilteredCodeLanguages = new List<CodeLanguage>(await RestApiService<CodeLanguage>.Get());
+            var codeLanguages = await RestApiService<CodeLanguage>.Get();
+
+            if (codeLanguages == null)
+            {
+                return;
+            }
+
+            UnfilteredCodeLanguages = new List<CodeLanguage>(codeLanguages);
         }
 
         public async Task<bool> UploadQuestionAsync()
@@ -75,7 +82,11 @@ namespace CodeShare.Uwp.ViewModels
                 return;
 
             //Check each item in search list if it contains the query
-            FilteredCodeLanguages = UnfilteredCodeLanguages?.Where(x => x.Extension != null && x.Extension.ToLower().Contains(query.ToLower())).ToList();
+            FilteredCodeLanguages = UnfilteredCodeLanguages?
+                .Where(x =>
+                (x.Extension != null && x.Extension.ToLower().StartsWith(query.ToLower()))
+                || (x.Name != null && x.Name.ToLower().StartsWith(query.ToLower())))
+                .ToList();
         }
 
         public void SubmitCodeLanguage(object obj)

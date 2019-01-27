@@ -1,3286 +1,3305 @@
 [
   {
     "Extension": ".$01",
-    "Name": "DOS Pipe File"
+    "Description": "DOS Pipe File"
   },
   {
     "Extension": "0.001",
-    "Name": "Multimedia Fusion Backup File"
+    "Description": "Multimedia Fusion Backup File"
   },
   {
     "Extension": ".4DB",
-    "Name": "4th Dimension Database Structure File"
+    "Description": "4th Dimension Database Structure File"
   },
   {
     "Extension": ".4TH",
-    "Name": "Forth Language File"
+    "Description": "Forth Language File"
   },
   {
     "Extension": ".A",
-    "Name": "Static Library"
+    "Description": "Static Library"
   },
   {
     "Extension": ".A2W",
-    "Name": "Alice World"
+    "Description": "Alice World"
   },
   {
     "Extension": ".A3X",
-    "Name": "Compiled AutoIt v3 Script"
+    "Description": "Compiled AutoIt v3 Script"
   },
   {
     "Extension": ".AB",
-    "Name": "Applix Builder File"
+    "Description": "Applix Builder File"
   },
   {
     "Extension": ".ABC",
-    "Name": "ActionScript Byte Code File"
+    "Description": "ActionScript Byte Code File"
   },
   {
     "Extension": ".ABC",
-    "Name": "ABC Source File"
+    "Description": "ABC Source File"
   },
   {
     "Extension": ".ACD",
-    "Name": "RSLogix 5000 Program"
+    "Description": "RSLogix 5000 Program"
   },
   {
     "Extension": ".ACP",
-    "Name": "EditPlus Auto-Completion File"
+    "Description": "EditPlus Auto-Completion File"
   },
   {
     "Extension": ".ACT",
-    "Name": "DS Game Maker Action File"
+    "Description": "DS Game Maker Action File"
   },
   {
     "Extension": ".ACTX",
-    "Name": "DS Game Maker Action Description File"
+    "Description": "DS Game Maker Action Description File"
   },
   {
     "Extension": ".ADA",
-    "Name": "Ada Source Code"
+    "Description": "Ada Source Code"
   },
   {
     "Extension": ".ADB",
-    "Name": "Ada Body File"
+    "Description": "Ada Body File"
   },
   {
     "Extension": ".ADBLOCK",
-    "Name": "Alpha Five Library Temporary File"
+    "Description": "Alpha Five Library Temporary File"
   },
   {
     "Extension": ".ADDIN",
-    "Name": "Visual Studio Add-in Definition File"
+    "Description": "Visual Studio Add-in Definition File"
   },
   {
     "Extension": ".ADS",
-    "Name": "Ada Specification File"
+    "Description": "Ada Specification File"
   },
   {
     "Extension": ".AGI",
-    "Name": "Asterisk Gateway Interface File"
+    "Description": "Asterisk Gateway Interface File"
   },
   {
     "Extension": ".AIA",
-    "Name": "MIT App Inventor Source Code File"
+    "Description": "MIT App Inventor Source Code File"
   },
   {
     "Extension": ".AIDL",
-    "Name": "Android Interface Definition Language File"
+    "Description": "Android Interface Definition Language File"
   },
   {
     "Extension": ".ALB",
-    "Name": "Alpha Five Library"
+    "Description": "Alpha Five Library"
   },
   {
     "Extension": ".ALM",
-    "Name": "Alpha Five Library"
+    "Description": "Alpha Five Library"
   },
   {
     "Extension": ".ALP",
-    "Name": "AnyLogic Project File"
+    "Description": "AnyLogic Project File"
   },
   {
     "Extension": ".ALX",
-    "Name": "Alpha Five Library Index File"
+    "Description": "Alpha Five Library Index File"
   },
   {
     "Extension": ".AM",
-    "Name": "Automake Makefile Template"
+    "Description": "Automake Makefile Template"
   },
   {
     "Extension": ".AM4",
-    "Name": "AutoPlay Media Studio 4 Project File"
+    "Description": "AutoPlay Media Studio 4 Project File"
   },
   {
     "Extension": ".AM5",
-    "Name": "AutoPlay Media Studio 5 Project File"
+    "Description": "AutoPlay Media Studio 5 Project File"
   },
   {
     "Extension": ".AM6",
-    "Name": "AutoPlay Media Studio 6 Project"
+    "Description": "AutoPlay Media Studio 6 Project"
   },
   {
     "Extension": ".AM7",
-    "Name": "AutoPlay Media Studio 7 Project"
+    "Description": "AutoPlay Media Studio 7 Project"
   },
   {
     "Extension": ".AML",
-    "Name": "Arc Macro Language File"
+    "Description": "Arc Macro Language File"
   },
   {
     "Extension": ".AML",
-    "Name": "Abstract Markup Language"
+    "Description": "Abstract Markup Language"
   },
   {
     "Extension": ".ANE",
-    "Name": "Adobe AIR Native Extension"
+    "Description": "Adobe AIR Native Extension"
   },
   {
     "Extension": ".ANJUTA",
-    "Name": "Anjuta IDE Project File"
+    "Description": "Anjuta IDE Project File"
   },
   {
     "Extension": ".AP_",
-    "Name": "ADT Android Developer Package"
+    "Description": "ADT Android Developer Package"
   },
   {
     "Extension": ".APA",
-    "Name": "RSView Development Project Archive"
+    "Description": "RSView Development Project Archive"
   },
   {
     "Extension": ".APPEX",
-    "Name": "OS X Application and System Extension File"
+    "Description": "OS X Application and System Extension File"
   },
   {
     "Extension": ".APPLET",
-    "Name": "Eclipse Java Applet Policy File"
+    "Description": "Eclipse Java Applet Policy File"
   },
   {
     "Extension": ".APPX",
-    "Name": "Windows 8 App Package"
+    "Description": "Windows 8 App Package"
   },
   {
     "Extension": ".APPXSYM",
-    "Name": "Windows 8 App Package Symbols File"
+    "Description": "Windows 8 App Package Symbols File"
   },
   {
     "Extension": ".APPXUPLOAD",
-    "Name": "Windows 8 App Upload Package"
+    "Description": "Windows 8 App Upload Package"
   },
   {
     "Extension": ".APR",
-    "Name": "Apadana Project File"
+    "Description": "Apadana Project File"
   },
   {
     "Extension": ".APS",
-    "Name": "Visual C++ Resource File"
+    "Description": "Visual C++ Resource File"
   },
   {
     "Extension": ".ARR",
-    "Name": "MultiMedia Fusion Array File"
+    "Description": "MultiMedia Fusion Array File"
   },
   {
     "Extension": ".ARSC",
-    "Name": "Android Package Resource File"
+    "Description": "Android Package Resource File"
   },
   {
     "Extension": ".ART",
-    "Name": "Artifacts Artifact File"
+    "Description": "Artifacts Artifact File"
   },
   {
     "Extension": ".ARTPROJ",
-    "Name": "Artifacts Project"
+    "Description": "Artifacts Project"
   },
   {
     "Extension": ".AS",
-    "Name": "ActionScript File"
+    "Description": "ActionScript File"
   },
   {
     "Extension": ".AS",
-    "Name": "AngelScript File"
+    "Description": "AngelScript File"
   },
   {
     "Extension": ".AS2PROJ",
-    "Name": "FlashDevelop ActionScript 2 Project File"
+    "Description": "FlashDevelop ActionScript 2 Project File"
   },
   {
     "Extension": ".AS3PROJ",
-    "Name": "FlashDevelop ActionScript 3 Project File"
+    "Description": "FlashDevelop ActionScript 3 Project File"
   },
   {
     "Extension": ".ASAR",
-    "Name": "Electron Archive"
+    "Description": "Electron Archive"
   },
   {
     "Extension": ".ASC",
-    "Name": "ActionScript Communication File"
+    "Description": "ActionScript Communication File"
   },
   {
     "Extension": ".ASCS",
-    "Name": "ActionScript Communication Server File"
+    "Description": "ActionScript Communication Server File"
   },
   {
     "Extension": ".ASDB",
-    "Name": "Asphyre Sphinx Archive File"
+    "Description": "Asphyre Sphinx Archive File"
   },
   {
     "Extension": ".ASI",
-    "Name": "Alpha Five Variable File"
+    "Description": "Alpha Five Variable File"
   },
   {
     "Extension": ".ASM",
-    "Name": "Assembly Language Source Code File"
+    "Description": "Assembly Language Source Code File"
   },
   {
     "Extension": ".ASM",
-    "Name": "Visual Studio Assembler Source Code File"
+    "Description": "Visual Studio Assembler Source Code File"
   },
   {
     "Extension": ".ASVF",
-    "Name": "Asphyre Sphinx Archive File"
+    "Description": "Asphyre Sphinx Archive File"
   },
   {
     "Extension": ".ASX",
-    "Name": "Alpha Five Library Temporary Index File"
+    "Description": "Alpha Five Library Temporary Index File"
   },
   {
     "Extension": ".AU3",
-    "Name": "AutoIt v3 Script"
+    "Description": "AutoIt v3 Script"
   },
   {
     "Extension": ".AUT",
-    "Name": "AutoIt Script File"
+    "Description": "AutoIt Script File"
   },
   {
     "Extension": ".AUTOPLAY",
-    "Name": "AutoPlay Media Studio Project File"
+    "Description": "AutoPlay Media Studio Project File"
   },
   {
     "Extension": ".AWK",
-    "Name": "AWK Script"
+    "Description": "AWK Script"
   },
   {
     "Extension": ".AXE",
-    "Name": "Annotated XML Example File"
+    "Description": "Annotated XML Example File"
   },
   {
     "Extension": ".B",
-    "Name": "BASIC Source File"
+    "Description": "BASIC Source File"
   },
   {
     "Extension": ".B",
-    "Name": "BuRg3r Definition File"
+    "Description": "BuRg3r Definition File"
   },
   {
     "Extension": ".BAS",
-    "Name": "BASIC Source Code File"
+    "Description": "BASIC Source Code File"
   },
   {
     "Extension": ".BASEX",
-    "Name": "BaseX Data File"
+    "Description": "BaseX Data File"
   },
   {
     "Extension": ".BB",
-    "Name": "Blitz Source Code File"
+    "Description": "Blitz Source Code File"
   },
   {
     "Extension": ".BBC",
-    "Name": "BBC BASIC Data File"
+    "Description": "BBC BASIC Data File"
   },
   {
     "Extension": ".BBPROJECT",
-    "Name": "BBEdit Project File"
+    "Description": "BBEdit Project File"
   },
   {
     "Extension": ".BBPROJECTD",
-    "Name": "BBEdit Project Document"
+    "Description": "BBEdit Project Document"
   },
   {
     "Extension": ".BCP",
-    "Name": "Borland C++ Makefile"
+    "Description": "Borland C++ Makefile"
   },
   {
     "Extension": ".BDSPROJ",
-    "Name": "Borland Developer Studio Project"
+    "Description": "Borland Developer Studio Project"
   },
   {
     "Extension": ".BET",
-    "Name": "BETA Source File"
+    "Description": "BETA Source File"
   },
   {
     "Extension": ".BLUEJ",
-    "Name": "BlueJ Package File"
+    "Description": "BlueJ Package File"
   },
   {
     "Extension": ".BOS",
-    "Name": "Build Options Specification File"
+    "Description": "Build Options Specification File"
   },
   {
     "Extension": ".BPG",
-    "Name": "Borland Project Group"
+    "Description": "Borland Project Group"
   },
   {
     "Extension": ".BPL",
-    "Name": "Borland Package Library"
+    "Description": "Borland Package Library"
   },
   {
     "Extension": ".BPR",
-    "Name": "Borland C++Builder Project File"
+    "Description": "Borland C++Builder Project File"
   },
   {
     "Extension": ".BRX",
-    "Name": "BREW Application Resource File"
+    "Description": "BREW Application Resource File"
   },
   {
     "Extension": ".BS2",
-    "Name": "BASIC Stamp 2 Code File"
+    "Description": "BASIC Stamp 2 Code File"
   },
   {
     "Extension": ".BSC",
-    "Name": "Visual Studio Source Browser Information File"
+    "Description": "Visual Studio Source Browser Information File"
   },
   {
     "Extension": ".BSH",
-    "Name": "BeanShell Script"
+    "Description": "BeanShell Script"
   },
   {
     "Extension": ".BTN",
-    "Name": "AutoPlay Media Studio Button File"
+    "Description": "AutoPlay Media Studio Button File"
   },
   {
     "Extension": ".BUILDPATH",
-    "Name": "Eclipse Build Path File"
+    "Description": "Eclipse Build Path File"
   },
   {
     "Extension": ".BUILDSETTING",
-    "Name": "Twixl Publisher Builder Build Setting"
+    "Description": "Twixl Publisher Builder Build Setting"
   },
   {
     "Extension": ".BUR",
-    "Name": "BuRg3r Source Code File"
+    "Description": "BuRg3r Source Code File"
   },
   {
     "Extension": ".BYTES",
-    "Name": "Binary Text Asset Data File"
+    "Description": "Binary Text Asset Data File"
   },
   {
+    "Name": "C",
     "Extension": ".C",
-    "Name": "C/C++ Source Code File"
+    "Description": "C/C++ Source Code File"
   },
   {
+    "Name": "Lite-C",
     "Extension": ".C",
-    "Name": "Lite-C Script"
+    "Description": "Lite-C Script"
   },
   {
     "Extension": ".CAF",
-    "Name": "CryENGINE Character Animation File"
+    "Description": "CryENGINE Character Animation File"
   },
   {
     "Extension": ".CAP",
-    "Name": "Construct Game Development File"
+    "Description": "Construct Game Development File"
   },
   {
     "Extension": ".CAPROJ",
-    "Name": "Construct Project File"
+    "Description": "Construct Project File"
   },
   {
     "Extension": ".CAPX",
-    "Name": "Construct Compressed Project File"
+    "Description": "Construct Compressed Project File"
   },
   {
     "Extension": ".CAR",
-    "Name": "Brew Component Application Resource File"
+    "Description": "Brew Component Application Resource File"
   },
   {
     "Extension": ".CBA",
-    "Name": "CryENGINE Resource Compiler Settings File"
+    "Description": "CryENGINE Resource Compiler Settings File"
   },
   {
     "Extension": ".CBL",
-    "Name": "COBOL Source Code File"
+    "Description": "COBOL Source Code File"
   },
   {
     "Extension": ".CBP",
-    "Name": "Code::Blocks Project File"
+    "Description": "Code::Blocks Project File"
   },
   {
     "Extension": ".CC",
-    "Name": "C++ Source Code File"
+    "Description": "C++ Source Code File"
   },
   {
     "Extension": ".CCC",
-    "Name": "Dev-C++ Code Completion Cache"
+    "Description": "Dev-C++ Code Completion Cache"
   },
   {
     "Extension": ".CCGAME",
-    "Name": "XNA Creators Club Game Package"
+    "Description": "XNA Creators Club Game Package"
   },
   {
     "Extension": ".CCN",
-    "Name": "Compressed Multimedia Fusion File"
+    "Description": "Compressed Multimedia Fusion File"
   },
   {
     "Extension": ".CCP",
-    "Name": "CodeCharge Studio Page File"
+    "Description": "CodeCharge Studio Page File"
   },
   {
     "Extension": ".CCS",
-    "Name": "CodeCharge Studio Project File"
+    "Description": "CodeCharge Studio Project File"
   },
   {
     "Extension": ".CCS",
-    "Name": "CCS Script File"
+    "Description": "CCS Script File"
   },
   {
     "Extension": ".CCSCC",
-    "Name": "ClearCase Source Control Info File"
+    "Description": "ClearCase Source Control Info File"
   },
   {
     "Extension": ".CD",
-    "Name": "Visual Studio Class Diagram"
+    "Description": "Visual Studio Class Diagram"
   },
   {
     "Extension": ".CDF",
-    "Name": "CryENGINE Character Definition File"
+    "Description": "CryENGINE Character Definition File"
   },
   {
     "Extension": ".CDX",
-    "Name": "Alpha Five Table Index File"
+    "Description": "Alpha Five Table Index File"
   },
   {
     "Extension": ".CDXML",
-    "Name": "Cmdlet Definition XML File"
+    "Description": "Cmdlet Definition XML File"
   },
   {
     "Extension": ".CFC",
-    "Name": "ColdFusion Component File"
+    "Description": "ColdFusion Component File"
   },
   {
     "Extension": ".CHAM",
-    "Name": "Compiled HAM File"
+    "Description": "Compiled HAM File"
   },
   {
     "Extension": ".CHEF",
-    "Name": "Chef Source Code File"
+    "Description": "Chef Source Code File"
   },
   {
     "Extension": ".CI",
-    "Name": "PolySpace Preprocessed Code File"
+    "Description": "PolySpace Preprocessed Code File"
   },
   {
     "Extension": ".CKBX",
-    "Name": "Cricket Audio XML Bank Description File"
+    "Description": "Cricket Audio XML Bank Description File"
   },
   {
     "Extension": ".CLASS",
-    "Name": "Java Class File"
+    "Description": "Java Class File"
   },
   {
     "Extension": ".CLIPS",
-    "Name": "Coda Clips File"
+    "Description": "Coda Clips File"
   },
   {
     "Extension": ".CLP",
-    "Name": "Clipper Compiler Instructions File"
+    "Description": "Clipper Compiler Instructions File"
   },
   {
     "Extension": ".CLS",
-    "Name": "Program Class File"
+    "Description": "Program Class File"
   },
   {
     "Extension": ".CLW",
-    "Name": "Visual C++ ClassWizard File"
+    "Description": "Visual C++ ClassWizard File"
   },
   {
     "Extension": ".CMA",
-    "Name": "OCaml Library"
+    "Description": "OCaml Library"
   },
   {
     "Extension": ".CMAKE",
-    "Name": "CMake File"
+    "Description": "CMake File"
   },
   {
     "Extension": ".COB",
-    "Name": "COBOL Source Code File"
+    "Description": "COBOL Source Code File"
   },
   {
     "Extension": ".COD",
-    "Name": "Compiled Source Code"
+    "Description": "Compiled Source Code"
   },
   {
     "Extension": ".CONFIG",
-    "Name": "Configuration File"
+    "Description": "Configuration File"
   },
   {
     "Extension": ".CP",
-    "Name": "Xcode C++ Source File"
+    "Description": "Xcode C++ Source File"
   },
   {
     "Extension": ".CP",
-    "Name": "Captivate Source File"
+    "Description": "Captivate Source File"
   },
   {
     "Extension": ".CPB",
-    "Name": "Comicino Studio Project File"
+    "Description": "Comicino Studio Project File"
   },
   {
+    "Name": "C++",
     "Extension": ".CPP",
-    "Name": "C++ Source Code File"
+    "Description": "C++ Source Code File"
   },
   {
+    "Name": "C#",
     "Extension": ".CS",
-    "Name": "C# Source Code File"
+    "Description": "C# Source Code File",
+    "About": "\"A CS file is a source code file written in C# (pronounced \"C Sharp\"), an object-oriented programming language created by Microsoft for use with the .NET Framework. It is used for developing a range of applications, from simple desktop programs to applications for distributed environments.\"",
+    "Syntax": {
+      "Delimiter": ",",
+      "Keywords": "abstract,add,alias,as,ascending,async,await,base,bool,break,by,byte,case,catch,char,checked,class,clause),condition),const,constraint),continue,decimal,default,delegate,descending,do,double,dynamic,else,enum,equals,event,explicit,extern,false,finally,fixed,float,for,foreach,from,get,global,goto,group,if,implicit,in,int,interface,internal,into,is,join,let,lock,long,Descriptionof,Descriptionspace,new,null,object,on,operator,orderby,out,override,params,partial,private,protected,public,readonly,ref,remove,return,sbyte,sealed,select,set,short,sizeof,stackalloc,static,static using,string,struct,switch,this,throw,true,try,type,typeof,uint,ulong,unchecked,unsafe,ushort,using,value,var,virtual,void,volatile,when,where,where,while,yield",
+      "Comments": "//,///,/*,*/"
+    }
   },
   {
     "Extension": ".CSI",
-    "Name": "ContentServ Include File"
+    "Description": "ContentServ Include File"
   },
   {
     "Extension": ".CSI",
-    "Name": "EdLog Program Data File"
+    "Description": "EdLog Program Data File"
   },
   {
     "Extension": ".CSN",
-    "Name": "Adobe Code Snippet Document"
+    "Description": "Adobe Code Snippet Document"
   },
   {
     "Extension": ".CSP",
-    "Name": "Caché Server Page"
+    "Description": "Caché Server Page"
   },
   {
     "Extension": ".CSPROJ",
-    "Name": "Visual Studio C# Project"
+    "Description": "Visual Studio C# Project"
   },
   {
     "Extension": ".CST",
-    "Name": "ContentServ Template"
+    "Description": "ContentServ Template"
   },
   {
     "Extension": ".CSX",
-    "Name": "Visual C# Script"
+    "Description": "Visual C# Script"
   },
   {
     "Extension": ".CTC",
-    "Name": "Visual Studio Command Table Configuration File"
+    "Description": "Visual Studio Command Table Configuration File"
   },
   {
     "Extension": ".CTL",
-    "Name": "Visual Basic UserControl Object File"
+    "Description": "Visual Basic UserControl Object File"
   },
   {
     "Extension": ".CTO",
-    "Name": "Visual Studio Binary Command Table Output File"
+    "Description": "Visual Studio Binary Command Table Output File"
   },
   {
     "Extension": ".CTP",
-    "Name": "CakePHP Template"
+    "Description": "CakePHP Template"
   },
   {
     "Extension": ".CTSYM",
-    "Name": "Visual Studio Command Table Output File"
+    "Description": "Visual Studio Command Table Output File"
   },
   {
     "Extension": ".CTX",
-    "Name": "Visual Basic Control Binary File"
+    "Description": "Visual Basic Control Binary File"
   },
   {
     "Extension": ".CTXT",
-    "Name": "BlueJ Context File"
+    "Description": "BlueJ Context File"
   },
   {
     "Extension": ".CU",
-    "Name": "CUDA Source Code File"
+    "Description": "CUDA Source Code File"
   },
   {
     "Extension": ".CVSRC",
-    "Name": "CVS Command File"
+    "Description": "CVS Command File"
   },
   {
     "Extension": ".CXP",
-    "Name": "CX-Programmer Project File"
+    "Description": "CX-Programmer Project File"
   },
   {
     "Extension": ".CXT",
-    "Name": "CX-Programmer Project Text File"
+    "Description": "CX-Programmer Project Text File"
   },
   {
     "Extension": ".CXX",
-    "Name": "C++ Source Code File"
+    "Description": "C++ Source Code File"
   },
   {
     "Extension": ".D",
-    "Name": "D Source Code File"
+    "Description": "D Source Code File"
   },
   {
     "Extension": ".D",
-    "Name": "Source Dependency File"
+    "Description": "Source Dependency File"
   },
   {
     "Extension": ".DABRIEFCASE",
-    "Name": "RemObjects Data Abstract File Briefcase"
+    "Description": "RemObjects Data Abstract File Briefcase"
   },
   {
     "Extension": ".DACONFIG",
-    "Name": "RemObjects Data Abstract Configuration File"
+    "Description": "RemObjects Data Abstract Configuration File"
   },
   {
     "Extension": ".DART",
-    "Name": "Dart Source Code File"
+    "Description": "Dart Source Code File"
   },
   {
     "Extension": ".DBA",
-    "Name": "DarkBASIC Source Code File"
+    "Description": "DarkBASIC Source Code File"
   },
   {
     "Extension": ".DBA",
-    "Name": "CryENGINE Animation Database File"
+    "Description": "CryENGINE Animation Database File"
   },
   {
     "Extension": ".DBML",
-    "Name": "Visual Studio OR Design File"
+    "Description": "Visual Studio OR Design File"
   },
   {
     "Extension": ".DBO",
-    "Name": "DarkBASIC Object"
+    "Description": "DarkBASIC Object"
   },
   {
     "Extension": ".DBPRO",
-    "Name": "DarkBASIC Professional Project File"
+    "Description": "DarkBASIC Professional Project File"
   },
   {
     "Extension": ".DBPROJ",
-    "Name": "Visual Studio Database Project File"
+    "Description": "Visual Studio Database Project File"
   },
   {
     "Extension": ".DCP",
-    "Name": "Delphi Compiled Package"
+    "Description": "Delphi Compiled Package"
   },
   {
     "Extension": ".DCPROJ",
-    "Name": "Dashcode Project"
+    "Description": "Dashcode Project"
   },
   {
     "Extension": ".DCR",
-    "Name": "Delphi Component Resource File"
+    "Description": "Delphi Component Resource File"
   },
   {
     "Extension": ".DCU",
-    "Name": "Delphi Compiled Unit"
+    "Description": "Delphi Compiled Unit"
   },
   {
     "Extension": ".DCUIL",
-    "Name": "Delphi .NET Compiled Unit File"
+    "Description": "Delphi .NET Compiled Unit File"
   },
   {
     "Extension": ".DDD",
-    "Name": "Alpha Five Data Dictionary File"
+    "Description": "Alpha Five Data Dictionary File"
   },
   {
     "Extension": ".DDM",
-    "Name": "Alpha Five Data Dictionary Memo File"
+    "Description": "Alpha Five Data Dictionary Memo File"
   },
   {
     "Extension": ".DDP",
-    "Name": "Delphi Diagram Portfolio File"
+    "Description": "Delphi Diagram Portfolio File"
   },
   {
     "Extension": ".DDX",
-    "Name": "Alpha Five Data Dictionary Index File"
+    "Description": "Alpha Five Data Dictionary Index File"
   },
   {
     "Extension": ".DEC",
-    "Name": "Declaration File"
+    "Description": "Declaration File"
   },
   {
     "Extension": ".DEF",
-    "Name": "Module-Definition File"
+    "Description": "Module-Definition File"
   },
   {
     "Extension": ".DEFS",
-    "Name": "BlueJ Settings File"
+    "Description": "BlueJ Settings File"
   },
   {
     "Extension": ".DEP",
-    "Name": "Windows Dependency File"
+    "Description": "Windows Dependency File"
   },
   {
     "Extension": ".DEPEND",
-    "Name": "Code::Blocks Dependencies File"
+    "Description": "Code::Blocks Dependencies File"
   },
   {
     "Extension": ".DEV",
-    "Name": "Dev-C++ Project File"
+    "Description": "Dev-C++ Project File"
   },
   {
     "Extension": ".DEVELOPERPROFILE",
-    "Name": "Xcode Developer Profile"
+    "Description": "Xcode Developer Profile"
   },
   {
     "Extension": ".DEVICEIDS",
-    "Name": "Device Identification FIle"
+    "Description": "Device Identification FIle"
   },
   {
     "Extension": ".DEX",
-    "Name": "Dalvik Executable File"
+    "Description": "Dalvik Executable File"
   },
   {
     "Extension": ".DF1",
-    "Name": "Omnis Native Datafile"
+    "Description": "Omnis Native Datafile"
   },
   {
     "Extension": ".DFK",
-    "Name": "Dark Flow Project File"
+    "Description": "Dark Flow Project File"
   },
   {
     "Extension": ".DFM",
-    "Name": "Delphi Form"
+    "Description": "Delphi Form"
   },
   {
     "Extension": ".DGE",
-    "Name": "Enterprise Test Server Declaration Generator File"
+    "Description": "Enterprise Test Server Declaration Generator File"
   },
   {
     "Extension": ".DGML",
-    "Name": "Visual Studio Directed Graph Document"
+    "Description": "Visual Studio Directed Graph Document"
   },
   {
     "Extension": ".DGSL",
-    "Name": "Visual Shader Graph File"
+    "Description": "Visual Shader Graph File"
   },
   {
     "Extension": ".DIAGSESSION",
-    "Name": "Diagnostics Session File"
+    "Description": "Diagnostics Session File"
   },
   {
     "Extension": ".DIFF",
-    "Name": "Patch File"
+    "Description": "Patch File"
   },
   {
     "Extension": ".DIS",
-    "Name": "DisSharp Project File"
+    "Description": "DisSharp Project File"
   },
   {
     "Extension": ".DM1",
-    "Name": "ER/Studio Data Model File"
+    "Description": "ER/Studio Data Model File"
   },
   {
     "Extension": ".DMD",
-    "Name": "SQL Developer Data Modeler File"
+    "Description": "SQL Developer Data Modeler File"
   },
   {
     "Extension": ".DOB",
-    "Name": "Visual Basic UserDocument"
+    "Description": "Visual Basic UserDocument"
   },
   {
     "Extension": ".DOCSET",
-    "Name": "Doxygen Document Set File"
+    "Description": "Doxygen Document Set File"
   },
   {
     "Extension": ".DOX",
-    "Name": "Visual Basic Binary UserDocument"
+    "Description": "Visual Basic Binary UserDocument"
   },
   {
     "Extension": ".DOX",
-    "Name": "Doxygen Documentation File"
+    "Description": "Doxygen Documentation File"
   },
   {
     "Extension": ".DPK",
-    "Name": "Delphi Package"
+    "Description": "Delphi Package"
   },
   {
     "Extension": ".DPKW",
-    "Name": "Delphi Package"
+    "Description": "Delphi Package"
   },
   {
     "Extension": ".DPL",
-    "Name": "Delphi Package Library"
+    "Description": "Delphi Package Library"
   },
   {
     "Extension": ".DPR",
-    "Name": "Delphi Project"
+    "Description": "Delphi Project"
   },
   {
     "Extension": ".DPROJ",
-    "Name": "Delphi Project"
+    "Description": "Delphi Project"
   },
   {
     "Extension": ".DRES",
-    "Name": "Delphi Compiled Resource File"
+    "Description": "Delphi Compiled Resource File"
   },
   {
     "Extension": ".DRF",
-    "Name": "Delphi Resource File"
+    "Description": "Delphi Resource File"
   },
   {
     "Extension": ".DSGM",
-    "Name": "DS Game Maker Project"
+    "Description": "DS Game Maker Project"
   },
   {
     "Extension": ".DSK",
-    "Name": "Borland Project Desktop File"
+    "Description": "Borland Project Desktop File"
   },
   {
     "Extension": ".DSP",
-    "Name": "Visual C++ 6 Project"
+    "Description": "Visual C++ 6 Project"
   },
   {
     "Extension": ".DSYM",
-    "Name": "Xcode Debug Symbols File"
+    "Description": "Xcode Debug Symbols File"
   },
   {
     "Extension": ".DTD",
-    "Name": "Document Name Definition File"
+    "Description": "Document Description Definition File"
   },
   {
     "Extension": ".DWS",
-    "Name": "Dyalog Workspace File"
+    "Description": "Dyalog Workspace File"
   },
   {
     "Extension": ".DYLIB",
-    "Name": "Mach-O Dynamic Library"
+    "Description": "Mach-O Dynamic Library"
   },
   {
     "Extension": ".EBA",
-    "Name": "Emergence BASIC Source Code File"
+    "Description": "Emergence BASIC Source Code File"
   },
   {
     "Extension": ".ECP",
-    "Name": "EasyC Project File"
+    "Description": "EasyC Project File"
   },
   {
     "Extension": ".EDM",
-    "Name": "Adobe Extension Data Markup Language File"
+    "Description": "Adobe Extension Data Markup Language File"
   },
   {
     "Extension": ".EDML",
-    "Name": "Adobe Extension Data Markup Language Document"
+    "Description": "Adobe Extension Data Markup Language Document"
   },
   {
     "Extension": ".EDMX",
-    "Name": "ADO.NET Entity Data Model Designer File"
+    "Description": "ADO.NET Entity Data Model Designer File"
   },
   {
     "Extension": ".EL",
-    "Name": "Emacs Lisp Code File"
+    "Description": "Emacs Lisp Code File"
   },
   {
     "Extension": ".ELC",
-    "Name": "Emacs Compiled Lisp File"
+    "Description": "Emacs Compiled Lisp File"
   },
   {
     "Extension": ".ENT",
-    "Name": "External Entity"
+    "Description": "External Entity"
   },
   {
     "Extension": ".ENTITLEMENTS",
-    "Name": "Mac App Sandboxing Entitlements File"
+    "Description": "Mac App Sandboxing Entitlements File"
   },
   {
     "Extension": ".EQL",
-    "Name": "Embedded SQL File"
+    "Description": "Embedded SQL File"
   },
   {
     "Extension": ".ERB",
-    "Name": "Ruby ERB Script"
+    "Description": "Ruby ERB Script"
   },
   {
     "Extension": ".ERL",
-    "Name": "Erlang Source Code File"
+    "Description": "Erlang Source Code File"
   },
   {
     "Extension": ".EX",
-    "Name": "Euphoria Source Code"
+    "Description": "Euphoria Source Code"
   },
   {
     "Extension": ".EXL",
-    "Name": "JSDAI Inclusion or Exclusion List"
+    "Description": "JSDAI Inclusion or Exclusion List"
   },
   {
     "Extension": ".EXP",
-    "Name": "Symbols Export File"
+    "Description": "Symbols Export File"
   },
   {
     "Extension": ".EXW",
-    "Name": "Euphoria Source code File"
+    "Description": "Euphoria Source code File"
   },
   {
     "Extension": ".F",
-    "Name": "Fortran Source Code"
+    "Description": "Fortran Source Code"
   },
   {
     "Extension": ".F2K",
-    "Name": "Fortran Source Code File"
+    "Description": "Fortran Source Code File"
   },
   {
     "Extension": ".F90",
-    "Name": "Fortran 90 Source Code File"
+    "Description": "Fortran 90 Source Code File"
   },
   {
     "Extension": ".F95",
-    "Name": "Fortran 95 Source Code File"
+    "Description": "Fortran 95 Source Code File"
   },
   {
     "Extension": ".FBP",
-    "Name": "wxFormBuilder Project"
+    "Description": "wxFormBuilder Project"
   },
   {
     "Extension": ".FBP7",
-    "Name": "FinalBuilder 7 Project"
+    "Description": "FinalBuilder 7 Project"
   },
   {
     "Extension": ".FBZ7",
-    "Name": "Compressed FinalBuilder 7 Project"
+    "Description": "Compressed FinalBuilder 7 Project"
   },
   {
     "Extension": ".FCE",
-    "Name": "ForeUI Custom Element File"
+    "Description": "ForeUI Custom Element File"
   },
   {
     "Extension": ".FCL",
-    "Name": "ForeUI Custom Library File"
+    "Description": "ForeUI Custom Library File"
   },
   {
     "Extension": ".FD",
-    "Name": "DataFlex Data File"
+    "Description": "DataFlex Data File"
   },
   {
     "Extension": ".FEATURE",
-    "Name": "SharePoint Feature File"
+    "Description": "SharePoint Feature File"
   },
   {
     "Extension": ".FGL",
-    "Name": "Fifth Generation Language Source File"
+    "Description": "Fifth Generation Language Source File"
   },
   {
     "Extension": ".FILTERS",
-    "Name": "Visual C++ Project Filters File"
+    "Description": "Visual C++ Project Filters File"
   },
   {
     "Extension": ".FIMPP",
-    "Name": "FiM++ Source Code File"
+    "Description": "FiM++ Source Code File"
   },
   {
     "Extension": ".FLA",
-    "Name": "Adobe Animate Animation"
+    "Description": "Adobe Animate Animation"
   },
   {
     "Extension": ".FOR",
-    "Name": "Fortran 77 Source File"
+    "Description": "Fortran 77 Source File"
   },
   {
     "Extension": ".FORTH",
-    "Name": "Forth Language File"
+    "Description": "Forth Language File"
   },
   {
     "Extension": ".FPM",
-    "Name": "FPS Creator Map File"
+    "Description": "FPS Creator Map File"
   },
   {
     "Extension": ".FPP",
-    "Name": "Fortran Source Code"
+    "Description": "Fortran Source Code"
   },
   {
     "Extension": ".FPT",
-    "Name": "Alpha Five Table Memo File"
+    "Description": "Alpha Five Table Memo File"
   },
   {
     "Extension": ".FRAMEWORK",
-    "Name": "Mac OS X Application Framework"
+    "Description": "Mac OS X Application Framework"
   },
   {
     "Extension": ".FRJ",
-    "Name": "FreeForm-J Project File"
+    "Description": "FreeForm-J Project File"
   },
   {
     "Extension": ".FRM",
-    "Name": "Visual Basic Text Form"
+    "Description": "Visual Basic Text Form"
   },
   {
     "Extension": ".FRX",
-    "Name": "Visual Basic Binary Form File"
+    "Description": "Visual Basic Binary Form File"
   },
   {
     "Extension": ".FRX",
-    "Name": "FoxPro Report"
+    "Description": "FoxPro Report"
   },
   {
     "Extension": ".FS",
-    "Name": "Visual F# Source File"
+    "Description": "Visual F# Source File"
   },
   {
     "Extension": ".FSI",
-    "Name": "Visual F# Signature File"
+    "Description": "Visual F# Signature File"
   },
   {
     "Extension": ".FSL",
-    "Name": "Form•Z Script"
+    "Description": "Form•Z Script"
   },
   {
     "Extension": ".FSPROJ",
-    "Name": "Visual F# Project File"
+    "Description": "Visual F# Project File"
   },
   {
     "Extension": ".FSPROJ",
-    "Name": "FireStarter Project File"
+    "Description": "FireStarter Project File"
   },
   {
     "Extension": ".FSSCRIPT",
-    "Name": "Visual F# Script"
+    "Description": "Visual F# Script"
   },
   {
     "Extension": ".FSX",
-    "Name": "Visual F# Script File"
+    "Description": "Visual F# Script File"
   },
   {
     "Extension": ".FTL",
-    "Name": "FreeMarker Template File"
+    "Description": "FreeMarker Template File"
   },
   {
     "Extension": ".FTN",
-    "Name": "Fortran Source Code File"
+    "Description": "Fortran Source Code File"
   },
   {
     "Extension": ".FXC",
-    "Name": "FilePackager Configuration"
+    "Description": "FilePackager Configuration"
   },
   {
     "Extension": ".FXCPROJ",
-    "Name": "FX Composer Project File"
+    "Description": "FX Composer Project File"
   },
   {
     "Extension": ".FXL",
-    "Name": "FaceFX Language File"
+    "Description": "FaceFX Language File"
   },
   {
     "Extension": ".FXML",
-    "Name": "FXML Source Code File"
+    "Description": "FXML Source Code File"
   },
   {
     "Extension": ".FXPL",
-    "Name": "Adobe Flash FXP Library"
+    "Description": "Adobe Flash FXP Library"
   },
   {
     "Extension": ".GAMEPROJ",
-    "Name": "GameSalad Project File"
+    "Description": "GameSalad Project File"
   },
   {
     "Extension": ".GAR",
-    "Name": "GridGain Archive"
+    "Description": "GridGain Archive"
   },
   {
     "Extension": ".GBAP",
-    "Name": "GLBasic Project File"
+    "Description": "GLBasic Project File"
   },
   {
     "Extension": ".GBAS",
-    "Name": "GLBasic Source File"
+    "Description": "GLBasic Source File"
   },
   {
     "Extension": ".GBM",
-    "Name": "Gameboy Map File"
+    "Description": "Gameboy Map File"
   },
   {
     "Extension": ".GBR",
-    "Name": "Gameboy Tileset File"
+    "Description": "Gameboy Tileset File"
   },
   {
     "Extension": ".GBS",
-    "Name": "Generic Build Support Metadata File"
+    "Description": "Generic Build Support Metadata File"
   },
   {
     "Extension": ".GCH",
-    "Name": "Precompiled Header File"
+    "Description": "Precompiled Header File"
   },
   {
     "Extension": ".GDFMAKERPROJECT",
-    "Name": "GDF Editor Project File"
+    "Description": "GDF Editor Project File"
   },
   {
     "Extension": ".GED",
-    "Name": "Game Editor Project File"
+    "Description": "Game Editor Project File"
   },
   {
     "Extension": ".GEM",
-    "Name": "RubyGems Package"
+    "Description": "RubyGems Package"
   },
   {
     "Extension": ".GEMSPEC",
-    "Name": "Gem Specification File"
+    "Description": "Gem Specification File"
   },
   {
     "Extension": ".GENERICTEST",
-    "Name": "Visual Studio Generic Test File"
+    "Description": "Visual Studio Generic Test File"
   },
   {
     "Extension": ".GFAR",
-    "Name": "Greenfoot Archive"
+    "Description": "Greenfoot Archive"
   },
   {
     "Extension": ".GITATTRIBUTES",
-    "Name": "Git Attributes File"
+    "Description": "Git Attributes File"
   },
   {
     "Extension": ".GITIGNORE",
-    "Name": "Git Ignore File"
+    "Description": "Git Ignore File"
   },
   {
     "Extension": ".GITKEEP",
-    "Name": "Git Keep File"
+    "Description": "Git Keep File"
   },
   {
     "Extension": ".GLADE",
-    "Name": "Glade Project File"
+    "Description": "Glade Project File"
   },
   {
     "Extension": ".GLD",
-    "Name": "MPLAB C Compiler Linker Script File"
+    "Description": "MPLAB C Compiler Linker Script File"
   },
   {
     "Extension": ".GLOBAL",
-    "Name": "Global Makefile"
+    "Description": "Global Makefile"
   },
   {
     "Extension": ".GLS",
-    "Name": "GLScript Game Script"
+    "Description": "GLScript Game Script"
   },
   {
     "Extension": ".GM",
-    "Name": "GameMonkey Script"
+    "Description": "GameMonkey Script"
   },
   {
     "Extension": ".GM6",
-    "Name": "GameMaker 6 Project File"
+    "Description": "GameMaker 6 Project File"
   },
   {
     "Extension": ".GM81",
-    "Name": "Game Maker 8.1 Project File"
+    "Description": "Game Maker 8.1 Project File"
   },
   {
     "Extension": ".GMD",
-    "Name": "Game Maker Program Code"
+    "Description": "Game Maker Program Code"
   },
   {
     "Extension": ".GMK",
-    "Name": "Game Maker Project File"
+    "Description": "Game Maker Project File"
   },
   {
     "Extension": ".GML",
-    "Name": "GameMaker Language File"
+    "Description": "GameMaker Language File"
   },
   {
     "Extension": ".GMO",
-    "Name": "GNU Machine Object File"
+    "Description": "GNU Machine Object File"
   },
   {
     "Extension": ".GMX",
-    "Name": "GameMaker File"
+    "Description": "GameMaker File"
   },
   {
     "Extension": ".GNUMAKEFILE",
-    "Name": "GNU Makefile"
+    "Description": "GNU Makefile"
   },
   {
     "Extension": ".GO",
-    "Name": "Go Source Code File"
+    "Description": "Go Source Code File"
   },
   {
     "Extension": ".GORM",
-    "Name": "Gorm Interface Resource File"
+    "Description": "Gorm Interface Resource File"
   },
   {
     "Extension": ".GPJ",
-    "Name": "MULTI IDE Project File"
+    "Description": "MULTI IDE Project File"
   },
   {
     "Extension": ".GPJ",
-    "Name": "jGRASP Project File"
+    "Description": "jGRASP Project File"
   },
   {
     "Extension": ".GREENFOOT",
-    "Name": "Greenfoot Project Archive"
+    "Description": "Greenfoot Project Archive"
   },
   {
     "Extension": ".GROOVY",
-    "Name": "Groovy Source Code File"
+    "Description": "Groovy Source Code File"
   },
   {
     "Extension": ".GROUPPROJ",
-    "Name": "Delphi Project Group File"
+    "Description": "Delphi Project Group File"
   },
   {
     "Extension": ".GS",
-    "Name": "Google Apps Script"
+    "Description": "Google Apps Script"
   },
   {
     "Extension": ".GS3",
-    "Name": "GameStarter File"
+    "Description": "GameStarter File"
   },
   {
     "Extension": ".GSPROJ",
-    "Name": "GameSalad Windows Project File"
+    "Description": "GameSalad Windows Project File"
   },
   {
     "Extension": ".GSZIP",
-    "Name": "GameSalad Marketplace Asset File"
+    "Description": "GameSalad Marketplace Asset File"
   },
   {
     "Extension": ".GVY",
-    "Name": "Groovy Source Code File"
+    "Description": "Groovy Source Code File"
   },
   {
     "Extension": ".GWD",
-    "Name": "Gear Watchface Design File"
+    "Description": "Gear Watchface Design File"
   },
   {
     "Extension": ".H",
-    "Name": "C/C++/Objective-C Header File"
+    "Description": "C/C++/Objective-C Header File"
   },
   {
     "Extension": ".HAL",
-    "Name": "HansaWorld Application Language File"
+    "Description": "HansaWorld Application Language File"
   },
   {
     "Extension": ".HAML",
-    "Name": "Haml Source Code File"
+    "Description": "Haml Source Code File"
   },
   {
     "Extension": ".HANDLEBARS",
-    "Name": "Handlebars Template"
+    "Description": "Handlebars Template"
   },
   {
     "Extension": ".HAS",
-    "Name": "Haskell Script"
+    "Description": "Haskell Script"
   },
   {
     "Extension": ".HBS",
-    "Name": "Handlebars Template"
+    "Description": "Handlebars Template"
   },
   {
     "Extension": ".HCF",
-    "Name": "Compact Ham Library"
+    "Description": "Compact Ham Library"
   },
   {
     "Extension": ".HH",
-    "Name": "C++ Header File"
+    "Description": "C++ Header File"
   },
   {
     "Extension": ".HHH",
-    "Name": "Power C Precompiled Header File"
+    "Description": "Power C Precompiled Header File"
   },
   {
     "Extension": ".HHP",
-    "Name": "HTML Help Workshop Project"
+    "Description": "HTML Help Workshop Project"
   },
   {
     "Extension": ".HPF",
-    "Name": "High Performance Fortran File"
+    "Description": "High Performance Fortran File"
   },
   {
     "Extension": ".HPP",
-    "Name": "C++ Header File"
+    "Description": "C++ Header File"
   },
   {
     "Extension": ".HRL",
-    "Name": "Erlang Header File"
+    "Description": "Erlang Header File"
   },
   {
     "Extension": ".HS",
-    "Name": "Haskell Script"
+    "Description": "Haskell Script"
   },
   {
-    "Extension": ".HXX",
-    "Name": "C++ Source Code Header File"
+    "Extension": ".HS",
+    "Description": "Haskell Script"
+  },
+  {
+    "Name": "HTML",
+    "Extension": ".HTML",
+    "Description": "Hypertext Markup Language File",
+    "About": "An HTML file is a webpage coded in HTML that can be displayed in a web browser. It is used to format text, tables, images, and other content that is displayed on a webpage. HTML files are widely used on the web as most pages within static websites have an \".html\" extension.\""
   },
   {
     "Extension": ".HYDRA",
-    "Name": "Hydra Image Filter Program File"
+    "Description": "Hydra Image Filter Program File"
   },
   {
     "Extension": ".I",
-    "Name": "Visual Studio Intermediate File"
+    "Description": "Visual Studio Intermediate File"
   },
   {
     "Extension": ".I",
-    "Name": "INTERCAL Source File"
+    "Description": "INTERCAL Source File"
   },
   {
     "Extension": ".ICONSET",
-    "Name": "Mac OS X Icon Set Folder"
+    "Description": "Mac OS X Icon Set Folder"
   },
   {
     "Extension": ".IDB",
-    "Name": "Visual Studio Intermediate Debug File"
+    "Description": "Visual Studio Intermediate Debug File"
   },
   {
     "Extension": ".IDL",
-    "Name": "Interface Definition Language File"
+    "Description": "Interface Definition Language File"
   },
   {
     "Extension": ".IDT",
-    "Name": "Windows Installer Database Text Archive File"
+    "Description": "Windows Installer Database Text Archive File"
   },
   {
     "Extension": ".ILK",
-    "Name": "Incremental Linking File"
+    "Description": "Incremental Linking File"
   },
   {
     "Extension": ".IML",
-    "Name": "IntelliJ IDEA Module"
+    "Description": "IntelliJ IDEA Module"
   },
   {
     "Extension": ".INC",
-    "Name": "Include File"
+    "Description": "Include File"
   },
   {
     "Extension": ".INL",
-    "Name": "C++ Inline File"
+    "Description": "C++ Inline File"
   },
   {
     "Extension": ".INO",
-    "Name": "Arduino Sketch File"
+    "Description": "Arduino Sketch File"
   },
   {
     "Extension": ".IPCH",
-    "Name": "Intellisense Precompiled Header File"
+    "Description": "Intellisense Precompiled Header File"
   },
   {
     "Extension": ".IPP",
-    "Name": "Inline Guard Macro File"
+    "Description": "Inline Guard Macro File"
   },
   {
     "Extension": ".IPR",
-    "Name": "InstallShield Professional Project File"
+    "Description": "InstallShield Professional Project File"
   },
   {
     "Extension": ".IPR",
-    "Name": "IntelliJ IDEA Project File"
+    "Description": "IntelliJ IDEA Project File"
   },
   {
     "Extension": ".ISC",
-    "Name": "Xilinx Device Configuration File"
+    "Description": "Xilinx Device Configuration File"
   },
   {
     "Extension": ".ISE",
-    "Name": "InstallShield Express Project File"
+    "Description": "InstallShield Express Project File"
   },
   {
     "Extension": ".ISM",
-    "Name": "InstallShield Project File"
+    "Description": "InstallShield Project File"
   },
   {
     "Extension": ".IST",
-    "Name": "InstallShield Project Template File"
+    "Description": "InstallShield Project Template File"
   },
   {
     "Extension": ".IWB",
-    "Name": "IWBasic Source Code File"
+    "Description": "IWBasic Source Code File"
   },
   {
     "Extension": ".IWS",
-    "Name": "IntelliJ IDEA Web Page"
+    "Description": "IntelliJ IDEA Web Page"
   },
   {
     "Extension": ".IWZ",
-    "Name": "InstallShield Express 2 Project File"
+    "Description": "InstallShield Express 2 Project File"
   },
   {
+    "Name": "Java",
     "Extension": ".J",
-    "Name": "Java Source File"
+    "Description": "Java Source File"
   },
   {
+    "Name": "Java",
     "Extension": ".JAV",
-    "Name": "Java Source File"
+    "Description": "Java Source File"
   },
   {
+    "Name": "Java",
     "Extension": ".JAVA",
-    "Name": "Java Source Code File"
+    "Description": "Java Source Code File"
   },
   {
     "Extension": ".JCP",
-    "Name": "JCreator Project File"
+    "Description": "JCreator Project File"
   },
   {
     "Extension": ".JDP",
-    "Name": "BlackBerry JDE Application Project"
+    "Description": "BlackBerry JDE Application Project"
   },
   {
     "Extension": ".JED",
-    "Name": "Xilinx JEDEC Programming File"
+    "Description": "Xilinx JEDEC Programming File"
   },
   {
     "Extension": ".JIC",
-    "Name": "JTAG Indirect Configuration File"
+    "Description": "JTAG Indirect Configuration File"
   },
   {
     "Extension": ".JL",
-    "Name": "Julia Source Code File"
+    "Description": "Julia Source Code File"
   },
   {
     "Extension": ".JLR",
-    "Name": "Juliar Source Code File"
+    "Description": "Juliar Source Code File"
   },
   {
     "Extension": ".JNILIB",
-    "Name": "JNI Library"
+    "Description": "JNI Library"
   },
   {
     "Extension": ".JPD",
-    "Name": "Java Process Definition"
+    "Description": "Java Process Definition"
   },
   {
     "Extension": ".JPR",
-    "Name": "JBuilder Project"
+    "Description": "JBuilder Project"
   },
   {
     "Extension": ".JPX",
-    "Name": "JBuilder Project"
+    "Description": "JBuilder Project"
   },
   {
     "Extension": ".JSFL",
-    "Name": "Animate JSFL Script File"
+    "Description": "Animate JSFL Script File"
   },
   {
     "Extension": ".JSH",
-    "Name": "JAWS Script Header File"
+    "Description": "JAWS Script Header File"
   },
   {
     "Extension": ".JSH",
-    "Name": "Jsh Script"
+    "Description": "Jsh Script"
   },
   {
     "Extension": ".JSPF",
-    "Name": "Java Server Page Fragment"
+    "Description": "Java Server Page Fragment"
   },
   {
     "Extension": ".JSS",
-    "Name": "JAWS Script"
+    "Description": "JAWS Script"
   },
   {
     "Extension": ".JSXINC",
-    "Name": "ExtendScript Included Script File"
+    "Description": "ExtendScript Included Script File"
   },
   {
     "Extension": ".KB",
-    "Name": "C++ Keyboard Script"
+    "Description": "C++ Keyboard Script"
   },
   {
     "Extension": ".KCT",
-    "Name": "Keyman Developer Customization Source File"
+    "Description": "Keyman Developer Customization Source File"
   },
   {
     "Extension": ".KDEVDLG",
-    "Name": "KDevelop Dialog Box File"
+    "Description": "KDevelop Dialog Box File"
   },
   {
     "Extension": ".KDEVELOP",
-    "Name": "KDevelop Project Data File"
+    "Description": "KDevelop Project Data File"
   },
   {
     "Extension": ".KDEVPRJ",
-    "Name": "KDevelop Project File"
+    "Description": "KDevelop Project File"
   },
   {
     "Extension": ".KDMP",
-    "Name": "Windows Crash Dump File"
+    "Description": "Windows Crash Dump File"
   },
   {
     "Extension": ".KPL",
-    "Name": "Kids Programming Language File"
+    "Description": "Kids Programming Language File"
   },
   {
     "Extension": ".KPS",
-    "Name": "Keyman Developer Package Source File"
+    "Description": "Keyman Developer Package Source File"
   },
   {
     "Extension": ".KT",
-    "Name": "Kotlin Source Code File"
+    "Description": "Kotlin Source Code File"
   },
   {
     "Extension": ".KV",
-    "Name": "Kivy Language File"
+    "Description": "Kivy Language File"
   },
   {
     "Extension": ".KVK",
-    "Name": "Keyman On-Screen Keyboard File"
+    "Description": "Keyman On-Screen Keyboard File"
   },
   {
     "Extension": ".L",
-    "Name": "Lex Source File"
+    "Description": "Lex Source File"
   },
   {
     "Extension": ".LBI",
-    "Name": "Dreamweaver Library Item"
+    "Description": "Dreamweaver Library Item"
   },
   {
     "Extension": ".LBS",
-    "Name": "Omnis Library"
+    "Description": "Omnis Library"
   },
   {
     "Extension": ".LDS",
-    "Name": "Binutils LD Linker Script"
+    "Description": "Binutils LD Linker Script"
   },
   {
     "Extension": ".LGO",
-    "Name": "Logo Instructions File"
+    "Description": "Logo Instructions File"
   },
   {
     "Extension": ".LHS",
-    "Name": "Literate Haskell Script"
+    "Description": "Literate Haskell Script"
   },
   {
     "Extension": ".LICENSES",
-    "Name": "Visual Studio Licensed Classes File"
+    "Description": "Visual Studio Licensed Classes File"
   },
   {
     "Extension": ".LICX",
-    "Name": "Visual Studio License File"
+    "Description": "Visual Studio License File"
   },
   {
     "Extension": ".LIS",
-    "Name": "VAX Program Listing"
+    "Description": "VAX Program Listing"
   },
   {
     "Extension": ".LISP",
-    "Name": "Lisp Source Code File"
+    "Description": "Lisp Source Code File"
   },
   {
     "Extension": ".LIST",
-    "Name": "JAR Index File"
+    "Description": "JAR Index File"
   },
   {
     "Extension": ".LIT",
-    "Name": "Literate Haskell Script"
+    "Description": "Literate Haskell Script"
   },
   {
     "Extension": ".LIT",
-    "Name": "Lit Source Code File"
+    "Description": "Lit Source Code File"
   },
   {
     "Extension": ".LIVECODE",
-    "Name": "LiveCode Stack File"
+    "Description": "LiveCode Stack File"
   },
   {
     "Extension": ".LNT",
-    "Name": "PC-lint/FlexeLint Configuration File"
+    "Description": "PC-lint/FlexeLint Configuration File"
   },
   {
     "Extension": ".LOADTEST",
-    "Name": "Visual Studio Load Test File"
+    "Description": "Visual Studio Load Test File"
   },
   {
     "Extension": ".LOL",
-    "Name": "LOLCODE Source Code FIle"
+    "Description": "LOLCODE Source Code FIle"
   },
   {
     "Extension": ".LPROJ",
-    "Name": "Localized Project Folder"
+    "Description": "Localized Project Folder"
   },
   {
     "Extension": ".LRDB",
-    "Name": "Adobe Lightroom Database"
+    "Description": "Adobe Lightroom Database"
   },
   {
     "Extension": ".LRF",
-    "Name": "Microsoft Linker Response File"
+    "Description": "Microsoft Linker Response File"
   },
   {
     "Extension": ".LSP",
-    "Name": "Lisp Program Source Code File"
+    "Description": "Lisp Program Source Code File"
   },
   {
     "Extension": ".LSPROJ",
-    "Name": "Visual Studio LightSwitch Project"
+    "Description": "Visual Studio LightSwitch Project"
   },
   {
     "Extension": ".LTB",
-    "Name": "LithTech Binary File"
+    "Description": "LithTech Binary File"
   },
   {
     "Extension": ".LUA",
-    "Name": "Lua Source File"
+    "Description": "Lua Source File"
   },
   {
     "Extension": ".LUC",
-    "Name": "Compiled Lua Source File"
+    "Description": "Compiled Lua Source File"
   },
   {
     "Extension": ".LUCIDSNIPPET",
-    "Name": "Lucid Snippet File"
+    "Description": "Lucid Snippet File"
   },
   {
     "Extension": ".LXSPROJ",
-    "Name": "Liquid XML Studio Project File"
+    "Description": "Liquid XML Studio Project File"
   },
   {
     "Extension": ".M",
-    "Name": "Objective-C Implementation File"
+    "Description": "Objective-C Implementation File"
   },
   {
     "Extension": ".M",
-    "Name": "MATLAB Source Code File"
+    "Description": "MATLAB Source Code File"
   },
   {
     "Extension": ".M",
-    "Name": "Mercury Source Code File"
+    "Description": "Mercury Source Code File"
   },
   {
     "Extension": ".M4",
-    "Name": "Macro Processor Library"
+    "Description": "Macro Processor Library"
   },
   {
     "Extension": ".MAGIK",
-    "Name": "Magik Source Code File"
+    "Description": "Magik Source Code File"
   },
   {
     "Extension": ".MAK",
-    "Name": "Makefile"
+    "Description": "Makefile"
   },
   {
     "Extension": ".MAKE",
-    "Name": "Xcode Makefile Script"
+    "Description": "Xcode Makefile Script"
   },
   {
     "Extension": ".MAKEFILE",
-    "Name": "Makefile"
+    "Description": "Makefile"
   },
   {
     "Extension": ".MAKO",
-    "Name": "Mako Template"
+    "Description": "Mako Template"
   },
   {
     "Extension": ".MARKDN",
-    "Name": "Markdown File"
+    "Description": "Markdown File"
   },
   {
     "Extension": ".MARKDOWN",
-    "Name": "Markdown Documentation File"
+    "Description": "Markdown Documentation File"
   },
   {
     "Extension": ".MCP",
-    "Name": "CodeWarrior Project"
+    "Description": "CodeWarrior Project"
   },
   {
     "Extension": ".MD",
-    "Name": "Markdown Documentation File"
+    "Description": "Markdown Documentation File"
   },
   {
     "Extension": ".MD",
-    "Name": "Machine Description File"
+    "Description": "Machine Description File"
   },
   {
     "Extension": ".MDOWN",
-    "Name": "Markdown File"
+    "Description": "Markdown File"
   },
   {
     "Extension": ".MDZIP",
-    "Name": "MagicDraw Project Archive"
+    "Description": "MagicDraw Project Archive"
   },
   {
     "Extension": ".MED",
-    "Name": "RSView Development Project"
+    "Description": "RSView Development Project"
   },
   {
     "Extension": ".MER",
-    "Name": "RSView Development Runtime File"
+    "Description": "RSView Development Runtime File"
   },
   {
     "Extension": ".MF",
-    "Name": "Java Manifest File"
+    "Description": "Java Manifest File"
   },
   {
     "Extension": ".MFA",
-    "Name": "Multimedia Fusion Development File"
+    "Description": "Multimedia Fusion Development File"
   },
   {
     "Extension": ".MFCRIBBON-MS",
-    "Name": "MFC Ribbon Definition XML File"
+    "Description": "MFC Ribbon Definition XML File"
   },
   {
     "Extension": ".MK",
-    "Name": "Makefile"
+    "Description": "Makefile"
   },
   {
     "Extension": ".MKD",
-    "Name": "Markdown Documentation File"
+    "Description": "Markdown Documentation File"
   },
   {
     "Extension": ".ML",
-    "Name": "ML Source Code File"
+    "Description": "ML Source Code File"
   },
   {
     "Extension": ".MLB",
-    "Name": "Visual FoxPro Library"
+    "Description": "Visual FoxPro Library"
   },
   {
     "Extension": ".MM",
-    "Name": "Objective-C++ Source File"
+    "Description": "Objective-C++ Source File"
   },
   {
     "Extension": ".MO",
-    "Name": "Machine Object File"
+    "Description": "Machine Object File"
   },
   {
     "Extension": ".MOD",
-    "Name": "Fortran Module File"
+    "Description": "Fortran Module File"
   },
   {
     "Extension": ".MODE1V3",
-    "Name": "Xcode Project Data File"
+    "Description": "Xcode Project Data File"
   },
   {
     "Extension": ".MODE2V3",
-    "Name": "Xcode Project Data File"
+    "Description": "Xcode Project Data File"
   },
   {
     "Extension": ".MOM",
-    "Name": "Managed Object Model"
+    "Description": "Managed Object Model"
   },
   {
     "Extension": ".MPR",
-    "Name": "FoxPro Generated Menu Program"
+    "Description": "FoxPro Generated Menu Program"
   },
   {
     "Extension": ".MPWS",
-    "Name": "MathPiper Worksheet"
+    "Description": "MathPiper Worksheet"
   },
   {
     "Extension": ".MQ4",
-    "Name": "MQL4 Source Code File"
+    "Description": "MQL4 Source Code File"
   },
   {
     "Extension": ".MQ5",
-    "Name": "MQL5 Source Code File"
+    "Description": "MQL5 Source Code File"
   },
   {
     "Extension": ".MQH",
-    "Name": "MetaTrader Include File"
+    "Description": "MetaTrader Include File"
   },
   {
     "Extension": ".MRSN",
-    "Name": "Mersenne Source Code File"
+    "Description": "Mersenne Source Code File"
   },
   {
     "Extension": ".MRT",
-    "Name": "Stimulsoft Report File"
+    "Description": "Stimulsoft Report File"
   },
   {
     "Extension": ".MSHA",
-    "Name": "Microsoft Help Asset File"
+    "Description": "Microsoft Help Asset File"
   },
   {
     "Extension": ".MSHC",
-    "Name": "Microsoft Help Container File"
+    "Description": "Microsoft Help Container File"
   },
   {
     "Extension": ".MSHI",
-    "Name": "Microsoft Help Index File"
+    "Description": "Microsoft Help Index File"
   },
   {
     "Extension": ".MSL",
-    "Name": "Mapping Specification Language File"
+    "Description": "Mapping Specification Language File"
   },
   {
     "Extension": ".MSP",
-    "Name": "MaxScript Page File"
+    "Description": "MaxScript Page File"
   },
   {
     "Extension": ".MSS",
-    "Name": "Microprocessor Software Specification File"
+    "Description": "Microprocessor Software Specification File"
   },
   {
     "Extension": ".MV",
-    "Name": "MivaScript File"
+    "Description": "MivaScript File"
   },
   {
     "Extension": ".MVX",
-    "Name": "Multimedia Fusion Movement Extension"
+    "Description": "Multimedia Fusion Movement Extension"
   },
   {
     "Extension": ".MXML",
-    "Name": "Flex MXML Component"
+    "Description": "Flex MXML Component"
   },
   {
     "Extension": ".MYAPP",
-    "Name": "Visual Studio Application XML File"
+    "Description": "Visual Studio Application XML File"
   },
   {
     "Extension": ".NBC",
-    "Name": "Next Byte Codes Source Code File"
+    "Description": "Next Byte Codes Source Code File"
   },
   {
     "Extension": ".NCB",
-    "Name": "Visual C++ IntelliSense Database"
+    "Description": "Visual C++ IntelliSense Database"
   },
   {
     "Extension": ".NED",
-    "Name": "OMNeT++ Network Description File"
+    "Description": "OMNeT++ Network Description File"
   },
   {
     "Extension": ".NEKO",
-    "Name": "Neko Source Code File"
+    "Description": "Neko Source Code File"
   },
   {
     "Extension": ".NFM",
-    "Name": "Delphi .NET Form File"
+    "Description": "Delphi .NET Form File"
   },
   {
     "Extension": ".NIB",
-    "Name": "Interface Builder User Interface File"
+    "Description": "Interface Builder User Interface File"
   },
   {
     "Extension": ".NIM",
-    "Name": "Nim Source Code File"
+    "Description": "Nim Source Code File"
   },
   {
     "Extension": ".NK",
-    "Name": "NUKE Script"
+    "Description": "NUKE Script"
   },
   {
     "Extension": ".NLS",
-    "Name": "NetLogo Source File"
+    "Description": "NetLogo Source File"
   },
   {
     "Extension": ".NQC",
-    "Name": "Not Quite C Source Code File"
+    "Description": "Not Quite C Source Code File"
   },
   {
     "Extension": ".NSH",
-    "Name": "NSIS Header File"
+    "Description": "NSIS Header File"
   },
   {
     "Extension": ".NSI",
-    "Name": "NSIS Script"
+    "Description": "NSIS Script"
   },
   {
     "Extension": ".NSL",
-    "Name": "nsL Script"
+    "Description": "nsL Script"
   },
   {
     "Extension": ".NUPKG",
-    "Name": "NuGet Package"
+    "Description": "NuGet Package"
   },
   {
     "Extension": ".NUPROJ",
-    "Name": "NuGet Build Project"
+    "Description": "NuGet Build Project"
   },
   {
     "Extension": ".NUSPEC",
-    "Name": "NuGet Specification File"
+    "Description": "NuGet Specification File"
   },
   {
     "Extension": ".NVV",
-    "Name": "NVIDIA Vertex Shader File"
+    "Description": "NVIDIA Vertex Shader File"
   },
   {
     "Extension": ".NW",
-    "Name": "Node-Webkit App Package"
+    "Description": "Node-Webkit App Package"
   },
   {
     "Extension": ".NXC",
-    "Name": "Not eXactly C Source Code File"
+    "Description": "Not eXactly C Source Code File"
   },
   {
     "Extension": ".O",
-    "Name": "Compiled Object File"
+    "Description": "Compiled Object File"
   },
   {
     "Extension": ".OAT",
-    "Name": "Android Optimized Application File"
+    "Description": "Android Optimized Application File"
   },
   {
     "Extension": ".OB2",
-    "Name": "Oberon-2 Source Code File"
+    "Description": "Oberon-2 Source Code File"
   },
   {
     "Extension": ".OCA",
-    "Name": "Custom Control Library Name File"
+    "Description": "Custom Control Library Description File"
   },
   {
     "Extension": ".OCTEST",
-    "Name": "Xcode Objective-C Unit Test Bundle"
+    "Description": "Xcode Objective-C Unit Test Bundle"
   },
   {
     "Extension": ".OCX",
-    "Name": "ActiveX Control"
+    "Description": "ActiveX Control"
   },
   {
     "Extension": ".ODL",
-    "Name": "Object Description Language File"
+    "Description": "Object Description Language File"
   },
   {
     "Extension": ".OMO",
-    "Name": "OMake Object File"
+    "Description": "OMake Object File"
   },
   {
     "Extension": ".ORDEREDTEST",
-    "Name": "Visual Studio Ordered Test File"
+    "Description": "Visual Studio Ordered Test File"
   },
   {
     "Extension": ".OS",
-    "Name": "ObjectScript Source File"
+    "Description": "ObjectScript Source File"
   },
   {
     "Extension": ".OSC",
-    "Name": "Obix Source Code File"
+    "Description": "Obix Source Code File"
   },
   {
     "Extension": ".OW",
-    "Name": "Free Pascal 1.0.x Object File"
+    "Description": "Free Pascal 1.0.x Object File"
   },
   {
     "Extension": ".OWL",
-    "Name": "OWL Source Code File"
+    "Description": "OWL Source Code File"
   },
   {
     "Extension": ".OXYGENE",
-    "Name": "Oxygene Project File"
+    "Description": "Oxygene Project File"
   },
   {
     "Extension": ".P",
-    "Name": "Pascal Source Code"
+    "Description": "Pascal Source Code"
   },
   {
     "Extension": ".P",
-    "Name": "Python Pickle File"
+    "Description": "Python Pickle File"
   },
   {
     "Extension": ".P3D",
-    "Name": "Panda3D Multifile"
+    "Description": "Panda3D Multifile"
   },
   {
     "Extension": ".P6",
-    "Name": "Perl 6 Source Code File"
+    "Description": "Perl 6 Source Code File"
   },
   {
     "Extension": ".PAS",
-    "Name": "Pascal Source File"
+    "Description": "Pascal Source File"
   },
   {
     "Extension": ".PAS",
-    "Name": "Delphi Unit Source File"
+    "Description": "Delphi Unit Source File"
   },
   {
     "Extension": ".PATCH",
-    "Name": "Patch File"
+    "Description": "Patch File"
   },
   {
     "Extension": ".PAW",
-    "Name": "Paw Document"
+    "Description": "Paw Document"
   },
   {
     "Extension": ".PB",
-    "Name": "PureBasic Source File"
+    "Description": "PureBasic Source File"
   },
   {
     "Extension": ".PBG",
-    "Name": "Pixel Bender Graph File"
+    "Description": "Pixel Bender Graph File"
   },
   {
     "Extension": ".PBJ",
-    "Name": "Pixel Bender Bytecode File"
+    "Description": "Pixel Bender Bytecode File"
   },
   {
     "Extension": ".PBK",
-    "Name": "Pixel Bender Kernel File"
+    "Description": "Pixel Bender Kernel File"
   },
   {
     "Extension": ".PBPROJ",
-    "Name": "Project Builder Project"
+    "Description": "Project Builder Project"
   },
   {
     "Extension": ".PBXBTREE",
-    "Name": "Xcode Auto-Complete File"
+    "Description": "Xcode Auto-Complete File"
   },
   {
     "Extension": ".PBXPROJ",
-    "Name": "Xcode Project Data File"
+    "Description": "Xcode Project Data File"
   },
   {
     "Extension": ".PBXUSER",
-    "Name": "Xcode Project User Data File"
+    "Description": "Xcode Project User Data File"
   },
   {
     "Extension": ".PC",
-    "Name": "Pro*C Source Code File"
+    "Description": "Pro*C Source Code File"
   },
   {
     "Extension": ".PCH",
-    "Name": "Precompiled Header File"
+    "Description": "Precompiled Header File"
   },
   {
     "Extension": ".PCP",
-    "Name": "Windows Installer Patch Creation Properties File"
+    "Description": "Windows Installer Patch Creation Properties File"
   },
   {
     "Extension": ".PDE",
-    "Name": "Processing Development Environment Source Code File"
+    "Description": "Processing Development Environment Source Code File"
   },
   {
     "Extension": ".PDE",
-    "Name": "Arduino Sketch"
+    "Description": "Arduino Sketch"
   },
   {
     "Extension": ".PDL",
-    "Name": "Perl Data Language File"
+    "Description": "Perl Data Language File"
   },
   {
     "Extension": ".PDM",
-    "Name": "VB Project Information File"
+    "Description": "VB Project Information File"
   },
   {
     "Extension": ".PERSPECTIVE",
-    "Name": "Xcode Project Data File"
+    "Description": "Xcode Project Data File"
   },
   {
     "Extension": ".PERSPECTIVEV3",
-    "Name": "Xcode Project Data File"
+    "Description": "Xcode Project Data File"
   },
   {
     "Extension": ".PFG",
-    "Name": "jEEPers Program Configuration File"
+    "Description": "jEEPers Program Configuration File"
   },
   {
     "Extension": ".PH",
-    "Name": "Perl Header File"
+    "Description": "Perl Header File"
   },
   {
     "Extension": ".PICKLE",
-    "Name": "Python Pickle File"
+    "Description": "Python Pickle File"
   },
   {
     "Extension": ".PIKA",
-    "Name": "Pika Software Builder Project File"
+    "Description": "Pika Software Builder Project File"
   },
   {
     "Extension": ".PJX",
-    "Name": "FoxPro Project"
+    "Description": "FoxPro Project"
   },
   {
     "Extension": ".PKGDEF",
-    "Name": "Visual Studio Shell File"
+    "Description": "Visual Studio Shell File"
   },
   {
     "Extension": ".PKGUNDEF",
-    "Name": "Visual Studio Shell File"
+    "Description": "Visual Studio Shell File"
   },
   {
     "Extension": ".PKL",
-    "Name": "Python Pickle File"
+    "Description": "Python Pickle File"
   },
   {
     "Extension": ".PKPROJ",
-    "Name": "Visual CCScript Project"
+    "Description": "Visual CCScript Project"
   },
   {
     "Extension": ".PL",
-    "Name": "Perl Script"
+    "Description": "Perl Script"
   },
   {
     "Extension": ".PL",
-    "Name": "Prolog Source Code File"
+    "Description": "Prolog Source Code File"
   },
   {
     "Extension": ".PL1",
-    "Name": "PL/I Source Code"
+    "Description": "PL/I Source Code"
   },
   {
     "Extension": ".PLAYGROUND",
-    "Name": "Xcode Playground File"
+    "Description": "Xcode Playground File"
   },
   {
     "Extension": ".PLC",
-    "Name": "PL/B Source File"
+    "Description": "PL/B Source File"
   },
   {
     "Extension": ".PLE",
-    "Name": "Messenger Plus! Live Encrypted Log File"
+    "Description": "Messenger Plus! Live Encrypted Log File"
   },
   {
     "Extension": ".PLG",
-    "Name": "Visual Studio Build Log File"
+    "Description": "Visual Studio Build Log File"
   },
   {
     "Extension": ".PLI",
-    "Name": "PL/I Source Code File"
+    "Description": "PL/I Source Code File"
   },
   {
     "Extension": ".PLTSUITE",
-    "Name": "Safari Page Load Test Suite File"
+    "Description": "Safari Page Load Test Suite File"
   },
   {
     "Extension": ".PM",
-    "Name": "Perl Module"
+    "Description": "Perl Module"
   },
   {
     "Extension": ".PMQ",
-    "Name": "Microsoft Target Analyzer File"
+    "Description": "Microsoft Target Analyzer File"
   },
   {
     "Extension": ".PNT",
-    "Name": "Panther Project"
+    "Description": "Panther Project"
   },
   {
     "Extension": ".PO",
-    "Name": "Portable Object"
+    "Description": "Portable Object"
   },
   {
     "Extension": ".POD",
-    "Name": "Perl POD File"
+    "Description": "Perl POD File"
   },
   {
     "Extension": ".POM",
-    "Name": "Maven Build File"
+    "Description": "Maven Build File"
   },
   {
     "Extension": ".POT",
-    "Name": "Portable Object File"
+    "Description": "Portable Object File"
   },
   {
     "Extension": ".PPC",
-    "Name": "Mobile Data Studio Project File"
+    "Description": "Mobile Data Studio Project File"
   },
   {
     "Extension": ".PPL",
-    "Name": "Free Pascal Dynamic Library"
+    "Description": "Free Pascal Dynamic Library"
   },
   {
     "Extension": ".PPU",
-    "Name": "Free Pascal Unit File"
+    "Description": "Free Pascal Unit File"
   },
   {
     "Extension": ".PRG",
-    "Name": "Visual FoxPro Program File"
+    "Description": "Visual FoxPro Program File"
   },
   {
     "Extension": ".PRG",
-    "Name": "RAPID Program File"
+    "Description": "RAPID Program File"
   },
   {
     "Extension": ".PRG",
-    "Name": "RPG Toolkit Program File"
+    "Description": "RPG Toolkit Program File"
   },
   {
     "Extension": ".PRG",
-    "Name": "xBase Program File"
+    "Description": "xBase Program File"
   },
   {
     "Extension": ".PRI",
-    "Name": "Qt Project Include File"
+    "Description": "Qt Project Include File"
   },
   {
     "Extension": ".PRI",
-    "Name": "Windows Compiled Resources File"
+    "Description": "Windows Compiled Resources File"
   },
   {
     "Extension": ".PRO",
-    "Name": "Qt Project File"
+    "Description": "Qt Project File"
   },
   {
     "Extension": ".PRO",
-    "Name": "IDL Source Code File"
+    "Description": "IDL Source Code File"
   },
   {
     "Extension": ".PROJECT",
-    "Name": "Eclipse Project Settings File"
+    "Description": "Eclipse Project Settings File"
   },
   {
     "Extension": ".PROTO",
-    "Name": "Protocol Buffer File"
+    "Description": "Protocol Buffer File"
   },
   {
     "Extension": ".PSC",
-    "Name": "Papyrus Script"
+    "Description": "Papyrus Script"
   },
   {
     "Extension": ".PSD1",
-    "Name": "Windows PowerShell Data File"
+    "Description": "Windows PowerShell Data File"
   },
   {
     "Extension": ".PSESS",
-    "Name": "Visual Studio Performance Session File"
+    "Description": "Visual Studio Performance Session File"
   },
   {
     "Extension": ".PSM1",
-    "Name": "Windows PowerShell Script Module File"
+    "Description": "Windows PowerShell Script Module File"
   },
   {
     "Extension": ".PTL",
-    "Name": "Rational Rose Petal File"
+    "Description": "Rational Rose Petal File"
   },
   {
     "Extension": ".PTY",
-    "Name": "Rational Property Set"
+    "Description": "Rational Property Set"
   },
   {
     "Extension": ".PWN",
-    "Name": "Pawn Source Code File"
+    "Description": "Pawn Source Code File"
   },
   {
     "Extension": ".PXD",
-    "Name": "Pyrex Definition File"
+    "Description": "Pyrex Definition File"
   },
   {
     "Extension": ".PXI",
-    "Name": "Pyrex Include File"
+    "Description": "Pyrex Include File"
   },
   {
     "Extension": ".PY",
-    "Name": "Python Script"
+    "Description": "Python Script"
   },
   {
     "Extension": ".PYD",
-    "Name": "Python Dynamic Module"
+    "Description": "Python Dynamic Module"
   },
   {
     "Extension": ".PYM",
-    "Name": "PYM Macro Preprocessor File"
+    "Description": "PYM Macro Preprocessor File"
   },
   {
     "Extension": ".PYW",
-    "Name": "Python GUI Source File"
+    "Description": "Python GUI Source File"
   },
   {
     "Extension": ".PYX",
-    "Name": "Pyrex Source Code File"
+    "Description": "Pyrex Source Code File"
   },
   {
     "Extension": ".QML",
-    "Name": "QT Meta Language File"
+    "Description": "QT Meta Language File"
   },
   {
     "Extension": ".QPR",
-    "Name": "FoxPro Generated Query Program"
+    "Description": "FoxPro Generated Query Program"
   },
   {
     "Extension": ".QX",
-    "Name": "Quexal Source Code"
+    "Description": "Quexal Source Code"
   },
   {
     "Extension": ".R",
-    "Name": "Rez Source Code File"
+    "Description": "Rez Source Code File"
   },
   {
     "Extension": ".R",
-    "Name": "R Script File"
+    "Description": "R Script File"
   },
   {
     "Extension": ".R",
-    "Name": "REBOL Script"
+    "Description": "REBOL Script"
   },
   {
     "Extension": ".R",
-    "Name": "Ratfor Source Code File"
+    "Description": "Ratfor Source Code File"
   },
   {
     "Extension": ".RAV",
-    "Name": "Rave Reports Project File"
+    "Description": "Rave Reports Project File"
   },
   {
     "Extension": ".RB",
-    "Name": "Ruby Source Code"
+    "Description": "Ruby Source Code"
   },
   {
     "Extension": ".RB",
-    "Name": "Real Studio Project"
+    "Description": "Real Studio Project"
   },
   {
     "Extension": ".RBC",
-    "Name": "Rembo-C Script"
+    "Description": "Rembo-C Script"
   },
   {
     "Extension": ".RBM",
-    "Name": "Real Studio Menu File"
+    "Description": "Real Studio Menu File"
   },
   {
     "Extension": ".RBP",
-    "Name": "Real Studio Project File"
+    "Description": "Real Studio Project File"
   },
   {
     "Extension": ".RBVCP",
-    "Name": "Real Studio Version Controlled Project"
+    "Description": "Real Studio Version Controlled Project"
   },
   {
     "Extension": ".RBW",
-    "Name": "Ruby Script"
+    "Description": "Ruby Script"
   },
   {
     "Extension": ".RBW",
-    "Name": "Real Studio Window File"
+    "Description": "Real Studio Window File"
   },
   {
     "Extension": ".RBXS",
-    "Name": "ROBLOX Script"
+    "Description": "ROBLOX Script"
   },
   {
     "Extension": ".RC",
-    "Name": "Resource Script"
+    "Description": "Resource Script"
   },
   {
     "Extension": ".RC2",
-    "Name": "Visual Studio Resources File"
+    "Description": "Visual Studio Resources File"
   },
   {
     "Extension": ".RDLC",
-    "Name": "Visual Studio Client Report Definition File"
+    "Description": "Visual Studio Client Report Definition File"
   },
   {
     "Extension": ".RDOC",
-    "Name": "Ruby Document"
+    "Description": "Ruby Document"
   },
   {
     "Extension": ".RDOC_OPTIONS",
-    "Name": "Ruby Document Options File"
+    "Description": "Ruby Document Options File"
   },
   {
     "Extension": ".REB",
-    "Name": "REBOL Script File"
+    "Description": "REBOL Script File"
   },
   {
     "Extension": ".REFRESH",
-    "Name": "Visual Studio Refresh File"
+    "Description": "Visual Studio Refresh File"
   },
   {
     "Extension": ".RES",
-    "Name": "C++ Complied Resource Script"
+    "Description": "C++ Complied Resource Script"
   },
   {
     "Extension": ".RES",
-    "Name": "Windows Resource File"
+    "Description": "Windows Resource File"
   },
   {
     "Extension": ".RESJSON",
-    "Name": "Windows JavaScript Resources File"
+    "Description": "Windows JavaScript Resources File"
   },
   {
     "Extension": ".RESOURCES",
-    "Name": "Visual Studio Resource File"
+    "Description": "Visual Studio Resource File"
   },
   {
     "Extension": ".RESW",
-    "Name": "Windows Resources File"
+    "Description": "Windows Resources File"
   },
   {
     "Extension": ".RESX",
-    "Name": ".NET Managed Resources File"
+    "Description": ".NET Managed Resources File"
   },
   {
     "Extension": ".REX",
-    "Name": "Rexx Source File"
+    "Description": "Rexx Source File"
   },
   {
     "Extension": ".REXX",
-    "Name": "Rexx Source File"
+    "Description": "Rexx Source File"
   },
   {
     "Extension": ".RISE",
-    "Name": "RISE Editor Model File"
+    "Description": "RISE Editor Model File"
   },
   {
     "Extension": ".RKT",
-    "Name": "Racket Source Code File"
+    "Description": "Racket Source Code File"
   },
   {
     "Extension": ".RLS",
-    "Name": "Symbian Localization File"
+    "Description": "Symbian Localization File"
   },
   {
     "Extension": ".RNC",
-    "Name": "RELAX NG Compact Syntax File"
+    "Description": "RELAX NG Compact Syntax File"
   },
   {
     "Extension": ".RODL",
-    "Name": "RemObjects Definition Language File"
+    "Description": "RemObjects Definition Language File"
   },
   {
     "Extension": ".ROTEST",
-    "Name": "RemObjects SDK Test File"
+    "Description": "RemObjects SDK Test File"
   },
   {
     "Extension": ".ROTESTRESULT",
-    "Name": "RemObjects SDK Test Results File"
+    "Description": "RemObjects SDK Test Results File"
   },
   {
     "Extension": ".RPY",
-    "Name": "Python Script"
+    "Description": "Python Script"
   },
   {
     "Extension": ".RS",
-    "Name": "Rust Source Code File"
+    "Description": "Rust Source Code File"
   },
   {
     "Extension": ".RSRC",
-    "Name": "Macintosh Resource File"
+    "Description": "Macintosh Resource File"
   },
   {
     "Extension": ".RSS",
-    "Name": "Symbian Application Resource File"
+    "Description": "Symbian Application Resource File"
   },
   {
     "Extension": ".RU",
-    "Name": "Java Russian Font Properties File"
+    "Description": "Java Russian Font Properties File"
   },
   {
     "Extension": ".RUL",
-    "Name": "InstallShield Rules File"
+    "Description": "InstallShield Rules File"
   },
   {
     "Extension": ".RWSNIPPET",
-    "Name": "RapidWeaver Snippet File"
+    "Description": "RapidWeaver Snippet File"
   },
   {
     "Extension": ".S",
-    "Name": "Source Code File"
+    "Description": "Source Code File"
   },
   {
     "Extension": ".S19",
-    "Name": "Motorola S19 File Record"
+    "Description": "Motorola S19 File Record"
   },
   {
     "Extension": ".SAS",
-    "Name": "SAS Program File"
+    "Description": "SAS Program File"
   },
   {
     "Extension": ".SB",
-    "Name": "Scratch Project File"
+    "Description": "Scratch Project File"
   },
   {
     "Extension": ".SB",
-    "Name": "Small Basic Source Code File"
+    "Description": "Small Basic Source Code File"
   },
   {
     "Extension": ".SB2",
-    "Name": "Scratch 2.0 Project File"
+    "Description": "Scratch 2.0 Project File"
   },
   {
     "Extension": ".SBPROJ",
-    "Name": "OpenGL Shader Builder Project"
+    "Description": "OpenGL Shader Builder Project"
   },
   {
     "Extension": ".SBR",
-    "Name": "Visual Studio Source Browser Intermediate File"
+    "Description": "Visual Studio Source Browser Intermediate File"
   },
   {
     "Extension": ".SC",
-    "Name": "SuperCollider Source Code File"
+    "Description": "SuperCollider Source Code File"
   },
   {
     "Extension": ".SCALA",
-    "Name": "Scala Source Code File"
+    "Description": "Scala Source Code File"
   },
   {
     "Extension": ".SCC",
-    "Name": "SourceSafe Source Code Control File"
+    "Description": "SourceSafe Source Code Control File"
   },
   {
     "Extension": ".SCM",
-    "Name": "Scheme Source Code File"
+    "Description": "Scheme Source Code File"
   },
   {
     "Extension": ".SCRATCH",
-    "Name": "Scratch Project File"
+    "Description": "Scratch Project File"
   },
   {
     "Extension": ".SCRIPTSUITE",
-    "Name": "AppleScript Script Suite File"
+    "Description": "AppleScript Script Suite File"
   },
   {
     "Extension": ".SCRIPTTERMINOLOGY",
-    "Name": "AppleScript Script Terminology File"
+    "Description": "AppleScript Script Terminology File"
   },
   {
     "Extension": ".SDEF",
-    "Name": "AppleScript Dictionary Document"
+    "Description": "AppleScript Dictionary Document"
   },
   {
     "Extension": ".SDL",
-    "Name": "Service Description Language File"
+    "Description": "Service Description Language File"
   },
   {
     "Extension": ".SED",
-    "Name": "Sed Script"
+    "Description": "Sed Script"
   },
   {
     "Extension": ".SEM",
-    "Name": "Alpha Five Set Data Dictionary Memo File"
+    "Description": "Alpha Five Set Data Dictionary Memo File"
   },
   {
     "Extension": ".SET",
-    "Name": "Alpha Five Set Data Dictionary File"
+    "Description": "Alpha Five Set Data Dictionary File"
   },
   {
     "Extension": ".SETUP",
-    "Name": "CryENGINE Character Setup File"
+    "Description": "CryENGINE Character Setup File"
   },
   {
     "Extension": ".SEX",
-    "Name": "Alpha Five Set Data Dictionary Index File"
+    "Description": "Alpha Five Set Data Dictionary Index File"
   },
   {
     "Extension": ".SGPBPR",
-    "Name": "Baltie Program"
+    "Description": "Baltie Program"
   },
   {
     "Extension": ".SGPSC",
-    "Name": "Baltie Scene"
+    "Description": "Baltie Scene"
   },
   {
     "Extension": ".SH",
-    "Name": "Bash Shell Script"
+    "Description": "Bash Shell Script"
   },
   {
     "Extension": ".SJAVA",
-    "Name": "Synchronous Java File"
+    "Description": "Synchronous Java File"
   },
   {
     "Extension": ".SLL",
-    "Name": "Static Link Library"
+    "Description": "Static Link Library"
   },
   {
     "Extension": ".SLN",
-    "Name": "Visual Studio Solution File"
+    "Description": "Visual Studio Solution File"
   },
   {
     "Extension": ".SLOGO",
-    "Name": "StarLogo Project File"
+    "Description": "StarLogo Project File"
   },
   {
     "Extension": ".SLOGT",
-    "Name": "StarLogo Project Template"
+    "Description": "StarLogo Project Template"
   },
   {
     "Extension": ".SLTNG",
-    "Name": "StarLogo TNG Project File"
+    "Description": "StarLogo TNG Project File"
   },
   {
     "Extension": ".SMA",
-    "Name": "AMX Mod Plugin Source File"
+    "Description": "AMX Mod Plugin Source File"
   },
   {
     "Extension": ".SMALI",
-    "Name": "Android Smali Assembly Language File"
+    "Description": "Android Smali Assembly Language File"
   },
   {
     "Extension": ".SMF",
-    "Name": "SkinMagic Toolkit File"
+    "Description": "SkinMagic Toolkit File"
   },
   {
     "Extension": ".SML",
-    "Name": "ARC/INFO Simple Macro Language File"
+    "Description": "ARC/INFO Simple Macro Language File"
   },
   {
     "Extension": ".SNIPPET",
-    "Name": "Visual Studio IntelliSense Code Snippet"
+    "Description": "Visual Studio IntelliSense Code Snippet"
   },
   {
     "Extension": ".SO",
-    "Name": "Shared Library"
+    "Description": "Shared Library"
   },
   {
     "Extension": ".SOL",
-    "Name": "Solidity Script"
+    "Description": "Solidity Script"
   },
   {
     "Extension": ".SPEC",
-    "Name": "RPM Specification File"
+    "Description": "RPM Specification File"
   },
   {
     "Extension": ".SPT",
-    "Name": "ESPL Programming File"
+    "Description": "ESPL Programming File"
   },
   {
     "Extension": ".SPT",
-    "Name": "Cypress Semiconductor Script"
+    "Description": "Cypress Semiconductor Script"
   },
   {
     "Extension": ".SQLPROJ",
-    "Name": "Visual Studio SQL Server Project"
+    "Description": "Visual Studio SQL Server Project"
   },
   {
     "Extension": ".SRC",
-    "Name": "Source Code"
+    "Description": "Source Code"
   },
   {
     "Extension": ".SRC.RPM",
-    "Name": "Red Hat Package Manager Source File"
+    "Description": "Red Hat Package Manager Source File"
   },
   {
     "Extension": ".SS",
-    "Name": "SilverStripe Source Code File"
+    "Description": "SilverStripe Source Code File"
   },
   {
     "Extension": ".SSC",
-    "Name": "SourceSafe Status File"
+    "Description": "SourceSafe Status File"
   },
   {
     "Extension": ".SSI",
-    "Name": "Adobe Dreamweaver Server Side Include File"
+    "Description": "Adobe Dreamweaver Server Side Include File"
   },
   {
     "Extension": ".STORYBOARD",
-    "Name": "Interface Builder Storyboard Document"
+    "Description": "Interface Builder Storyboard Document"
   },
   {
     "Extension": ".SUBLIME-BUILD",
-    "Name": "Sublime Text Build File"
+    "Description": "Sublime Text Build File"
   },
   {
     "Extension": ".SUD",
-    "Name": "Super Project Analyzer File"
+    "Description": "Super Project Analyzer File"
   },
   {
     "Extension": ".SUO",
-    "Name": "Visual Studio Solution User Options File"
+    "Description": "Visual Studio Solution User Options File"
   },
   {
     "Extension": ".SUP",
-    "Name": "Super Project Definition File"
+    "Description": "Super Project Definition File"
   },
   {
     "Extension": ".SV",
-    "Name": "SystemVerilog Source Code File"
+    "Description": "SystemVerilog Source Code File"
   },
   {
     "Extension": ".SVH",
-    "Name": "SystemVerilog Source Code Header File"
+    "Description": "SystemVerilog Source Code Header File"
   },
   {
     "Extension": ".SVN-BASE",
-    "Name": "Subversion Base File"
+    "Description": "Subversion Base File"
   },
   {
     "Extension": ".SWC",
-    "Name": "Flex Components Archive"
+    "Description": "Flex Components Archive"
   },
   {
     "Extension": ".SWD",
-    "Name": "Flash Debug File"
+    "Description": "Flash Debug File"
   },
   {
     "Extension": ".SWIFT",
-    "Name": "Swift Source Code File"
+    "Description": "Swift Source Code File"
   },
   {
     "Extension": ".SYM",
-    "Name": "Symbols File"
+    "Description": "Symbols File"
   },
   {
     "Extension": ".T",
-    "Name": "Turing Source Code File"
+    "Description": "Turing Source Code File"
   },
   {
     "Extension": ".TARGETS",
-    "Name": "MSBuild Targets File"
+    "Description": "MSBuild Targets File"
   },
   {
     "Extension": ".TBD",
-    "Name": "Apple Xcode Text-based Definition File"
+    "Description": "Apple Xcode Text-based Definition File"
   },
   {
     "Extension": ".TCC",
-    "Name": "C++ Source Code File"
+    "Description": "C++ Source Code File"
   },
   {
     "Extension": ".TCL",
-    "Name": "Tcl Script"
+    "Description": "Tcl Script"
   },
   {
     "Extension": ".TDS",
-    "Name": "Turbo Debugger Symbols File"
+    "Description": "Turbo Debugger Symbols File"
   },
   {
     "Extension": ".TESTRUNCONFIG",
-    "Name": "Visual Studio Test Run Configuration File"
+    "Description": "Visual Studio Test Run Configuration File"
   },
   {
     "Extension": ".TESTSETTINGS",
-    "Name": "Visual Studio Test Settings File"
+    "Description": "Visual Studio Test Settings File"
   },
   {
     "Extension": ".TEXTFACTORY",
-    "Name": "BBEdit Text Factory"
+    "Description": "BBEdit Text Factory"
   },
   {
     "Extension": ".TIPROGRAM",
-    "Name": "TI-Basic Program File"
+    "Description": "TI-Basic Program File"
   },
   {
     "Extension": ".TK",
-    "Name": "Tk Script"
+    "Description": "Tk Script"
   },
   {
     "Extension": ".TLD",
-    "Name": "Tag Library Descriptor File"
+    "Description": "Tag Library Descriptor File"
   },
   {
     "Extension": ".TLH",
-    "Name": "Typelib Generated C/C++ Header File"
+    "Description": "Typelib Generated C/C++ Header File"
   },
   {
     "Extension": ".TLI",
-    "Name": "Typelib Generated C/C++ Inline File"
+    "Description": "Typelib Generated C/C++ Inline File"
   },
   {
     "Extension": ".TMLANGUAGE",
-    "Name": "TextMate Language Grammar File"
+    "Description": "TextMate Language Grammar File"
   },
   {
     "Extension": ".TMPL",
-    "Name": "BlueJ Default Template"
+    "Description": "BlueJ Default Template"
   },
   {
     "Extension": ".TMPROJ",
-    "Name": "TextMate Project File"
+    "Description": "TextMate Project File"
   },
   {
     "Extension": ".TMPROJECT",
-    "Name": "TextMate Project"
+    "Description": "TextMate Project"
   },
   {
     "Extension": ".TNS",
-    "Name": "TI-Nspire Document"
+    "Description": "TI-Nspire Document"
   },
   {
     "Extension": ".TPK",
-    "Name": "Gear Watchface Design Build File"
+    "Description": "Gear Watchface Design Build File"
   },
   {
     "Extension": ".TPL",
-    "Name": "Phorum Template"
+    "Description": "Phorum Template"
   },
   {
     "Extension": ".TPU",
-    "Name": "Turbo Pascal Unit"
+    "Description": "Turbo Pascal Unit"
   },
   {
     "Extension": ".TPX",
-    "Name": "Turbo Pascal 7 Unit"
+    "Description": "Turbo Pascal 7 Unit"
   },
   {
     "Extension": ".TRX",
-    "Name": "Visual Studio Test Results File"
+    "Description": "Visual Studio Test Results File"
   },
   {
     "Extension": ".TS",
-    "Name": "TypeScript File"
+    "Description": "TypeScript File"
   },
   {
     "Extension": ".TT",
-    "Name": "Visual Studio Text Template"
+    "Description": "Visual Studio Text Template"
   },
   {
     "Extension": ".TU",
-    "Name": "Turing Source File"
+    "Description": "Turing Source File"
   },
   {
     "Extension": ".TUR",
-    "Name": "Turing Program Source File"
+    "Description": "Turing Program Source File"
   },
   {
     "Extension": ".TWIG",
-    "Name": "Twig Template"
+    "Description": "Twig Template"
   },
   {
     "Extension": ".UFT",
-    "Name": "Torque Font Cache File"
+    "Description": "Torque Font Cache File"
   },
   {
     "Extension": ".UI",
-    "Name": "User Interface File"
+    "Description": "User Interface File"
   },
   {
     "Extension": ".UML",
-    "Name": "UML Data Object Model"
+    "Description": "UML Data Object Model"
   },
   {
     "Extension": ".UMLCLASS",
-    "Name": "UML Class Model"
+    "Description": "UML Class Model"
   },
   {
     "Extension": ".V",
-    "Name": "Verilog Source Code File"
+    "Description": "Verilog Source Code File"
   },
   {
     "Extension": ".V",
-    "Name": "Coq Source Code File"
+    "Description": "Coq Source Code File"
   },
   {
     "Extension": ".V11.SUO",
-    "Name": "Visual Studio 2012 Solution User Options File"
+    "Description": "Visual Studio 2012 Solution User Options File"
   },
   {
     "Extension": ".V12.SUO",
-    "Name": "Visual Studio 2013 Solution User Options File"
+    "Description": "Visual Studio 2013 Solution User Options File"
   },
   {
     "Extension": ".VAC",
-    "Name": "Oc2.316s Cakit File"
+    "Description": "Oc2.316s Cakit File"
   },
   {
     "Extension": ".VALA",
-    "Name": "Vala Source Code File"
+    "Description": "Vala Source Code File"
   },
   {
     "Extension": ".VAR",
-    "Name": "Variable Data"
+    "Description": "Variable Data"
   },
   {
     "Extension": ".VB",
-    "Name": "Visual Basic Project Item File"
+    "Description": "Visual Basic Project Item File"
   },
   {
     "Extension": ".VBG",
-    "Name": "Visual Basic Project Group File"
+    "Description": "Visual Basic Project Group File"
   },
   {
     "Extension": ".VBP",
-    "Name": "Visual Basic Project File"
+    "Description": "Visual Basic Project File"
   },
   {
     "Extension": ".VBPROJ",
-    "Name": "Visual Studio Visual Basic Project"
+    "Description": "Visual Studio Visual Basic Project"
   },
   {
     "Extension": ".VBX",
-    "Name": "Visual Basic Custom Control"
+    "Description": "Visual Basic Custom Control"
   },
   {
     "Extension": ".VBZ",
-    "Name": "Visual Basic Project Template"
+    "Description": "Visual Basic Project Template"
   },
   {
     "Extension": ".VC",
-    "Name": "Verge Code File"
+    "Description": "Verge Code File"
   },
   {
     "Extension": ".VC4",
-    "Name": "Visual C++ 4 File"
+    "Description": "Visual C++ 4 File"
   },
   {
     "Extension": ".VCP",
-    "Name": "eMbedded Visual C++ Project File"
+    "Description": "eMbedded Visual C++ Project File"
   },
   {
     "Extension": ".VCPROJ",
-    "Name": "Visual C++ Project File"
+    "Description": "Visual C++ Project File"
   },
   {
     "Extension": ".VCX",
-    "Name": "Visual Fox Pro Class Library"
+    "Description": "Visual Fox Pro Class Library"
   },
   {
     "Extension": ".VCXPROJ",
-    "Name": "Visual C++ Project"
+    "Description": "Visual C++ Project"
   },
   {
     "Extension": ".VDM",
-    "Name": "VDM Specification File"
+    "Description": "VDM Specification File"
   },
   {
     "Extension": ".VDM",
-    "Name": "VEDIT Macro File"
+    "Description": "VEDIT Macro File"
   },
   {
     "Extension": ".VDP",
-    "Name": "Visual Studio Deployment Project"
+    "Description": "Visual Studio Deployment Project"
   },
   {
     "Extension": ".VDPROJ",
-    "Name": "Visual Studio Setup and Deployment Project"
+    "Description": "Visual Studio Setup and Deployment Project"
   },
   {
     "Extension": ".VGC",
-    "Name": "ViziGen Code Generation Template"
+    "Description": "ViziGen Code Generation Template"
   },
   {
     "Extension": ".VHD",
-    "Name": "VHDL Source File"
+    "Description": "VHDL Source File"
   },
   {
     "Extension": ".VHDL",
-    "Name": "VHDL Source File"
+    "Description": "VHDL Source File"
   },
   {
     "Extension": ".VIC",
-    "Name": "ViziGen Code Import Mappings File"
+    "Description": "ViziGen Code Import Mappings File"
   },
   {
     "Extension": ".VJP",
-    "Name": "Visual Studio J++ Project"
+    "Description": "Visual Studio J++ Project"
   },
   {
     "Extension": ".VJSPROJ",
-    "Name": "Visual Studio J# Project"
+    "Description": "Visual Studio J# Project"
   },
   {
     "Extension": ".VM",
-    "Name": "Velocity Template"
+    "Description": "Velocity Template"
   },
   {
     "Extension": ".VPC",
-    "Name": "ViziGen Configuration File"
+    "Description": "ViziGen Configuration File"
   },
   {
     "Extension": ".VSCT",
-    "Name": "Visual Studio Command Table"
+    "Description": "Visual Studio Command Table"
   },
   {
     "Extension": ".VSHOST.EXE",
-    "Name": "Visual Studio Hosting Process File"
+    "Description": "Visual Studio Hosting Process File"
   },
   {
     "Extension": ".VSIXMANIFEST",
-    "Name": "VSIX Manifest"
+    "Description": "VSIX Manifest"
   },
   {
     "Extension": ".VSL",
-    "Name": "Velocity Template File"
+    "Description": "Velocity Template File"
   },
   {
     "Extension": ".VSMACROS",
-    "Name": "Visual Studio Binary Macro Project"
+    "Description": "Visual Studio Binary Macro Project"
   },
   {
     "Extension": ".VSMDI",
-    "Name": "Visual Studio Test Metadata File"
+    "Description": "Visual Studio Test Metadata File"
   },
   {
     "Extension": ".VSMPROJ",
-    "Name": "Visual Studio Text Macro Project"
+    "Description": "Visual Studio Text Macro Project"
   },
   {
     "Extension": ".VSP",
-    "Name": "Visual Studio Performance Report File"
+    "Description": "Visual Studio Performance Report File"
   },
   {
     "Extension": ".VSPF",
-    "Name": "Visual Studio Performance Filter File"
+    "Description": "Visual Studio Performance Filter File"
   },
   {
     "Extension": ".VSPS",
-    "Name": "Visual Studio Serialized Performance Report"
+    "Description": "Visual Studio Serialized Performance Report"
   },
   {
     "Extension": ".VSPSCC",
-    "Name": "Visual Studio Project Source Control File"
+    "Description": "Visual Studio Project Source Control File"
   },
   {
     "Extension": ".VSPX",
-    "Name": "Visual Studio Performance Report Data File"
+    "Description": "Visual Studio Performance Report Data File"
   },
   {
     "Extension": ".VSSSCC",
-    "Name": "Visual Studio Solution Source Control File"
+    "Description": "Visual Studio Solution Source Control File"
   },
   {
     "Extension": ".VSZ",
-    "Name": "Visual Studio Wizard File"
+    "Description": "Visual Studio Wizard File"
   },
   {
     "Extension": ".VTM",
-    "Name": "Visual Tool Markup Language Document"
+    "Description": "Visual Tool Markup Language Document"
   },
   {
     "Extension": ".VTML",
-    "Name": "Visual Tool Markup Language File"
+    "Description": "Visual Tool Markup Language File"
   },
   {
     "Extension": ".VTV",
-    "Name": "Adobe Dreamweaver Validator Configuration File"
+    "Description": "Adobe Dreamweaver Validator Configuration File"
   },
   {
     "Extension": ".VWL",
-    "Name": "Vuforia Word List"
+    "Description": "Vuforia Word List"
   },
   {
     "Extension": ".W",
-    "Name": "OpenEdge Architect Source Code File"
+    "Description": "OpenEdge Architect Source Code File"
   },
   {
     "Extension": ".W32",
-    "Name": "Win32 Makefile"
+    "Description": "Win32 Makefile"
   },
   {
     "Extension": ".WAPPROJ",
-    "Name": "Windows Application Packaging Project File"
+    "Description": "Windows Application Packaging Project File"
   },
   {
     "Extension": ".WASM",
-    "Name": "WebAssembly Binary File"
+    "Description": "WebAssembly Binary File"
   },
   {
     "Extension": ".WDGT",
-    "Name": "Adobe Captivate Widget File"
+    "Description": "Adobe Captivate Widget File"
   },
   {
     "Extension": ".WDGTPROJ",
-    "Name": "Dashcode Widget Project"
+    "Description": "Dashcode Widget Project"
   },
   {
     "Extension": ".WDL",
-    "Name": "World Definition Language Script"
+    "Description": "World Definition Language Script"
   },
   {
     "Extension": ".WDP",
-    "Name": "Windev Project File"
+    "Description": "Windev Project File"
   },
   {
     "Extension": ".WDW",
-    "Name": "WinDev Window File"
+    "Description": "WinDev Window File"
   },
   {
     "Extension": ".WEBTEST",
-    "Name": "Visual Studio Web Test File"
+    "Description": "Visual Studio Web Test File"
   },
   {
     "Extension": ".WID",
-    "Name": "Visual Studio Widget File"
+    "Description": "Visual Studio Widget File"
   },
   {
     "Extension": ".WINMD",
-    "Name": "Windows Metadata File"
+    "Description": "Windows Metadata File"
   },
   {
     "Extension": ".WIQ",
-    "Name": "Visual Studio Work Item Query File"
+    "Description": "Visual Studio Work Item Query File"
   },
   {
     "Extension": ".WIXLIB",
-    "Name": "WiX Library File"
+    "Description": "WiX Library File"
   },
   {
     "Extension": ".WIXMSP",
-    "Name": "WiX XML Patch File"
+    "Description": "WiX XML Patch File"
   },
   {
     "Extension": ".WIXMST",
-    "Name": "WiX Transform File"
+    "Description": "WiX Transform File"
   },
   {
     "Extension": ".WIXOBJ",
-    "Name": "WiX Object File"
+    "Description": "WiX Object File"
   },
   {
     "Extension": ".WIXOUT",
-    "Name": "WiX XML Output File"
+    "Description": "WiX XML Output File"
   },
   {
     "Extension": ".WIXPDB",
-    "Name": "WiX Debug File"
+    "Description": "WiX Debug File"
   },
   {
     "Extension": ".WIXPROJ",
-    "Name": "WiX Project File"
+    "Description": "WiX Project File"
   },
   {
     "Extension": ".WORKSHEET",
-    "Name": "BBEdit Shell Worksheet File"
+    "Description": "BBEdit Shell Worksheet File"
   },
   {
     "Extension": ".WORKSPACE",
-    "Name": "Code::Blocks Workspace File"
+    "Description": "Code::Blocks Workspace File"
   },
   {
     "Extension": ".WOWPROJ",
-    "Name": "AddOn Studio Project File"
+    "Description": "AddOn Studio Project File"
   },
   {
     "Extension": ".WPW",
-    "Name": "WinDev Mobile Window File"
+    "Description": "WinDev Mobile Window File"
   },
   {
     "Extension": ".WSC",
-    "Name": "Windows Script Component"
+    "Description": "Windows Script Component"
   },
   {
     "Extension": ".WSP",
-    "Name": "SharePoint Solution Package"
+    "Description": "SharePoint Solution Package"
   },
   {
     "Extension": ".WXI",
-    "Name": "WiX Include File"
+    "Description": "WiX Include File"
   },
   {
     "Extension": ".WXL",
-    "Name": "WiX Localization File"
+    "Description": "WiX Localization File"
   },
   {
     "Extension": ".WXS",
-    "Name": "WiX Source File"
+    "Description": "WiX Source File"
   },
   {
     "Extension": ".X",
-    "Name": "Lex Source Code File"
+    "Description": "Lex Source Code File"
   },
   {
     "Extension": ".XAML",
-    "Name": "XAML File"
+    "Description": "XAML File"
   },
   {
     "Extension": ".XAMLX",
-    "Name": "Visual Studio Workflow Service File"
+    "Description": "Visual Studio Workflow Service File"
   },
   {
     "Extension": ".XAP",
-    "Name": "XACT Project"
+    "Description": "XACT Project"
   },
   {
     "Extension": ".XBF",
-    "Name": "XAML Binary File"
+    "Description": "XAML Binary File"
   },
   {
     "Extension": ".XCAPPDATA",
-    "Name": "Xcode App Data File"
+    "Description": "Xcode App Data File"
   },
   {
     "Extension": ".XCARCHIVE",
-    "Name": "Xcode Archive"
+    "Description": "Xcode Archive"
   },
   {
     "Extension": ".XCCONFIG",
-    "Name": "Xcode Configuration Settings File"
+    "Description": "Xcode Configuration Settings File"
   },
   {
     "Extension": ".XCDATAMODEL",
-    "Name": "Xcode Core Data Model File"
+    "Description": "Xcode Core Data Model File"
   },
   {
     "Extension": ".XCDATAMODELD",
-    "Name": "Xcode Core Data Model File"
+    "Description": "Xcode Core Data Model File"
   },
   {
     "Extension": ".XCODE",
-    "Name": "Xcode Project"
+    "Description": "Xcode Project"
   },
   {
     "Extension": ".XCODEPROJ",
-    "Name": "Xcode Project"
+    "Description": "Xcode Project"
   },
   {
     "Extension": ".XCSNAPSHOTS",
-    "Name": "Xcode Snapshot"
+    "Description": "Xcode Snapshot"
   },
   {
     "Extension": ".XCWORKSPACE",
-    "Name": "Xcode Workspace File"
+    "Description": "Xcode Workspace File"
   },
   {
     "Extension": ".XIB",
-    "Name": "Interface Builder File"
+    "Description": "Interface Builder File"
   },
   {
     "Extension": ".XOJO_BINARY_MENU",
-    "Name": "Xojo Binary Menu File"
+    "Description": "Xojo Binary Menu File"
   },
   {
     "Extension": ".XOJO_BINARY_PROJECT",
-    "Name": "Xojo Binary Project File"
+    "Description": "Xojo Binary Project File"
   },
   {
     "Extension": ".XOJO_BINARY_TOOLBAR",
-    "Name": "Xojo Binary Toolbar File"
+    "Description": "Xojo Binary Toolbar File"
   },
   {
     "Extension": ".XOJO_BINARY_WINDOW",
-    "Name": "Xojo Binary Window File"
+    "Description": "Xojo Binary Window File"
   },
   {
     "Extension": ".XOJO_MENU",
-    "Name": "Xojo Menu File"
+    "Description": "Xojo Menu File"
   },
   {
     "Extension": ".XOJO_PROJECT",
-    "Name": "Xojo Project File"
+    "Description": "Xojo Project File"
   },
   {
     "Extension": ".XOJO_TOOLBAR",
-    "Name": "Xojo Toolbar File"
+    "Description": "Xojo Toolbar File"
   },
   {
     "Extension": ".XOJO_WINDOW",
-    "Name": "Xojo Window File"
+    "Description": "Xojo Window File"
   },
   {
     "Extension": ".XOJO_XML_MENU",
-    "Name": "Xojo XML Menu File"
+    "Description": "Xojo XML Menu File"
   },
   {
     "Extension": ".XOJO_XML_PROJECT",
-    "Name": "Xojo XML Project File"
+    "Description": "Xojo XML Project File"
   },
   {
     "Extension": ".XOJO_XML_TOOLBAR",
-    "Name": "Xojo Toolbar File"
+    "Description": "Xojo Toolbar File"
   },
   {
     "Extension": ".XOML",
-    "Name": "Windows Workflow File"
+    "Description": "Windows Workflow File"
   },
   {
     "Extension": ".XPP",
-    "Name": "X++ Source Code File"
+    "Description": "X++ Source Code File"
   },
   {
     "Extension": ".XQ",
-    "Name": "XQuery File"
+    "Description": "XQuery File"
   },
   {
     "Extension": ".XQL",
-    "Name": "XML Query Language File"
+    "Description": "XML Query Language File"
   },
   {
     "Extension": ".XQM",
-    "Name": "XQuery Module"
+    "Description": "XQuery Module"
   },
   {
     "Extension": ".XQUERY",
-    "Name": "XQuery Source Code File"
+    "Description": "XQuery Source Code File"
   },
   {
     "Extension": ".XQY",
-    "Name": "XQuery Source File"
+    "Description": "XQuery Source File"
   },
   {
     "Extension": ".XSD",
-    "Name": "XML Schema Definition"
+    "Description": "XML Schema Definition"
   },
   {
     "Extension": ".XSX",
-    "Name": "Visual Studio XML Schema Layout File"
+    "Description": "Visual Studio XML Schema Layout File"
   },
   {
     "Extension": ".XT",
-    "Name": "Xdebug Trace File"
+    "Description": "Xdebug Trace File"
   },
   {
     "Extension": ".XTB",
-    "Name": "Angular Translation File"
+    "Description": "Angular Translation File"
   },
   {
     "Extension": ".Y",
-    "Name": "Yacc Source File"
+    "Description": "Yacc Source File"
   },
   {
     "Extension": ".YAB",
-    "Name": "Yabasic Source Code"
+    "Description": "Yabasic Source Code"
   },
   {
     "Extension": ".YAML",
-    "Name": "YAML Document"
+    "Description": "YAML Document"
   },
   {
     "Extension": ".YML",
-    "Name": "YAML Document"
+    "Description": "YAML Document"
   },
   {
     "Extension": ".YML2",
-    "Name": "YML Script"
+    "Description": "YML Script"
   },
   {
     "Extension": ".YMP",
-    "Name": "YaST Metapackage File"
+    "Description": "YaST Metapackage File"
   },
   {
     "Extension": ".YPR",
-    "Name": "BYOB Project File"
+    "Description": "BYOB Project File"
   }
 ]

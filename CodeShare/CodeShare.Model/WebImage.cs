@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace CodeShare.Model
 {
-    public class WebImage : WebFile, IImage
+    public class WebImage : WebFile, IWebImage
     {
         public int Width { get; set; }
         public int Height { get; set; }

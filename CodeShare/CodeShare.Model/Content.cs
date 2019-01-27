@@ -26,9 +26,6 @@ namespace CodeShare.Model
             set => SetField(ref _views, value);
         }
 
-        public ICollection<ContentLog> Logs { get; set; } = new ObservableCollection<ContentLog>();
-        public IEnumerable<ContentLog> LogsSorted => Logs.OrderByDescending(c => c.Created);
-
         public ObservableCollection<Screenshot> Screenshots { get; set; } = new ObservableCollection<Screenshot>();
         public IEnumerable<Screenshot> ScreenshotsSorted => Screenshots.OrderByDescending(c => c.Created);
 
@@ -40,14 +37,6 @@ namespace CodeShare.Model
 
         public ObservableCollection<Comment> Comments { get; set; } = new ObservableCollection<Comment>();
         public IEnumerable<Comment> CommentsSorted => Comments.OrderByDescending(c => c.Created);
-
-        private ObservableCollection<File> _files = new ObservableCollection<File>();
-        public ObservableCollection<File> Files
-        {
-            get => _files;
-            set => SetField(ref _files, value);
-        }
-        public IList<File> FilesSorted => Files?.OrderBy(c => c.Name).ToList();
 
         public IList<Rating> Ratings { get; set; } = new List<Rating>();
 
@@ -102,7 +91,6 @@ namespace CodeShare.Model
                 Banners[i].IsPrimary = banner.Uid.Equals(Banners[i].Uid);
             }
 
-            Logs.Add(new ContentLog(true, "uploaded", user.Uid, banner));
             RefreshBindings();
         }
 
@@ -116,8 +104,6 @@ namespace CodeShare.Model
                 Videos = new ObservableCollection<Video>();
 
             Videos.Insert(0, video);
-
-            Logs.Add(new ContentLog(true, "added", user.Uid, video));
         }
 
         public void Reply(Comment comment)
@@ -128,7 +114,6 @@ namespace CodeShare.Model
                 Comments = new ObservableCollection<Comment>();
 
             Comments.Add(comment);
-            Logs.Add(new ContentLog(true, "added", comment.UserUid, comment));
         }
 
         public void Like(User user)
@@ -157,16 +142,16 @@ namespace CodeShare.Model
             return HasRatings && Ratings.Any(x => x.User.Equals(user));
         }
 
-        public void AddFile(File file, User user)
+        public void AddScreenshot(Screenshot screenshot, User user)
         {
-            if (file == null)
-                throw new NullReferenceException("File was null.");
+            if (screenshot == null)
+                throw new NullReferenceException("Screenshot was null.");
             if (user == null)
                 throw new NullReferenceException("User was null.");
-            if (Files == null)
-                Files = new ObservableCollection<File>();
+            if (Screenshots == null)
+                Screenshots = new ObservableCollection<Screenshot>();
 
-            Files.Add(file);
+            Screenshots.Add(screenshot);
         }
 
         #endregion

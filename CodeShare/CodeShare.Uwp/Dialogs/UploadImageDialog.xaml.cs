@@ -69,7 +69,7 @@ namespace CodeShare.Uwp.Dialogs
             Hide();
         }
 
-        public async Task<T> CreateImageFromFile<T>() where T : WebImage, ICroppableImage, new()
+        public async Task<T> CreateImageFromFile<T>() where T : class, IWebImage, ICroppableImage, new()
         {
             return await ImageUtilities.CreateNewImageAsync<T>(ImageFile);
         }

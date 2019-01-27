@@ -25,18 +25,14 @@ using Windows.UI;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class CodeBlock : UserControl
+    public sealed partial class CodeBox : UserControl
     {
         public static readonly DependencyProperty CodeProperty = DependencyProperty.Register("Code", typeof(string), typeof(CodeBlock), new PropertyMetadata(default(string)));
 
         public string Code
         {
             get => (string) GetValue(CodeProperty);
-            set
-            {
-                SetValue(CodeProperty, value);
-                UpdateCode(value);
-            }
+            set => SetValue(CodeProperty, value);
         }
 
         private RelayCommand _copyCodeCommand;
@@ -44,30 +40,9 @@ namespace CodeShare.Uwp.Controls
 
         private bool LockChangeExecution { get; set; }
 
-        public CodeBlock()
+        public CodeBox()
         {
             InitializeComponent();
-        }
-
-        private void UpdateCode(string text)
-        {
-            if (!LockChangeExecution)
-            {
-                LockChangeExecution = true;
-
-                var inlines = CodeEditor.SyntaxHighlight(text, Colors.DodgerBlue);
-                
-                CodeTextBlock.Inlines.Clear();
-
-                foreach (var inline in inlines)
-                {
-                    CodeTextBlock.Inlines.Add(inline);
-                }
-
-                UpdateLineNumbers();
-
-                LockChangeExecution = false;
-            }
         }
 
         private void CopyCode()
@@ -80,7 +55,12 @@ namespace CodeShare.Uwp.Controls
         private void UpdateLineNumbers()
         {
             LineNumbers.Text = "";
-            if (string.IsNullOrWhiteSpace(Code)) return;
+
+            if (string.IsNullOrWhiteSpace(Code))
+            {
+                return;
+            }
+
             LineNumbers.Text = GenerateLineNumbers(Code.Split('\n').Length);
         }
 
@@ -92,6 +72,11 @@ namespace CodeShare.Uwp.Controls
                 lineNumbers += $"{i}\n";
 
             return lineNumbers;
+        }
+
+        private void CodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateLineNumbers();
         }
     }
 }

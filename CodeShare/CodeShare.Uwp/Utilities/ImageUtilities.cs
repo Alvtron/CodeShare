@@ -16,7 +16,7 @@ namespace CodeShare.Uwp.Utilities
 {
     public class ImageUtilities
     {
-        public static async Task<T> CreateNewImageAsync<T>(StorageFile storageFile, string description = "") where T : WebImage, ICroppableImage, new()
+        public static async Task<T> CreateNewImageAsync<T>(StorageFile storageFile, string description = "") where T : class, IWebImage, ICroppableImage, new()
         {
             var imageInBytes = await StorageUtilities.ConvertStorageFileToByteArrayAsync(storageFile);
 

@@ -49,6 +49,8 @@ namespace CodeShare.Uwp.Controls
             set => SetValue(CommentProperty, value);
         }
 
+        private ReplyCommentDialog ReplyDialog { get; set; }
+
         public CommentBlock()
         {
             InitializeComponent();
@@ -58,7 +60,7 @@ namespace CodeShare.Uwp.Controls
         {
             if (!await RestApiService<Comment>.Update(Comment, Comment.Uid))
             {
-                await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
+                await NotificationService.DisplayErrorMessage("Something went wrong with updating the comment. Try again later.");
                 return;
             }
 
@@ -70,7 +72,7 @@ namespace CodeShare.Uwp.Controls
             if (Comment == null)
             {
                 await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
-                throw new NullReferenceException("Comment is null!");
+                return;
             }
 
             Comment.Like(AuthService.CurrentUser);
@@ -83,12 +85,16 @@ namespace CodeShare.Uwp.Controls
             if (Comment == null)
             {
                 await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
-                throw new NullReferenceException("Comment is null!");
+                return;
             }
+            if (ReplyDialog == null)
+            {
+                ReplyDialog = new ReplyCommentDialog(Comment);
+            }
+            
+            await ReplyDialog.ShowAsync();
 
-            throw new NotImplementedException();
-
-            //await UpdateComment();
+            await UpdateComment();
         }
 
         public async Task Share()
@@ -96,12 +102,12 @@ namespace CodeShare.Uwp.Controls
             if (Comment == null)
             {
                 await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
-                throw new NullReferenceException("Comment is null!");
+                return;
             }
 
             await NotificationService.DisplayErrorMessage("This is not implemented.");
 
-            await UpdateComment();
+            //await UpdateComment();
         }
 
         public async Task Report()
@@ -109,7 +115,7 @@ namespace CodeShare.Uwp.Controls
             if (Comment == null)
             {
                 await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
-                throw new NullReferenceException("Comment is null!");
+                return;
             }
 
             var reportDialog = new ReportDialog("comment by " + Comment.User?.Name);

@@ -26,6 +26,6 @@
             <AppBarButton Icon="Underline" Command="{x:Bind UnderlineCommand}" CommandParameter="{Binding ElementName=EditorBox}" ToolTipService.ToolTip="Underline" IsCompact="True"/>
             <AppBarButton Icon="Clear" Command="{x:Bind ClearCommand}" CommandParameter="{Binding ElementName=EditorBox}" ToolTipService.ToolTip="Underline" IsCompact="True"/>
         </StackPanel>
-        <RichEditBox Name="EditorBox" Grid.Row="1" Grid.ColumnSpan="2" Width="Auto" MinHeight="100"/>
+        <RichEditBox Name="EditorBox" TextChanged="EditorBox_TextChanged" Grid.Row="1" Grid.ColumnSpan="2" Width="Auto" MinHeight="100"/>
     </Grid>
 </UserControl>

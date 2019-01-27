@@ -3,68 +3,50 @@ using System.Text.RegularExpressions;
 
 namespace CodeShare.Model.Services
 {
-    public static class ValidationService
+    public static partial class ValidationService
     {
-        public enum Response
-        {
-            Empty,
-            Valid,
-            Invalid,
-            AlreadyExist,
-            DoNotExist,
-            UserCreated,
-            TooShort,
-            TooLong,
-            ContainsIllegalCharacters,
-            Unavailable,
-            NoSymbol,
-            NoNumber,
-            NoLowerCase,
-            NoUpperCase,
-        };
-
         public static int UserNameMinLength = 3;
         public static int UserNameMaxLength = 30;
 
         public static int PasswordMinLength = 6;
         public static int PasswordMaxLength = 100;
 
-        public static Response ValidateEmail(string email)
+        public static ValidationResponse ValidateEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
-                return Response.Empty;
+                return ValidationResponse.Empty;
 
             try
             {
                 var mailAddress = new MailAddress(email);
-                return (mailAddress.Address == email) ? Response.Valid : Response.Invalid;
+                return (mailAddress.Address == email) ? ValidationResponse.Valid : ValidationResponse.Invalid;
             }
             catch
             {
-                return Response.Invalid;
+                return ValidationResponse.Invalid;
             }
         }
 
-        public static Response ValidateName(string username)
+        public static ValidationResponse ValidateUserName(string username)
         {
             var validCharacters = new Regex(@"[a-zA-Z0-9¨_]+$");
 
             if (string.IsNullOrWhiteSpace(username))
-                return Response.Empty;
+                return ValidationResponse.Empty;
 
             if (username.Length <= UserNameMinLength)
-                return Response.TooShort;
+                return ValidationResponse.TooShort;
 
             if (username.Length >= UserNameMaxLength)
-                return Response.TooLong;
+                return ValidationResponse.TooLong;
 
             if (!validCharacters.IsMatch(username))
-                return Response.ContainsIllegalCharacters;
+                return ValidationResponse.ContainsIllegalCharacters;
 
-            return Response.Valid;
+            return ValidationResponse.Valid;
         }
 
-        public static Response ValidatePassword(string password)
+        public static ValidationResponse ValidatePassword(string password)
         {
             var regexNumber = new Regex(@"[0-9]+");
             var regexUpperChar = new Regex(@"[A-Z]+");
@@ -72,27 +54,27 @@ namespace CodeShare.Model.Services
             var regexSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
 
             if (string.IsNullOrWhiteSpace(password))
-                return Response.Empty;
+                return ValidationResponse.Empty;
 
             if (password.Length <= PasswordMinLength)
-                return Response.TooShort;
+                return ValidationResponse.TooShort;
 
             if (password.Length >= PasswordMaxLength)
-                return Response.TooLong;
+                return ValidationResponse.TooLong;
 
             if (!regexLowerChar.IsMatch(password))
-                return Response.NoLowerCase;
+                return ValidationResponse.NoLowerCase;
 
             if (!regexUpperChar.IsMatch(password))
-                return Response.NoUpperCase;
+                return ValidationResponse.NoUpperCase;
 
             if (!regexNumber.IsMatch(password))
-                return Response.NoNumber;
+                return ValidationResponse.NoNumber;
 
             if (!regexSymbols.IsMatch(password))
-                return Response.NoSymbol;
+                return ValidationResponse.NoSymbol;
 
-            return Response.Valid;
+            return ValidationResponse.Valid;
         }
     }
 }

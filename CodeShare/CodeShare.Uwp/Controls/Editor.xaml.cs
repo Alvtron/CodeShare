@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CodeShare.Uwp.Xaml;
+using System.Diagnostics;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -39,7 +40,7 @@ namespace CodeShare.Uwp.Controls
         public ICommand UnderlineCommand => _underlineCommand = _underlineCommand ?? new RelayCommand(parameter => OnUnderline());
 
         private RelayCommand _clearCommand;
-        public ICommand ClearCommand => _clearCommand = _clearCommand ?? new RelayCommand(parameter => Clear());
+        public ICommand ClearCommand => _clearCommand = _clearCommand ?? new RelayCommand(parameter => OnClear());
 
         public string Header
         {
@@ -77,34 +78,37 @@ namespace CodeShare.Uwp.Controls
             }
         }
 
-        private bool _lockChangeExecution;
+        private bool LockChangeExecution { get; set; }
 
         public Editor()
         {
             InitializeComponent();
-            EditorBox.TextChanged += BindableRichEditBox_TextChanged;
         }
 
-        private void BindableRichEditBox_TextChanged(object sender, RoutedEventArgs e)
+        private void EditorBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            if (!_lockChangeExecution)
+            if (!LockChangeExecution)
             {
-                _lockChangeExecution = true;
-                EditorBox.Document.GetText(TextGetOptions.None, out var text);
-                if (string.IsNullOrWhiteSpace(text))
-                {
-                    Rtf = "";
-                }
-                else
-                {
-                    EditorBox.Document.GetText(TextGetOptions.FormatRtf, out text);
-                    Rtf = text;
-                }
-                _lockChangeExecution = false;
+                LockChangeExecution = true;
+
+                EditorBox.Document.GetText(TextGetOptions.FormatRtf, out var rtf);
+                Rtf = rtf;
+                
+                LockChangeExecution = false;
             }
         }
 
-        public void Clear()
+        private void UpdateRtfText(string rtf)
+        {
+            if (!LockChangeExecution)
+            {
+                EditorBox.IsReadOnly = false;
+                EditorBox.Document.SetText(TextSetOptions.FormatRtf, rtf);
+                EditorBox.IsReadOnly = !Editable;
+            }
+        }
+
+        private void OnClear()
         {
             EditorBox.IsReadOnly = false;
             EditorBox.Document.SetText(TextSetOptions.None, "");
@@ -113,19 +117,18 @@ namespace CodeShare.Uwp.Controls
 
         private static void RtfPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            if (!(dependencyObject is Editor rtb)) return;
-            if (!rtb._lockChangeExecution)
+            if (!(dependencyObject is Editor editor))
             {
-                rtb.EditorBox.IsReadOnly = false;
-                rtb.EditorBox.Document.SetText(TextSetOptions.FormatRtf, dependencyPropertyChangedEventArgs.NewValue as string);
-                rtb.EditorBox.IsReadOnly = !rtb.Editable;
+                return;
             }
+
+            editor.UpdateRtfText(dependencyPropertyChangedEventArgs.NewValue as string);
         }
 
         private static void EditablePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             if (!(dependencyObject is Editor rtb)) return;
-            if (!rtb._lockChangeExecution)
+            if (!rtb.LockChangeExecution)
             {
                 rtb.EditorBox.IsReadOnly = !rtb.Editable;
             }

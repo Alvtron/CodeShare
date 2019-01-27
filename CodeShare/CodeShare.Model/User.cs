@@ -13,8 +13,8 @@ namespace CodeShare.Model
     public class User : Content, IAccount
     {
         [Required]
-        private string _email;
-        public string Email
+        private Email _email;
+        public Email Email
         {
             get => _email;
             set => SetField(ref _email, value);
@@ -127,6 +127,8 @@ namespace CodeShare.Model
         public ObservableCollection<ProfilePicture> ProfilePictures { get; set; } = new ObservableCollection<ProfilePicture>();
         public IEnumerable<ProfilePicture> ProfilePicturesSorted => ProfilePictures.OrderByDescending(c => c.Created);
 
+        public ICollection<UserLog> Logs { get; set; } = new ObservableCollection<UserLog>();
+
         [NotMapped, JsonIgnore]
         public ProfilePicture ProfilePicture => ProfilePictures.FirstOrDefault(p => p.IsPrimary);
 
@@ -139,16 +141,13 @@ namespace CodeShare.Model
 
         public User(string username, string email, string password)
         {
-            if (ValidationService.ValidateName(username) != ValidationService.Response.Valid) return;
-            if (ValidationService.ValidateEmail(email) != ValidationService.Response.Valid) return;
-            if (ValidationService.ValidatePassword(password) != ValidationService.Response.Valid) return;
+            if (ValidationService.ValidateUserName(username) != ValidationResponse.Valid) return;
+            if (ValidationService.ValidatePassword(password) != ValidationResponse.Valid) return;
 
             Name = username;
-            Email = email;
+            Email = new Email(email);
             Password = new Password(password);
             Created = DateTime.Now;
-
-            Logs.Add(new ContentLog(true, "signed up"));
         }
 
         // FUNCTIONS
@@ -162,13 +161,13 @@ namespace CodeShare.Model
         public void SignIn()
         {
             SignedIn = DateTime.Now;
-            Logs.Add(new ContentLog(false, "signed in"));
+            Logs.Add(new UserLog(this, this, "signed in", null, false));
         }
 
         public void SignOut()
         {
             SignedOut = DateTime.Now;
-            Logs.Add(new ContentLog(false, "signed out"));
+            Logs.Add(new UserLog(this, this, "signed out", null, false));
         }
 
         public void SetProfilePicture(ProfilePicture profilePicture)
@@ -194,8 +193,14 @@ namespace CodeShare.Model
                 ProfilePictures[i].IsPrimary = profilePicture.Uid.Equals(ProfilePictures[i].Uid);
             }
 
-            Logs.Add(new ContentLog(true, "uploaded", Uid, profilePicture));
+            Logs.Add(new UserLog(this, this, "uploaded", profilePicture));
             RefreshBindings();
+        }
+
+        public new void SetBanner(User user, Banner banner)
+        {
+            base.SetBanner(user, banner);
+            Logs.Add(new UserLog(this, user, "uploaded", banner));
         }
 
         public void AddFriend(User friend)
@@ -217,7 +222,7 @@ namespace CodeShare.Model
             }
 
             Friends.Add(friend);
-            Logs.Add(new ContentLog(true, "is now friends with", friend.Uid));
+            Logs.Add(new UserLog(this, this, "is now friends with", friend));
         }
 
         public void RemoveFriend(User friend)
@@ -240,7 +245,7 @@ namespace CodeShare.Model
 
             Friends.Remove(friend);
 
-            Logs.Add(new ContentLog(false, "is no longer friends with", friend.Uid));
+            Logs.Add(new UserLog(this, this, "is no longer friends with", friend));
         }
 
         public void AddCode(Code code)
@@ -248,7 +253,7 @@ namespace CodeShare.Model
             if (!Codes.Contains(code))
             {
                 Codes.Add(code);
-                Logs.Add(new ContentLog(true, "added", code.Uid));
+                Logs.Add(new UserLog(this, this, "added", code));
             }
         }
 
@@ -257,8 +262,13 @@ namespace CodeShare.Model
             if (Codes.Contains(code))
             {
                 Codes.Remove(code);
-                Logs.Add(new ContentLog(true, "removed", code.Uid));
+                Logs.Add(new UserLog(this, this, "removed", code));
             }
+        }
+
+        public void SetColor(byte r, byte g, byte b, byte a)
+        {
+            SetColor(new Color(r, g, b, a));
         }
 
         public void SetColor(Color color)
@@ -266,12 +276,7 @@ namespace CodeShare.Model
             if (color == null) return;
 
             Color = color;
-            Logs.Add(new ContentLog(true, $"changed his color to {color}"));
-        }
-
-        public void SetColor(byte r, byte g, byte b, byte a)
-        {
-            SetColor(new Color(r, g, b, a));
+            Logs.Add(new UserLog(this, this, $"changed his color to {color}"));
         }
 
         public bool IsFriendsWith(User friend) => Friends.Any(f => f.Uid == friend.Uid);
@@ -285,7 +290,7 @@ namespace CodeShare.Model
         public string Initials => (!string.IsNullOrWhiteSpace(FirstName) || !string.IsNullOrWhiteSpace(LastName)) ? FirstName?.Substring(0, 1) + LastName?.Substring(0, 1) : "";
 
         [NotMapped, JsonIgnore]
-        public bool Valid => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Email) && Password != null;
+        public bool Valid => !string.IsNullOrWhiteSpace(Name) && Email != null && Password != null;
 
         [NotMapped, JsonIgnore]
         public int CurrentLevel => Model.Experience.ExpToLevel(Experience);

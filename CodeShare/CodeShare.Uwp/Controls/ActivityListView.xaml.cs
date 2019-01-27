@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -24,13 +26,14 @@ namespace CodeShare.Uwp.Controls
 {
     public sealed partial class ActivityListView : UserControl
     {
-        public static readonly DependencyProperty LogsProperty = DependencyProperty.Register("Logs", typeof(IEnumerable<ContentLog>), typeof(ActivityListView), new PropertyMetadata(new List<ContentLog>()));
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(QuestionGridView), new PropertyMetadata(null));
+        public static readonly DependencyProperty LogsSourceProperty = DependencyProperty.Register("Logs", typeof(object), typeof(ActivityListView), new PropertyMetadata(null));
 
-        public IEnumerable<ContentLog> Logs
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(ActivityListView), new PropertyMetadata(null));
+
+        public object LogsSource
         {
-            get => GetValue(LogsProperty) as IEnumerable<ContentLog>;
-            set => SetValue(LogsProperty, value);
+            get => GetValue(LogsSourceProperty);
+            set => SetValue(LogsSourceProperty, value);
         }
 
         public string Header
@@ -44,24 +47,61 @@ namespace CodeShare.Uwp.Controls
             InitializeComponent();
         }
 
-        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        private async void Actor_Click(object sender, RoutedEventArgs e)
         {
-            if (!(sender is HyperlinkButton btn)) return;
+            if (!(sender is HyperlinkButton link)) return;
+            if (!(link.Tag is UserLog log)) return;
 
-            var target = btn.Tag;
+            var kek = new ListView();
 
-            switch (target)
+            await NavigationService.Navigate(log.ActorType, log.ActorUid);
+        }
+
+        private async void Subject_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is HyperlinkButton link)) return;
+            if (!(link.Tag is UserLog log)) return;
+
+            await NavigationService.Navigate(log.ActorType, log.ActorUid);
+        }
+
+        private async void Actor_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is HyperlinkButton link)) return;
+            if (!(link.Tag is UserLog log)) return;
+            if (!log.ActorUid.HasValue) return;
+
+            await PopulateLinkContent(link, log.ActorType, log.ActorUid.Value);
+
+        }
+
+        private async void Subject_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is HyperlinkButton link)) return;
+            if (!(link.Tag is UserLog log)) return;
+            if (!log.SubjectUid.HasValue) return;
+
+            await PopulateLinkContent(link, log.SubjectType, log.SubjectUid.Value);
+        }
+
+        private async Task PopulateLinkContent(HyperlinkButton link, string type, Guid uid)
+        {
+            switch (type)
             {
-                case Code code:
-                    NavigationService.Navigate(typeof(CodePage), code, code.Name);
+                case "Code":
+                    var code = await RestApiService<Code>.Get(uid);
+                    if (code != null) link.Content = code?.Name;
                     return;
-                case User user:
-                    NavigationService.Navigate(typeof(UserPage), user, user.Name);
+                case "Question":
+                    var question = await RestApiService<Question>.Get(uid);
+                    if (question != null) link.Content = question?.Name;
                     return;
-                case Comment comment:
-                    var dialog = new CommentDialog(comment);
-                    await dialog.ShowAsync();
+                case "User":
+                    var user = await RestApiService<User>.Get(uid);
+                    if (user != null) link.Content = user?.Name;
                     return;
+                default:
+                    break;
             }
         }
     }

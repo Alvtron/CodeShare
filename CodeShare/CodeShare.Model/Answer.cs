@@ -16,8 +16,8 @@ namespace CodeShare.Model
 
         }
 
-        public Answer(Guid userUid, Guid contentUid, string message)
-            : base(userUid, contentUid, message)
+        public Answer(User user, Guid contentUid, string message)
+            : base(user, contentUid, message)
         {
 
         }

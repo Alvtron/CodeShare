@@ -17,6 +17,7 @@ namespace CodeShare.WebApi.Controllers
         private IQueryable<Question> Entities => Context.Questions
             .Include(q => q.User.ProfilePictures)
             .Include(q => q.User.Banners)
+            .Include(e => e.Logs)
             .Include(q => q.Solution.User.ProfilePictures)
             .Include(q => q.Solution.User.Banners)
             .Include(q => q.CodeLanguage)
@@ -91,7 +92,6 @@ namespace CodeShare.WebApi.Controllers
                 UpdateEntities(entity.Comments, existingEntity.Comments);
                 UpdateEntities(entity.Ratings, existingEntity.Ratings);
                 UpdateEntities(entity.Logs, existingEntity.Logs);
-                UpdateEntities(entity.Files, existingEntity.Files);
                 UpdateEntities(entity.Banners, existingEntity.Banners);
                 UpdateEntities(entity.Screenshots, existingEntity.Screenshots);
                 UpdateEntities(entity.Videos, existingEntity.Videos);

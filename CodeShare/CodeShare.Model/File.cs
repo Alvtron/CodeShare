@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -7,26 +8,35 @@ namespace CodeShare.Model
 {
     public class File : Entity, IFile
     {
-        public Content Content { get; set; }
+        public Code Code { get; set; }
 
-        public Guid? ContentUid { get; set; }
+        public Guid? CodeUid { get; set; }
 
         private string _data;
         public string Data
         {
             get => _data;
-            set
-            {
-                _data = value;
-                Updated = DateTime.Now;
-            }
+            set => SetField(ref _data, value);
         }
 
-        public string Name { get; set; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => SetField(ref _name, value);
+        }
 
-        public string Extension { get; set; }
+        private string _extension;
+        public string Extension
+        {
+            get => _extension;
+            set => SetField(ref _extension, value);
+        }
 
-        public int Lines => Data.Split('\n').Length;
+        [NotMapped, JsonIgnore]
+        public string FullName => $"{Name}{Extension}";
+        [NotMapped, JsonIgnore]
+        public int Lines => Data == null ? 0 : Data.Split('\n').Length;
 
         public File() { }
 
@@ -39,6 +49,6 @@ namespace CodeShare.Model
             Updated = DateTime.Now;
         }
 
-        public override string ToString() => $"{Name}{Extension}";
+        public override string ToString() => FullName;
     }
 }

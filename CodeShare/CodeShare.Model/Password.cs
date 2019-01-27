@@ -1,18 +1,37 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace CodeShare.Model
 {
     [ComplexType]
     public class Password : IPassword
     {
+        public enum Response
+        {
+            Valid,
+            Empty,
+            TooShort,
+            TooLong,
+            NoSymbol,
+            NoNumber,
+            NoLowerCase,
+            NoUpperCase,
+        };
+
         public int Iterations { get; set; } = 100000;
         public byte[] Salt { get; set; }
         public string Hash { get; set; }
 
         private const int SaltSize = 24;
         private const int HashSize = 20;
+
+        [NotMapped, JsonIgnore]
+        public const int PasswordMinLength = 6;
+        [NotMapped, JsonIgnore]
+        public const int PasswordMaxLength = 100;
 
         public Password() { }
             
@@ -45,6 +64,37 @@ namespace CodeShare.Model
 
                 return Convert.ToBase64String(newHash);
             }
+        }
+
+        public static Response Validate(string password)
+        {
+            var regexNumber = new Regex(@"[0-9]+");
+            var regexUpperChar = new Regex(@"[A-Z]+");
+            var regexLowerChar = new Regex(@"[a-z]+");
+            var regexSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
+
+            if (string.IsNullOrWhiteSpace(password))
+                return Response.Empty;
+
+            if (password.Length < PasswordMinLength)
+                return Response.TooShort;
+
+            if (password.Length > PasswordMaxLength)
+                return Response.TooLong;
+
+            if (!regexLowerChar.IsMatch(password))
+                return Response.NoLowerCase;
+
+            if (!regexUpperChar.IsMatch(password))
+                return Response.NoUpperCase;
+
+            if (!regexNumber.IsMatch(password))
+                return Response.NoNumber;
+
+            if (!regexSymbols.IsMatch(password))
+                return Response.NoSymbol;
+
+            return Response.Valid;
         }
     }
 }

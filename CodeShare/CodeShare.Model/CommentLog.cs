@@ -7,20 +7,16 @@ namespace CodeShare.Model
     public class CommentLog : Log
     {
         public Comment Comment { get; set; }
-        public Guid? CommentUid { get; set; }
+        public Guid CommentUid { get; set; }
 
         public CommentLog()
         {
         }
 
-        public CommentLog(bool isPublic, string action, Guid? actor = null, IEntity subject = null)
-            : base(isPublic, action, actor, subject)
+        public CommentLog(Comment comment, User actor, string action, IEntity subject = null, bool isPublic = true)
+            : base(actor, action, subject, isPublic)
         {
-            Action = action;
-            ActorUid = actor;
-            SubjectUid = subject?.Uid;
-            SubjectType = subject?.GetType().Name;
-            IsPublic = isPublic;
+            CommentUid = comment.Uid;
         }
     }
 }

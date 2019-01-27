@@ -78,7 +78,7 @@ namespace CodeShare.Uwp.Controls
 
             NavigationService.Lock();
 
-            var comment = new Comment(AuthService.CurrentUser.Uid, Entity.Uid, editor.Rtf);
+            var comment = new Comment(AuthService.CurrentUser, Entity.Uid, editor.Rtf);
 
             if (!await RestApiService<Comment>.Add(comment))
             {

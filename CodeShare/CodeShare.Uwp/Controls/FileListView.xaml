@@ -1,9 +1,10 @@
 ﻿<UserControl
-    x:Class="CodeShare.Uwp.Controls.CodeFileView"
+    x:Class="CodeShare.Uwp.Controls.FileListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CodeShare.Uwp.Controls"
     xmlns:model="using:CodeShare.Model"
+    xmlns:controls="using:CodeShare.Uwp.Controls"
     xmlns:converters="using:CodeShare.Uwp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -18,22 +19,14 @@
     <SplitView DisplayMode="Inline" IsPaneOpen="True" PaneBackground="Transparent">
         <SplitView.Pane>
             <StackPanel VerticalAlignment="Stretch" Spacing="10">
-                <TextBlock Name="ListHeader" Text="Files" />
-                <Viewbox Visibility="Collapsed" DataContext="{x:Bind IsDeletionAllowed}" Name="IsDeletionAllowedContext" />
+                <TextBlock>
+                    <Run Text="{x:Bind Files.Count, Mode=OneWay}" />
+                    <Run Text="file(s)" />
+                </TextBlock>
                 <ListView x:Name="FilesList" ItemsSource="{x:Bind Files, Mode=OneWay}" SelectedValuePath="Data" SelectionMode="Single" VerticalAlignment="Stretch" IsItemClickEnabled="True">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="model:File">
-                            <StackPanel>
-                                <TextBlock>
-                                    <Run Text="{x:Bind Name, Mode=OneWay}" />
-                                    <Run Text="•" Foreground="Gray" />
-                                    <Run Text="{x:Bind Lines, Mode=OneWay}" Foreground="Gray" />
-                                    <Run Text="lines" Foreground="Gray" />
-                                </TextBlock>
-                                <HyperlinkButton Visibility="{Binding DataContext.IsDeletionAllowed, ElementName=IsDeletionAllowedContext, Converter={StaticResource VisibillityConverter}}">
-                                    <SymbolIcon Symbol="Delete" />
-                                </HyperlinkButton>
-                            </StackPanel>
+                            <controls:FileItem File="{x:Bind Mode=OneWay}" Width="auto" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -1,7 +1,6 @@
 ﻿using CodeShare.Model;
 using CodeShare.WebApi.Controllers;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -9,37 +8,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 
 namespace CodeShare.WebApi.Controllers
 {
-    public class UsersController : BaseController, IController<User>
+    public class FileController : BaseController, IController<File>
     {
-        public IQueryable<User> Entities => Context.Users
-            .Include(e => e.Friends.Select(f => f.ProfilePictures))
-            .Include(e => e.Codes.Select(f => f.Banners))
-            .Include(e => e.Ratings)
-            .Include(e => e.Logs)
-            .Include(e => e.Comments.Select(comment => comment.User.ProfilePictures))
-            .Include(e => e.Comments.Select(comment => comment.User.Banners))
-            .Include(e => e.Comments.Select(comment => comment.Ratings))
-            .Include(e => e.ProfilePictures)
-            .Include(e => e.Banners)
-            .Include(e => e.Videos);
+        private IQueryable<File> Entities => Context.Files
+            .Include(e => e.Code.User);
 
         /// <summary>
         /// Gets all entities from database.
         /// </summary>
         /// <returns></returns>
-        [Route("api/users")]
-        public IQueryable<User> Get()
+        [Route("api/files")]
+        public IQueryable<File> Get()
         {
             if (!IsDatabaseOnline) return null;
 
-            var entities = Context.Users
-                .Include(c => c.ProfilePictures)
-                .Include(a => a.Banners);
-
-            return entities;
+            return Entities;
         }
 
         /// <summary>
@@ -47,7 +34,7 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        [ResponseType(typeof(User)), Route("api/users/{uid}")]
+        [ResponseType(typeof(File)), Route("api/files/{uid}")]
         public IHttpActionResult Get(Guid uid)
         {
             if (!IsDatabaseOnline) return InternalServerError();
@@ -69,28 +56,13 @@ namespace CodeShare.WebApi.Controllers
         /// <param name="uid">The uid.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [ResponseType(typeof(void)), Route("api/users/{uid}")]
-        public IHttpActionResult Put(Guid uid, [FromBody] User entity)
+        [ResponseType(typeof(void)), Route("api/files/{uid}")]
+        public IHttpActionResult Put(Guid uid, [FromBody] File entity)
         {
             if (!IsDatabaseOnline) return InternalServerError();
 
-            if (uid == Guid.Empty)
-            {
-                Debug.WriteLine($"The provided {uid.GetType().Name} parameter is empty! Put denied.");
-                return BadRequest($"The provided {uid.GetType().Name} parameter is empty! Put denied.");
-            }
-
-            if (entity == null)
-            {
-                Debug.WriteLine($"The provided {entity.GetType().Name} object is empty! Put denied.");
-                return BadRequest($"The provided {entity.GetType().Name} object is empty! Put denied.");
-            }
-
-            if (uid != entity.Uid)
-            {
-                Debug.WriteLine($"The provided {entity.GetType().Name} object does not match the provided key {uid}. Put denied!");
-                return BadRequest($"The provided {entity.GetType().Name} object does not match the provided key {uid}. Put denied!");
-            }
+            if (CheckUpdateParameters(uid, entity) is BadRequestResult badRequest)
+                return badRequest;
 
             var existingEntity = Entities.FirstOrDefault(u => u.Uid.Equals(uid));
 
@@ -102,15 +74,7 @@ namespace CodeShare.WebApi.Controllers
 
             try
             {
-                UpdateEntity(entity, existingEntity);
-                UpdateEntities(entity.Friends, existingEntity.Friends);
-                UpdateEntities(entity.Comments, existingEntity.Comments);
-                UpdateEntities(entity.Ratings, existingEntity.Ratings);
-                UpdateEntities(entity.Logs, existingEntity.Logs);
-                UpdateEntities(entity.ProfilePictures, existingEntity.ProfilePictures);
-                UpdateEntities(entity.Banners, existingEntity.Banners);
-                UpdateEntities(entity.Screenshots, existingEntity.Screenshots);
-                UpdateEntities(entity.Videos, existingEntity.Videos);
+                Context.Entry(existingEntity).CurrentValues.SetValues(entity);
 
                 Context.SaveChanges();
             }
@@ -132,8 +96,8 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [ResponseType(typeof(User)), Route("api/users")]
-        public IHttpActionResult Post(User entity)
+        [ResponseType(typeof(File)), Route("api/files")]
+        public IHttpActionResult Post(File entity)
         {
             if (!IsDatabaseOnline)
                 return InternalServerError();
@@ -144,10 +108,10 @@ namespace CodeShare.WebApi.Controllers
 
             try
             {
-                Context.Users.Add(entity);
+                Context.Files.Add(entity);
                 Context.SaveChanges();
 
-                return Ok(User);
+                return Ok(entity);
             }
 #if DEBUG
             catch (DbEntityValidationException exception)
@@ -179,7 +143,7 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        [ResponseType(typeof(User)), Route("api/users/{uid}")]
+        [ResponseType(typeof(File)), Route("api/files/{uid}")]
         public IHttpActionResult Delete(Guid uid)
         {
             if (!IsDatabaseOnline) return InternalServerError();
@@ -188,12 +152,9 @@ namespace CodeShare.WebApi.Controllers
 
             try
             {
-                Context.Database.ExecuteSqlCommand("DELETE FROM dbo.Friendships WHERE Friend_A = @uid OR Friend_B = @uid", new SqlParameter("uid", uid));
-                Context.Database.ExecuteSqlCommand("DELETE FROM dbo.Entities WHERE Uid = @uid", new SqlParameter("uid", uid));
-
                 Context.SaveChanges();
 
-                return Ok($"User {uid} was successfully deleted.");
+                return Ok($"Code {uid} was successfully deleted.");
             }
             catch (Exception exception)
             {

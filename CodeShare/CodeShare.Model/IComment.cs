@@ -12,7 +12,9 @@ namespace CodeShare.Model
     {
         Guid Uid { get; set; }
         User User { get; set; }
-        Guid? UserUid { get; set; }
+        Guid UserUid { get; set; }
+        Content Content { get; set; }
+        Guid ContentUid { get; set; }
         string Text { get; set; }
     }
 }

@@ -80,23 +80,6 @@ namespace CodeShare.Uwp.ViewModels
             Changed = false;
         }
 
-        public override async Task UploadImagesAsync()
-        {
-            var imageFiles = await StorageUtilities.PickMultipleImages();
-            if (imageFiles == null || imageFiles.Count == 0) return;
-
-            NavigationService.Lock();
-
-            foreach (var imageFile in imageFiles)
-            {
-                User?.ProfilePictures.Add(await ImageUtilities.CreateNewImageAsync<ProfilePicture>(imageFile));
-                User?.Logs.Add(new ContentLog(true, "Uploaded", AuthService.CurrentUser.Uid));
-            }
-
-            NavigationService.Unlock();
-            Changed = true;
-        }
-
         public override async Task UploadVideoAsync()
         {
             var dialog = new AddVideoDialog();
@@ -118,6 +101,11 @@ namespace CodeShare.Uwp.ViewModels
         }
 
         public override void DeleteVideo(Video video)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task UploadImagesAsync()
         {
             throw new NotImplementedException();
         }

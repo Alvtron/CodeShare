@@ -44,7 +44,7 @@
                     <Pivot RelativePanel.LeftOf="Info" RelativePanel.AlignTopWithPanel="True" Margin="24,0,0,0">
                         <!-- Code -->
                         <PivotItem Header="Code">
-                            <controls:CodeFileView Files="{x:Bind ViewModel.Code.FilesSorted, Mode=OneWay}" />
+                            <controls:FileListView Files="{x:Bind ViewModel.Code.FilesSorted, Mode=OneWay}" />
                         </PivotItem>
                         <!-- About -->
                         <PivotItem Header="About">
@@ -87,7 +87,7 @@
                         </PivotItem>
                         <!-- Changes -->
                         <PivotItem Header="Changes">
-                            <controls:ActivityListView Logs="{x:Bind ViewModel.Code.LogsSorted, Mode=OneWay}" />
+                            <controls:ActivityListView LogsSource="{x:Bind ViewModel.Code.Logs, Mode=OneWay}" />
                         </PivotItem>
                     </Pivot>
                 </RelativePanel>

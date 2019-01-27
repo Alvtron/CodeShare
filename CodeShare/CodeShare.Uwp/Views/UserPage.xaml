@@ -147,7 +147,7 @@
                 </PivotItem>
                 <!-- Activity -->
                 <PivotItem Header="Activity" Padding="24">
-                    <controls:ActivityListView Logs="{x:Bind ViewModel.User.LogsSorted, Mode=OneWay}" />
+                    <controls:ActivityListView LogsSource="{x:Bind ViewModel.User.Logs, Mode=OneWay}" />
                 </PivotItem>
             </Pivot>
         </StackPanel>

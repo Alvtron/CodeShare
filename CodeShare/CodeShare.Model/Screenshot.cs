@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CodeShare.Model
 {
-    public class Screenshot : WebImage, IContentImage, ICroppableImage
+    public class Screenshot : WebImage, ICroppableImage
     {
         public Content Content { get; set; }
         public Guid ContentUid { get; set; }

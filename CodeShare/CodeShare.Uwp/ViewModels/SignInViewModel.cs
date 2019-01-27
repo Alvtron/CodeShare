@@ -201,7 +201,7 @@ namespace CodeShare.Uwp.ViewModels
         
         private bool ValidateEmail()
         {
-            if (ValidationService.ValidateEmail(SignUpEmail) != ValidationService.Response.Valid)
+            if (ValidationService.ValidateEmail(SignUpEmail) != ValidationResponse.Valid)
             {
                 SignUpEmailBorder = new SolidColorBrush(Colors.Red);
                 return false;
@@ -212,7 +212,7 @@ namespace CodeShare.Uwp.ViewModels
 
         private bool ValidateName()
         {
-            if (ValidationService.ValidateName(SignUpName) != ValidationService.Response.Valid)
+            if (ValidationService.ValidateUserName(SignUpName) != ValidationResponse.Valid)
             {
                 SignUpNameBorder = new SolidColorBrush(Colors.Red);
                 return false;
@@ -223,7 +223,7 @@ namespace CodeShare.Uwp.ViewModels
         
         private bool ValidatePassword()
         {
-            if (ValidationService.ValidatePassword(SignUpPassword) != ValidationService.Response.Valid)
+            if (ValidationService.ValidatePassword(SignUpPassword) != ValidationResponse.Valid)
             {
                 SignUpPasswordBorder = new SolidColorBrush(Colors.Red);
                 return false;

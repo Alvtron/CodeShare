@@ -1,4 +1,6 @@
 ﻿using CodeShare.Model;
+using CodeShare.Uwp.DataSource;
+using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Views;
 using System;
 using System.Diagnostics;
@@ -106,7 +108,7 @@ namespace CodeShare.Uwp.Services
                 Navigate(typeof(UsersPage), parameter, "Users");
         }
 
-        public static void Navigate(string pageName)
+        public static async Task Navigate(string pageName, object parameter = null)
         {
             if (!Initialized)
             {
@@ -117,17 +119,31 @@ namespace CodeShare.Uwp.Services
             switch (pageName)
             {
                 case "Home":
-                    Navigate(typeof(HomePage), null, "Home");
-                    break;
+                    Navigate(typeof(HomePage), parameter, "Home");
+                    return;
+                case "Code":
+                    Navigate(typeof(CodePage), parameter);
+                    return;
                 case "Codes":
-                    Navigate(typeof(CodesPage), null, "Codes");
-                    break;
+                    Navigate(typeof(CodesPage), parameter, "Codes");
+                    return;
+                case "Question":
+                    Navigate(typeof(QuestionPage), parameter);
+                    return;
                 case "Questions":
-                    Navigate(typeof(QuestionsPage), null, "Questions");
-                    break;
+                    Navigate(typeof(QuestionsPage), parameter, "Questions");
+                    return;
+                case "User":
+                    Navigate(typeof(UserPage), parameter);
+                    return;
                 case "Users":
-                    Navigate(typeof(UsersPage), null, "Users");
-                    break;
+                    Navigate(typeof(UsersPage), parameter, "Users");
+                    return;
+                case "Comment":
+                    var comment = await RestApiService<Comment>.Get((Guid)parameter);
+                    var dialog = new CommentDialog(comment);
+                    await dialog.ShowAsync();
+                    return;
                 default:
                     break;
             }

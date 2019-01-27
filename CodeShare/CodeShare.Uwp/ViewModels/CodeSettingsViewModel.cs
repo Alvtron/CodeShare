@@ -81,8 +81,7 @@ namespace CodeShare.Uwp.ViewModels
 
             foreach (var imageFile in imageFiles)
             {
-                Code?.Screenshots.Add(await ImageUtilities.CreateNewImageAsync<Screenshot>(imageFile));
-                Code?.Logs.Add(new ContentLog(true, "Uploaded", AuthService.CurrentUser.Uid));
+                Code?.AddScreenshot(await ImageUtilities.CreateNewImageAsync<Screenshot>(imageFile), AuthService.CurrentUser);
             }
 
             NavigationService.Unlock();

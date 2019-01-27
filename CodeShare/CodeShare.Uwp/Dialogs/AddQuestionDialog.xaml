@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CodeShare.Uwp.Dialogs"
     xmlns:xaml="using:CodeShare.Uwp.Xaml"
+    xmlns:model="using:CodeShare.Model"
     xmlns:controls="using:CodeShare.Uwp.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,6 +17,20 @@
     <StackPanel Spacing="8">
         <TextBox Header="Title" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>
         <controls:Editor Header="Question" Rtf="{x:Bind ViewModel.Question, Mode=TwoWay}" Height="300" />
-        <AutoSuggestBox Header="Language" ItemsSource="{x:Bind ViewModel.FilteredCodeLanguages, Mode=OneWay}" QueryIcon="Find" QuerySubmitted="ASB_QuerySubmitted" TextChanged="ASB_TextChanged" Loaded="ASB_Loaded"/>
+        <AutoSuggestBox Header="Language" ItemsSource="{x:Bind ViewModel.FilteredCodeLanguages, Mode=OneWay}" QueryIcon="Find" QuerySubmitted="ASB_QuerySubmitted" TextChanged="ASB_TextChanged" Loaded="ASB_Loaded">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate x:DataType="model:CodeLanguage">
+                    <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{x:Bind Description, Mode=OneWay}" TextWrapping="WrapWholeWords"/>
+                        </ToolTipService.ToolTip>
+                        <TextBlock Text="{x:Bind Name, Mode=OneWay}" VerticalAlignment="Center" />
+                        <TextBlock VerticalAlignment="Center">
+                            (<Run Text="{x:Bind Extension, Mode=OneWay}"/>)
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
     </StackPanel>
 </ContentDialog>

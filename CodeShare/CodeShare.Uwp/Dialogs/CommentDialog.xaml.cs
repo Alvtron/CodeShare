@@ -8,12 +8,12 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class CommentDialog : ContentDialog
     {
-        public CommentViewModel ViewModel { get; }
+        public Comment Comment { get; private set; }
 
         public CommentDialog(Comment comment)
         {
             InitializeComponent();
-            ViewModel = new CommentViewModel(comment);
+            Comment = comment;
         }
     }
 }
