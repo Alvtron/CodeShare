@@ -3,6 +3,7 @@ using CodeShare.Uwp.DataSource;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Views;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -16,6 +17,7 @@ namespace CodeShare.Uwp.Services
         private static ProgressRing ProgressRing { get; set; }
 
         private static ObservableStack<string> Headers { get; } = new ObservableStack<string>();
+        private static Dictionary<Type, Action<Type, object, string>> Navigations { get; set; }
 
         public static bool Initialized => Frame != null && NavigationView != null && ProgressRing != null && Headers != null;
 
@@ -69,7 +71,7 @@ namespace CodeShare.Uwp.Services
             UpdateBackButtonVisibillity();
         }
 
-        public static void Navigate(Type viewType, object parameter, string newHeader)
+        public static void Navigate(Type viewType, object parameter, string newHeader = "")
         {
             if (!Initialized)
             {
@@ -80,32 +82,11 @@ namespace CodeShare.Uwp.Services
             Headers.Push(newHeader);
             Frame?.Navigate(viewType, parameter);
 
-            if (viewType != typeof(HomePage))
-                return;
-
-            Clear();
-            Headers.Push(newHeader);
-        }
-
-        public static void Navigate(Type viewType, object parameter)
-        {
-            if (!Initialized)
-            {
-                Debug.WriteLine("Can't navigate. NavigationService is not initialized.");
-                return;
-            }
-
             if (viewType == typeof(HomePage))
-                Navigate(typeof(HomePage), parameter, "Home");
-
-            else if (viewType == typeof(CodesPage))
-                Navigate(typeof(CodesPage), parameter, "Codes");
-
-            else if (viewType == typeof(QuestionsPage))
-                Navigate(typeof(QuestionsPage), parameter, "Questions");
-
-            else if (viewType == typeof(UsersPage))
-                Navigate(typeof(UsersPage), parameter, "Users");
+            {
+                Clear();
+                Headers.Push(newHeader);
+            }
         }
 
         public static async Task Navigate(string pageName, object parameter = null)
@@ -119,28 +100,28 @@ namespace CodeShare.Uwp.Services
             switch (pageName)
             {
                 case "Home":
-                    Navigate(typeof(HomePage), parameter, "Home");
+                    Navigate(typeof(HomePage), parameter, pageName);
                     return;
                 case "Code":
-                    Navigate(typeof(CodePage), parameter);
+                    Navigate(typeof(CodePage), parameter, pageName);
                     return;
                 case "Codes":
-                    Navigate(typeof(CodesPage), parameter, "Codes");
+                    Navigate(typeof(CodesPage), parameter, pageName);
                     return;
                 case "Question":
-                    Navigate(typeof(QuestionPage), parameter);
+                    Navigate(typeof(QuestionPage), parameter, pageName);
                     return;
                 case "Questions":
-                    Navigate(typeof(QuestionsPage), parameter, "Questions");
+                    Navigate(typeof(QuestionsPage), parameter, pageName);
                     return;
                 case "User":
-                    Navigate(typeof(UserPage), parameter);
+                    Navigate(typeof(UserPage), parameter, pageName);
                     return;
                 case "Users":
-                    Navigate(typeof(UsersPage), parameter, "Users");
+                    Navigate(typeof(UsersPage), parameter, pageName);
                     return;
                 case "Comment":
-                    var comment = await RestApiService<Comment>.Get((Guid)parameter);
+                    var comment = await RestApiService<Reply>.Get((Guid)parameter);
                     var dialog = new CommentDialog(comment);
                     await dialog.ShowAsync();
                     return;

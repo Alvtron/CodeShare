@@ -197,10 +197,29 @@ namespace CodeShare.Model
             RefreshBindings();
         }
 
-        public new void SetBanner(User user, Banner banner)
+        public override void SetBanner(User user, Banner banner)
         {
-            base.SetBanner(user, banner);
+            SetBanner(banner);
             Logs.Add(new UserLog(this, user, "uploaded", banner));
+        }
+
+        public override void AddScreenshot(User user, Screenshot screenshot)
+        {
+            AddScreenshot(screenshot);
+            Logs.Add(new UserLog(this, user, "added", screenshot));
+        }
+
+        public override void AddVideo(User user, Video video)
+        {
+            AddVideo(video);
+
+            Logs.Add(new UserLog(this, user, "added", video));
+        }
+
+        public override void Reply(User user, Reply comment)
+        {
+            Reply(comment);
+            Logs.Add(new UserLog(this, user, "added", comment));
         }
 
         public void AddFriend(User friend)

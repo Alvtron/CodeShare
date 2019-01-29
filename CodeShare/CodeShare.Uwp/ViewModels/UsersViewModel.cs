@@ -1,20 +1,23 @@
 ﻿using CodeShare.Model;
 using CodeShare.Uwp.DataSource;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public class UsersViewModel : BaseViewModel
+    public class UsersViewModel : ObservableObject
     {
-        private ObservableCollection<User> _allUsers = new ObservableCollection<User>();
+        private ObservableCollection<User> _allUsers;
         public ObservableCollection<User> AllUsers
         {
             get => _allUsers;
             set => SetField(ref _allUsers, value);
         }
 
-        private ObservableCollection<User> _filteredUsers = new ObservableCollection<User>();
+        private ObservableCollection<User> _filteredUsers;
         public ObservableCollection<User> FilteredUsers
         {
             get => _filteredUsers;
@@ -32,20 +35,20 @@ namespace CodeShare.Uwp.ViewModels
             }
         }
 
-        public UsersViewModel()
+        public UsersViewModel(IEnumerable<User> users)
         {
+            if (users == null)
+            {
+                throw new ArgumentNullException("User was null");
+            }
+
+            AllUsers = new ObservableCollection<User>(users);
+            FilteredUsers = AllUsers;
+
             AllUsers.CollectionChanged += (s, e) =>
             {
                 SearchByQuery(SearchQuery);
             };
-
-            var allUsers = RestApiService<User>.Get().Result;
-
-            if (allUsers == null)
-                return;
-
-            AllUsers = new ObservableCollection<User>(allUsers);
-            FilteredUsers = AllUsers;
         }
 
         private void SearchByQuery(string query)

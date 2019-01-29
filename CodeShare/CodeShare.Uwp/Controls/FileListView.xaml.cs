@@ -3,6 +3,7 @@ using CodeShare.Uwp.DataSource;
 using CodeShare.Uwp.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,28 +23,29 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class FileListView : UserControl
+    public sealed partial class CodeFileListView : UserControl
     {
-        public static readonly DependencyProperty FilesProperty = DependencyProperty.Register("Code", typeof(ICollection<File>), typeof(FileListView), new PropertyMetadata(new List<File>()));
+        public static readonly DependencyProperty FilesProperty = DependencyProperty.Register("CodeFiles", typeof(ICollection<CodeFile>), typeof(CodeFileListView), new PropertyMetadata(new ObservableCollection<CodeFile>()));
 
-        public ICollection<File> Files
+        public ObservableCollection<CodeFile> CodeFiles
         {
-            get => GetValue(FilesProperty) as ICollection<File>;
+            get => GetValue(FilesProperty) as ObservableCollection<CodeFile>;
             set
             {
+                value.OrderBy(f => f.Name);
                 SetValue(FilesProperty, value);
                 SelectFirstFile();
             }
         }
 
-        public FileListView()
+        public CodeFileListView()
         {
             InitializeComponent();
         }
 
         public void SelectFirstFile()
         {
-            if (Files.Count() == 0) return;
+            if (CodeFiles.Count() == 0) return;
 
             try
             {

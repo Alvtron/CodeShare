@@ -1,9 +1,9 @@
 ﻿<UserControl
-    x:Class="CodeShare.Uwp.Controls.CommentBlock"
+    x:Class="CodeShare.Uwp.Controls.ReplyBlock"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CodeShare.Uwp.Controls" 
-    xmlns:model="using:CodeShare.Model"
+    xmlns:controls="using:CodeShare.Uwp.Controls"
     xmlns:xaml="using:CodeShare.Uwp.Xaml"
     xmlns:converters="using:CodeShare.Uwp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,24 +26,30 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <!-- Comment user photo -->
-        <PersonPicture Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="40" Width="40" ProfilePicture="{x:Bind Comment.User.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}" VerticalAlignment="Top" />
+        <HyperlinkButton Padding="0" Command="{x:Bind NavigateToUserCommand}">
+            <PersonPicture Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="40" Width="40" ProfilePicture="{x:Bind Reply.User.ProfilePicture, Mode=OneWay, Converter={StaticResource ImageConverter}}" VerticalAlignment="Top" />
+        </HyperlinkButton>
         <!-- Comment username & date -->
-        <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource CaptionTextBlockStyle}">
-            <Run Text="{x:Bind Comment.User.Name, Mode=OneWay}" Foreground="{StaticResource RPSColor}"/>
-            <Run Text="·" Foreground="LightGray"/>
-            <Run Text="{x:Bind Comment.Created, Mode=OneWay}" Foreground="LightGray"/>
-        </TextBlock>
+        <HyperlinkButton Grid.Column="1" Grid.Row="0" Command="{x:Bind NavigateToUserCommand}" Background="Transparent" Padding="0" >
+            <TextBlock Style="{StaticResource CaptionTextBlockStyle}">
+                <Run Text="{x:Bind Reply.User.Name, Mode=OneWay}" Foreground="{StaticResource RPSColor}"/>
+                <Run Text="·" Foreground="LightGray"/>
+                <Run Text="{x:Bind Reply.Created, Mode=OneWay}" Foreground="LightGray"/>
+            </TextBlock>
+        </HyperlinkButton>
+        
         <!-- Comment body -->
-        <xaml:RichTextBox Grid.Column="1" Grid.Row="1" Rtf="{x:Bind Comment.Text, Mode=OneWay}"/>
+        <xaml:RichTextBox Grid.Column="1" Grid.Row="1" Rtf="{x:Bind Reply.Text, Mode=OneWay}"/>
         <!-- Comment actions -->
         <CommandBar Grid.Column="1" Grid.Row="2" Background="Transparent" OverflowButtonVisibility="Auto">
             <CommandBar.Content>
                 <AppBarButton IsEnabled="False">
                     <AppBarButton.Content>
                         <TextBlock>
-                            <Run Text="{x:Bind Comment.NumberOfLikes, Mode=OneWay}" />
+                            <Run Text="{x:Bind Reply.NumberOfLikes, Mode=OneWay}" />
                             <Run Text="likes" />
                         </TextBlock>
                     </AppBarButton.Content>
@@ -54,5 +60,6 @@
             <AppBarButton Label="Share" Icon="Share" Command="{x:Bind ShareCommand, Mode=OneWay}" />
             <AppBarButton Label="Report" Icon="Flag" Command="{x:Bind ReportCommand, Mode=OneWay}" />
         </CommandBar>
+        <controls:ReplyListView Replies="{x:Bind Reply.Replies, Mode=OneWay}" Grid.Column="1" Grid.Row="3" />
     </Grid>
 </UserControl>

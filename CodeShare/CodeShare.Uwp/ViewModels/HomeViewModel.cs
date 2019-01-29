@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public class HomeViewModel : BaseViewModel
+    public class HomeViewModel
     {
         public ObservableCollection<Code> MostPopularCodes { get; private set; } = new ObservableCollection<Code>();
 

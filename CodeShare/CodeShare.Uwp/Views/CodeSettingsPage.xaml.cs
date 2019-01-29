@@ -1,6 +1,9 @@
 ﻿using CodeShare.Model;
+using CodeShare.Uwp.DataSource;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
+using System;
+using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -10,23 +13,41 @@ namespace CodeShare.Uwp.Views
     {
         public CodeSettingsViewModel ViewModel;
 
-        public CodeSettingsPage()
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            InitializeComponent();
-        }
+            NavigationService.Lock();
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
+            Code code;
+
             switch (e.Parameter)
             {
-                case Code code:
-                    ViewModel = new CodeSettingsViewModel(code);
-                    NavigationService.SetHeaderTitle("Edit " + code.Name);
+                case Code _code:
+                    code = _code;
+                    break;
+                case Guid guid:
+                    code = await RestApiService<Code>.Get(guid);
+                    break;
+                case IEntity entity:
+                    code = await RestApiService<Code>.Get(entity.Uid);
                     break;
                 default:
-                    NavigationService.GoBack();
-                    return;
+                    await NotificationService.DisplayErrorMessage("Developer error.");
+                    throw new InvalidOperationException();
             }
+
+            if (code == null)
+            {
+                await NotificationService.DisplayErrorMessage("This code does not exist.");
+                NavigationService.GoBack();
+            }
+
+            ViewModel = new CodeSettingsViewModel(code);
+
+            InitializeComponent();
+
+            NavigationService.Unlock();
+
+            NavigationService.SetHeaderTitle($"{ViewModel.Model?.Name} - Settings");
         }
     }
 }

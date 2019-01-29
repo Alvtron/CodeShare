@@ -22,9 +22,9 @@ namespace CodeShare.WebApi.Controllers
             .Include(q => q.Solution.User.Banners)
             .Include(q => q.CodeLanguage)
             .Include(q => q.Ratings)
-            .Include(q => q.Comments)
-            .Include(q => q.Comments.Select(comment => comment.User.ProfilePictures))
-            .Include(q => q.Comments.Select(comment => comment.User.Banners));
+            .Include(q => q.Replies)
+            .Include(q => q.Replies.Select(comment => comment.User.ProfilePictures))
+            .Include(q => q.Replies.Select(comment => comment.User.Banners));
 
         /// <summary>
         /// Gets all entities from database.
@@ -38,7 +38,8 @@ namespace CodeShare.WebApi.Controllers
             var entities = Context.Questions
                 .Include(a => a.Banners)
                 .Include(q => q.User.ProfilePictures)
-                .Include(q => q.User.Banners);
+                .Include(q => q.User.Banners)
+                .Include(q => q.CodeLanguage);
 
             return entities;
         }
@@ -89,7 +90,7 @@ namespace CodeShare.WebApi.Controllers
             try
             {
                 UpdateEntity(entity, existingEntity);
-                UpdateEntities(entity.Comments, existingEntity.Comments);
+                UpdateEntities(entity.Replies, existingEntity.Replies);
                 UpdateEntities(entity.Ratings, existingEntity.Ratings);
                 UpdateEntities(entity.Logs, existingEntity.Logs);
                 UpdateEntities(entity.Banners, existingEntity.Banners);

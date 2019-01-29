@@ -14,25 +14,31 @@ using CodeShare.Uwp.DataSource;
 using CodeShare.Uwp.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.Storage;
+using System.Diagnostics;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public class CodeSettingsViewModel : EditorViewModel
+    public class CodeSettingsViewModel : ModelSettingsViewModel<Code>
     {
-        private Code _code = new Code();
-        public Code Code
-        {
-            get => _code;
-            set => SetField(ref _code, value);
-        }
+        private RelayCommand _uploadCodeFilesCommand;
+        public ICommand UploadCodeFilesCommand => _uploadCodeFilesCommand = _uploadCodeFilesCommand ?? new RelayCommand(async param => await UploadFiles());
 
-        private RelayCommand _uploadCodeCommand;
-        public ICommand UploadCodeCommand => _uploadCodeCommand = _uploadCodeCommand ?? new RelayCommand(async param => await UploadFiles());
+        private RelayCommand _uploadScreenshotsCommand;
+        public ICommand UploadScreenshotsCommand => _uploadScreenshotsCommand = _uploadScreenshotsCommand ?? new RelayCommand(async param => await UploadScreenshotsAsync());
+
+        private RelayCommand<Screenshot> _deleteScreenshotCommand;
+        public ICommand DeleteScreenshotCommand => _deleteScreenshotCommand = _deleteScreenshotCommand ?? new RelayCommand<Screenshot>(screenshot => DeleteScreenshot(screenshot));
+
+        private RelayCommand _uploadVideoCommand;
+        public ICommand UploadVideoCommand => _uploadVideoCommand = _uploadVideoCommand ?? new RelayCommand(async param => await UploadVideoAsync());
+
+        private RelayCommand<Video> _deleteVideoCommand;
+        public ICommand DeleteVideoCommand => _deleteVideoCommand = _deleteVideoCommand ?? new RelayCommand<Video>(param => DeleteVideo(param));
 
         public CodeSettingsViewModel(Code code)
+            : base(code)
         {
-            Code = code;
-            Code.PropertyChanged += (s, e) => { Changed = true; };
+            
         }
 
         private async Task UploadFiles()
@@ -42,37 +48,34 @@ namespace CodeShare.Uwp.ViewModels
             if (files == null || files.Count == 0)
                 return;
 
+            var codeLanguages = await RestApiService<CodeLanguage>.Get();
+
             foreach (var file in files)
             {
-                Code.AddFile(new File(await FileIO.ReadTextAsync(file), file.DisplayName, file.FileType), AuthService.CurrentUser);
+                var fileType = file.FileType.ToLower();
+                var codeLanguage = codeLanguages.FirstOrDefault(cl => cl.Extension.ToLower().Equals(fileType));
+
+                if (codeLanguage == null)
+                {
+                    Debug.WriteLine($"Rejected file {file.Name}. Extension is not supported.");
+                    continue;
+                }
+
+                try
+                {
+                    var codeFile = new CodeFile(codeLanguage, await FileIO.ReadTextAsync(file), file.DisplayName, file.FileType);
+                    Model.AddFile(codeFile, AuthService.CurrentUser);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    continue;
+                }
             }
-            
-            Changed = true;
+
+            IsModelChanged = true;
         }
 
-        public async Task<bool> SaveChangesAsync()
-        {
-            if (Code == null)
-            {
-                await NotificationService.DisplayErrorMessage("Some changes are not valid.");
-                return false;
-            }
-
-            NavigationService.Lock();
-
-            if (await RestApiService<Code>.Update(Code, Code.Uid) == false)
-            {
-                await NotificationService.DisplayErrorMessage("An error occurred during the upload. No changes where made.");
-                NavigationService.Unlock();
-                return false;
-            }
-
-            NavigationService.Unlock();
-            Changed = false;
-            return true;
-        }
-
-        public override async Task UploadImagesAsync()
+        public async Task UploadScreenshotsAsync()
         {
             var imageFiles = await StorageUtilities.PickMultipleImages();
             if (imageFiles == null || imageFiles.Count == 0) return;
@@ -81,14 +84,25 @@ namespace CodeShare.Uwp.ViewModels
 
             foreach (var imageFile in imageFiles)
             {
-                Code?.AddScreenshot(await ImageUtilities.CreateNewImageAsync<Screenshot>(imageFile), AuthService.CurrentUser);
+                Model?.AddScreenshot(AuthService.CurrentUser, await ImageUtilities.CreateNewImageAsync<Screenshot>(imageFile));
             }
 
             NavigationService.Unlock();
-            Changed = true;
+
+            IsModelChanged = true;
         }
 
-        public override async Task UploadVideoAsync()
+        public void DeleteScreenshot(Screenshot screenshot)
+        {
+            if (screenshot == null)
+            {
+                return;
+            }
+
+            Model.Screenshots.Remove(screenshot);
+        }
+
+        public async Task UploadVideoAsync()
         {
             var dialog = new AddVideoDialog();
             NavigationService.Lock();
@@ -100,36 +114,20 @@ namespace CodeShare.Uwp.ViewModels
                 return;
             }
 
-            Code?.AddVideo(AuthService.CurrentUser, dialog.VideoData);
+            Model?.AddVideo(AuthService.CurrentUser, dialog.VideoData);
             NavigationService.Unlock();
-            Changed = true;
+
+            IsModelChanged = true;
         }
 
-        public override void DeleteVideo(Video video)
+        public void DeleteVideo(Video video)
         {
-            Code?.Videos.Remove(video);
-            Changed = true;
-        }
-
-        public override void DeleteImage(WebFile screenshot)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override async Task SaveAsync()
-        {
-            NavigationService.Lock();
-
-            if (await RestApiService<Code>.Update(Code, Code.Uid))
+            if (video == null)
             {
-                Changed = false;
+                return;
             }
-            NavigationService.Unlock();
-    }
 
-        public override void Reset()
-        {
-            throw new NotImplementedException();
+            Model?.Videos.Remove(video);
         }
     }
 }

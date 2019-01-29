@@ -12,28 +12,23 @@ using System.Windows.Input;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public class CodesViewModel : BaseViewModel
+    public class CodesViewModel : ObservableObject
     {
-        private IList<Code> _codes = new List<Code>();
-        public IList<Code> Codes
+        private ObservableCollection<Code> _codes;
+        public ObservableCollection<Code> Codes
         {
             get => _codes;
             set => SetField(ref _codes, value);
         }
 
-        public CodesViewModel()
+        public CodesViewModel(IEnumerable<Code> codes)
         {
-            InitializeSearchList();
-        }
+            if (codes == null)
+            {
+                throw new ArgumentNullException("Codes was null");
+            }
 
-        private void InitializeSearchList()
-        {
-            var allCodes = RestApiService<Code>.Get().Result;
-
-            if (allCodes == null)
-                return;
-
-            Codes = new List<Code>(allCodes);
+            Codes = new ObservableCollection<Code>(codes);
         }
     }
 }

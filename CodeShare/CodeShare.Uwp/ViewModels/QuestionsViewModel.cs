@@ -1,20 +1,22 @@
 ﻿using CodeShare.Model;
 using CodeShare.Uwp.DataSource;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public class QuestionsViewModel : BaseViewModel
+    public class QuestionsViewModel : ObservableObject
     {
-        private ObservableCollection<Question> _unfilteredQuestions = new ObservableCollection<Question>();
+        private ObservableCollection<Question> _unfilteredQuestions;
         public ObservableCollection<Question> UnfilteredQuestions
         {
             get => _unfilteredQuestions;
             set => SetField(ref _unfilteredQuestions, value);
         }
 
-        private ObservableCollection<Question> _filteredQuestions = new ObservableCollection<Question>();
+        private ObservableCollection<Question> _filteredQuestions;
         public ObservableCollection<Question> FilteredQuestions
         {
             get => _filteredQuestions;
@@ -32,20 +34,20 @@ namespace CodeShare.Uwp.ViewModels
             }
         }
 
-        public QuestionsViewModel()
+        public QuestionsViewModel(IEnumerable<Question> Questions)
         {
+            if (Questions == null)
+            {
+                throw new ArgumentNullException("Questions was null.");
+            }
+
+            UnfilteredQuestions = new ObservableCollection<Question>(Questions);
+            FilteredQuestions = UnfilteredQuestions;
+
             UnfilteredQuestions.CollectionChanged += (s, e) =>
             {
                 SearchByQuery(SearchQuery);
             };
-
-            var allQuestions = RestApiService<Question>.Get().Result;
-
-            if (allQuestions == null)
-                return;
-
-            UnfilteredQuestions = new ObservableCollection<Question>(allQuestions);
-            FilteredQuestions = UnfilteredQuestions;
         }
 
         private void SearchByQuery(string query)

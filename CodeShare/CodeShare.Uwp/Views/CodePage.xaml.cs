@@ -13,44 +13,47 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class CodePage : Page
     {
-        public CodeViewModel ViewModel { get; set; } = new CodeViewModel();
-        
-        public CodePage()
-        {
-            InitializeComponent();
-        }
+        public CodeViewModel ViewModel { get; set; }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationService.Lock();
 
+            Code code;
+
             switch (e.Parameter)
             {
                 case Guid guid:
-                    ViewModel.Code = await RestApiService<Code>.Get(guid);
+                    code = await RestApiService<Code>.Get(guid);
                     break;
                 case IEntity entity:
-                    ViewModel.Code = await RestApiService<Code>.Get(entity.Uid);
+                    code = await RestApiService<Code>.Get(entity.Uid);
                     break;
+                default:
+                    await NotificationService.DisplayErrorMessage("Developer error.");
+                    throw new InvalidOperationException();
             }
 
-            NavigationService.Unlock();
-
-            if (ViewModel.Code == null)
+            if (code == null)
             {
-                await NotificationService.DisplayErrorMessage("This resource pack do not exist.");
+                await NotificationService.DisplayErrorMessage("This code does not exist.");
                 NavigationService.GoBack();
             }
 
+            ViewModel = new CodeViewModel(code);
 
-            ViewModel.Code.Views++;
+            InitializeComponent();
 
-            if (!await RestApiService<Code>.Update(ViewModel.Code, ViewModel.Code.Uid))
+            NavigationService.Unlock();
+
+            ViewModel.Model.Views++;
+
+            if (!await RestApiService<Code>.Update(ViewModel.Model, ViewModel.Model.Uid))
             {
-                Debug.WriteLine($"Failed to increment view counter for code {ViewModel.Code.Uid}.");
+                Debug.WriteLine($"Failed to increment view counter for code {ViewModel.Model.Uid}.");
             }
 
-            NavigationService.SetHeaderTitle(ViewModel.Code?.Name);
+            NavigationService.SetHeaderTitle(ViewModel.Model?.Name);
         }
     }
 }

@@ -34,17 +34,17 @@
                     Grid.Column="0"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
-                    ProfilePicture="{x:Bind ViewModel.Question.User.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+                    ProfilePicture="{x:Bind ViewModel.Model.User.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}"
                     Height="48"
                     Width="48"/>
                 <xaml:RichTextBox
                     Grid.Column="1"
                     Height="auto"
-                    Rtf="{x:Bind ViewModel.Question.Text, Mode=OneWay}"/>
+                    Rtf="{x:Bind ViewModel.Model.Text, Mode=OneWay}"/>
             </Grid>
             <!-- Replies -->
             <TextBlock Text="Replies"/>
-            <controls:CommentListView Entity="{x:Bind ViewModel.Question, Mode=TwoWay}" />
+            <controls:QuestionCommentsPanel Question="{x:Bind ViewModel.Model, Mode=TwoWay}" />
         </StackPanel>
     </ScrollViewer>
 </Page>

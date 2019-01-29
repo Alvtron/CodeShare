@@ -13,44 +13,47 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class QuestionPage : Page
     {
-        public QuestionViewModel ViewModel { get; set; } = new QuestionViewModel();
-
-        public QuestionPage()
-        {
-            InitializeComponent();
-        }
+        public QuestionViewModel ViewModel { get; set; }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationService.Lock();
 
+            Question question;
+
             switch (e.Parameter)
             {
                 case Guid guid:
-                    ViewModel.Question = await RestApiService<Question>.Get(guid);
+                    question = await RestApiService<Question>.Get(guid);
                     break;
                 case IEntity entity:
-                    ViewModel.Question = await RestApiService<Question>.Get(entity.Uid);
+                    question = await RestApiService<Question>.Get(entity.Uid);
                     break;
+                default:
+                    await NotificationService.DisplayErrorMessage("Developer error.");
+                    throw new InvalidOperationException();
             }
 
-            NavigationService.Unlock();
-
-            if (ViewModel.Question == null)
+            if (question == null)
             {
-                await NotificationService.DisplayErrorMessage("This resource pack do not exist.");
+                await NotificationService.DisplayErrorMessage("This question does not exist.");
                 NavigationService.GoBack();
             }
 
+            ViewModel = new QuestionViewModel(question);
 
-            ViewModel.Question.Views++;
+            InitializeComponent();
 
-            if (!await RestApiService<Question>.Update(ViewModel.Question, ViewModel.Question.Uid))
+            NavigationService.Unlock();
+
+            ViewModel.Model.Views++;
+
+            if (!await RestApiService<Question>.Update(ViewModel.Model, ViewModel.Model.Uid))
             {
-                Debug.WriteLine($"Failed to increment view counter for code {ViewModel.Question.Uid}.");
+                Debug.WriteLine($"Failed to increment view counter for question {ViewModel.Model.Uid}.");
             }
 
-            NavigationService.SetHeaderTitle(ViewModel.Question?.Title);
+            NavigationService.SetHeaderTitle(ViewModel.Model?.Name);
         }
     }
 }

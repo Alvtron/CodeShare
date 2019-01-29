@@ -10,10 +10,10 @@ namespace CodeShare.DataAccess
     {
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Code> Codes { get; set; }
-        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<CodeLanguage> CodeLanguages { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<CodeFile> CodeFiles { get; set; }
+        public virtual DbSet<Reply> Replies { get; set; }
 
         public DataContext() : base("CodeShare")
         {
@@ -30,6 +30,8 @@ namespace CodeShare.DataAccess
         {
             Debug.WriteLine($"Creating model for Context...");
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            #region Logs
 
             Debug.WriteLine($"Creating model for {typeof(UserLog).Name} class.");
             modelBuilder.Entity<UserLog>().Map(m =>
@@ -79,6 +81,10 @@ namespace CodeShare.DataAccess
                 .WithMany(u => u.Logs)
                 .HasForeignKey(l => l.CommentUid);
 
+            #endregion
+
+            #region Videos
+
             Debug.WriteLine($"Creating model for {typeof(Video).Name} class.");
             modelBuilder.Entity<Video>().Map(m =>
             {
@@ -86,6 +92,10 @@ namespace CodeShare.DataAccess
                 m.ToTable($"{typeof(Video).Name}s");
             });
             modelBuilder.Entity<Video>().HasKey(e => e.Uid);
+
+            #endregion
+
+            #region Images
 
             Debug.WriteLine($"Creating model for {typeof(ProfilePicture).Name} class.");
             modelBuilder.Entity<ProfilePicture>().Map(m =>
@@ -131,6 +141,10 @@ namespace CodeShare.DataAccess
             });
             modelBuilder.Entity<Screenshot>().HasKey(e => e.Uid);
 
+            #endregion
+
+            #region Report
+
             Debug.WriteLine($"Creating model for {typeof(Report).Name} class.");
             modelBuilder.Entity<Report>().Map(m =>
             {
@@ -139,13 +153,9 @@ namespace CodeShare.DataAccess
             });
             modelBuilder.Entity<Report>().HasKey(e => e.Uid);
 
-            Debug.WriteLine($"Creating model for {typeof(Rating).Name} class.");
-            modelBuilder.Entity<Rating>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable($"{typeof(Rating).Name}s");
-            });
-            modelBuilder.Entity<Rating>().HasKey(e => e.Uid);
+            #endregion
+
+            #region CodeLanguage
 
             Debug.WriteLine($"Creating model for {typeof(CodeLanguage).Name} class.");
             modelBuilder.Entity<CodeLanguage>().Map(m =>
@@ -161,28 +171,11 @@ namespace CodeShare.DataAccess
             modelBuilder.Types<CodeLanguage>()
                 .Configure(ctc => ctc.Property(c => c.Syntax.Comments).HasColumnName("Syntax_Comments"));
 
-            Debug.WriteLine($"Creating model for {typeof(File).Name} class.");
-            modelBuilder.Entity<File>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable($"{typeof(File).Name}s");
-            });
-            modelBuilder.Entity<File>().HasKey(e => e.Uid);
+            #endregion
 
-            Debug.WriteLine($"Creating model for {typeof(Answer).Name} class.");
-            modelBuilder.Entity<Answer>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable($"{typeof(Answer).Name}s");
-            });
-            modelBuilder.Entity<Answer>().HasKey(e => e.Uid);
+            #region Content
 
             Debug.WriteLine($"Creating model for {typeof(Content).Name} class.");
-            modelBuilder.Entity<Content>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable($"{typeof(Content).Name}s");
-            });
             modelBuilder.Entity<Content>().HasKey(e => e.Uid);
             modelBuilder.Entity<Content>()
                 .HasMany(c => c.Banners)
@@ -193,8 +186,8 @@ namespace CodeShare.DataAccess
                 .WithRequired(c => c.Content)
                 .HasForeignKey(c => c.ContentUid);
             modelBuilder.Entity<Content>()
-                .HasMany(c => c.Comments)
-                .WithRequired(c => c.Content)
+                .HasMany(c => c.Replies)
+                .WithOptional(c => c.Content)
                 .HasForeignKey(c => c.ContentUid);
             modelBuilder.Entity<Content>()
                 .HasMany(c => c.Videos)
@@ -204,6 +197,10 @@ namespace CodeShare.DataAccess
                 .HasMany(c => c.Ratings)
                 .WithRequired(c => c.Content)
                 .HasForeignKey(c => c.ContentUid);
+
+            #endregion
+
+            #region User
 
             Debug.WriteLine($"Creating model for {typeof(User).Name} class.");
             modelBuilder.Entity<User>().ToTable("Users");
@@ -241,6 +238,10 @@ namespace CodeShare.DataAccess
             modelBuilder.Types<User>()
                 .Configure(ctc => ctc.Property(u => u.Color.A).HasColumnName("Color_A"));
 
+            #endregion
+
+            #region Code
+
             Debug.WriteLine($"Creating model for {typeof(Code).Name} class.");
             modelBuilder.Entity<Code>().ToTable("Codes");
             modelBuilder.Entity<Code>()
@@ -252,26 +253,57 @@ namespace CodeShare.DataAccess
                 .WithRequired(c => c.Code)
                 .HasForeignKey(l => l.CodeUid);
 
-            Debug.WriteLine($"Creating model for {typeof(Comment).Name} class.");
-            modelBuilder.Entity<Comment>().Map(m =>
+            Debug.WriteLine($"Creating model for {typeof(CodeFile).Name} class.");
+            modelBuilder.Entity<CodeFile>().Map(m =>
             {
                 m.MapInheritedProperties();
-                m.ToTable($"{typeof(Comment).Name}s");
+                m.ToTable($"{typeof(CodeFile).Name}s");
             });
+            modelBuilder.Entity<CodeFile>().HasKey(e => e.Uid);
+            modelBuilder.Entity<CodeFile>()
+                .HasRequired(c => c.CodeLanguage)
+                .WithMany()
+                .HasForeignKey(c => c.CodeLanguageUid);
+
+            #endregion
+
+            #region Comments
+
+            Debug.WriteLine($"Creating model for {typeof(Comment).Name} class.");
             modelBuilder.Entity<Comment>().HasKey(e => e.Uid);
             modelBuilder.Entity<Comment>()
                 .HasMany(e => e.Logs)
                 .WithRequired(e => e.Comment)
                 .HasForeignKey(e => e.CommentUid);
             modelBuilder.Entity<Comment>()
+                .HasMany(e => e.Ratings)
+                .WithRequired(e => e.Comment)
+                .HasForeignKey(e => e.CommentUid);
+
+            Debug.WriteLine($"Creating model for {typeof(Reply).Name} class.");
+            modelBuilder.Entity<Reply>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable($"Replies");
+            });
+            modelBuilder.Entity<Reply>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Reply>()
                 .HasMany(u => u.Replies)
                 .WithMany()
                 .Map(mc =>
                 {
-                    mc.ToTable("Replies");
-                    mc.MapLeftKey("Parent");
+                    mc.ToTable("RepliesToReply");
+                    mc.MapLeftKey("Comment");
                     mc.MapRightKey("Reply");
                 });
+            modelBuilder.Entity<Reply>()
+                .HasOptional(e => e.Content)
+                .WithMany(e => e.Replies)
+                .HasForeignKey(e => e.ContentUid);
+
+            #endregion
+
+            #region Question
 
             Debug.WriteLine($"Creating model for {typeof(Question).Name} class.");
             modelBuilder.Entity<Question>().ToTable($"{typeof(Question).Name}s");
@@ -288,6 +320,36 @@ namespace CodeShare.DataAccess
                 .HasOptional(q => q.CodeLanguage)
                 .WithMany()
                 .HasForeignKey(q => q.CodeLanguageUid);
+
+            #endregion
+
+            #region Rating
+
+            Debug.WriteLine($"Creating model for {typeof(Rating).Name} class.");
+            modelBuilder.Entity<Rating>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable($"{typeof(Rating).Name}s");
+            });
+            modelBuilder.Entity<Rating>().HasKey(e => e.Uid);
+
+            Debug.WriteLine($"Creating model for {typeof(ContentRating).Name} class.");
+            modelBuilder.Entity<ContentRating>().ToTable($"{typeof(ContentRating).Name}s");
+            modelBuilder.Entity<ContentRating>().HasKey(e => e.Uid);
+            modelBuilder.Entity<ContentRating>()
+                .HasRequired(c => c.Content)
+                .WithMany(c => c.Ratings)
+                .HasForeignKey(c => c.ContentUid);
+
+            Debug.WriteLine($"Creating model for {typeof(CommentRating).Name} class.");
+            modelBuilder.Entity<CommentRating>().ToTable($"{typeof(CommentRating).Name}s");
+            modelBuilder.Entity<CommentRating>().HasKey(e => e.Uid);
+            modelBuilder.Entity<CommentRating>()
+                .HasRequired(c => c.Comment)
+                .WithMany(c => c.Ratings)
+                .HasForeignKey(c => c.CommentUid);
+
+            #endregion
 
             Debug.WriteLine("Model creating completed.");
         }

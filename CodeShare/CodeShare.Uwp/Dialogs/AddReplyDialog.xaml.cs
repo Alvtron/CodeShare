@@ -19,12 +19,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CodeShare.Uwp.Dialogs
 {
-    public sealed partial class ReplyCommentDialog : ContentDialog
+    public sealed partial class AddReplyDialog : ContentDialog
     {
-        private Comment ParentComment { get; set; }
+        private Reply ParentComment { get; set; }
         private string Text { get; set; } = string.Empty;
 
-        public ReplyCommentDialog(Comment parentComment)
+        public AddReplyDialog(Reply parentComment)
         {
             if (parentComment == null)
             {
@@ -32,7 +32,7 @@ namespace CodeShare.Uwp.Dialogs
             }
 
             ParentComment = parentComment;
-            Title = $"Reply to {ParentComment.User.Name}";
+            Title = $"Reply to {ParentComment?.User?.Name}";
             InitializeComponent();
         }
 
@@ -43,7 +43,7 @@ namespace CodeShare.Uwp.Dialogs
                 return;
             }
 
-            ParentComment.Reply(new Comment(AuthService.CurrentUser, ParentComment.ContentUid, Text));
+            ParentComment.AddReply(new Reply(AuthService.CurrentUser, Text));
         }
     }
 }

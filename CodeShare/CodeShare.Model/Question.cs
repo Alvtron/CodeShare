@@ -30,7 +30,7 @@ namespace CodeShare.Model
 
         public Guid UserUid { get; set; }
 
-        public Comment Solution { get; set; }
+        public Reply Solution { get; set; }
 
         public Guid? SolutionUid { get; set; }
 
@@ -61,29 +61,29 @@ namespace CodeShare.Model
             return GetType().Name;
         }
 
-        public new void SetBanner(User user, Banner banner)
+        public override void SetBanner(User user, Banner banner)
         {
-            base.SetBanner(user, banner);
+            SetBanner(banner);
             Logs.Add(new QuestionLog(this, user, "uploaded", banner));
         }
 
-        public new void AddVideo(User user, Video video)
+        public override void AddScreenshot(User user, Screenshot screenshot)
         {
-            base.AddVideo(user, video);
+            AddScreenshot(screenshot);
+            Logs.Add(new QuestionLog(this, user, "added", screenshot));
+        }
+
+        public override void AddVideo(User user, Video video)
+        {
+            AddVideo(video);
 
             Logs.Add(new QuestionLog(this, user, "added", video));
         }
 
-        public new void Reply(Comment comment)
+        public override void Reply(User user, Reply comment)
         {
-            base.Reply(comment);
-            Logs.Add(new QuestionLog(this, comment.User, "added", comment));
-        }
-
-        public new void AddScreenshot(Screenshot screenshot, User user)
-        {
-            base.AddScreenshot(screenshot, user);
-            Logs.Add(new QuestionLog(this, user, "added", screenshot));
+            Reply(comment);
+            Logs.Add(new QuestionLog(this, user, "added", comment));
         }
     }
 }

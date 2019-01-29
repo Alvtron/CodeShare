@@ -15,20 +15,19 @@ namespace CodeShare.WebApi.Controllers
     public class CodeController : BaseController, IController<Code>
     {
         private IQueryable<Code> Entities => Context.Codes
+            .Include(a => a.Banners)
+            .Include(c => c.Screenshots)
+            .Include(c => c.Videos)
             .Include(c => c.User)
             .Include(c => c.User.ProfilePictures)
             .Include(c => c.User.Banners)
             .Include(c => c.User.Screenshots)
-            .Include(c => c.Files)
+            .Include(c => c.Files.Select(f => f.CodeLanguage))
             .Include(e => e.Logs)
             .Include(c => c.Ratings)
-            .Include(c => c.CodeLanguage)
-            .Include(c => c.Comments.Select(comment => comment.User.ProfilePictures))
-            .Include(c => c.Comments.Select(comment => comment.User.Banners))
-            .Include(c => c.Comments.Select(comment => comment.Ratings))
-            .Include(a => a.Banners)
-            .Include(c => c.Screenshots)
-            .Include(c => c.Videos);
+            .Include(c => c.Replies.Select(comment => comment.User.ProfilePictures))
+            .Include(c => c.Replies.Select(comment => comment.User.Banners))
+            .Include(c => c.Replies.Select(comment => comment.Ratings));
 
         /// <summary>
         /// Gets all entities from database.
@@ -41,8 +40,7 @@ namespace CodeShare.WebApi.Controllers
 
             var entities = Context.Codes
                 .Include(a => a.Banners)
-                .Include(c => c.User)
-                .Include(c => c.CodeLanguage);
+                .Include(c => c.User);
 
             return entities;
         }
@@ -93,7 +91,7 @@ namespace CodeShare.WebApi.Controllers
             try
             {
                 Context.Entry(existingEntity).CurrentValues.SetValues(entity);
-                UpdateEntities(entity.Comments, existingEntity.Comments);
+                UpdateEntities(entity.Replies, existingEntity.Replies);
                 UpdateEntities(entity.Ratings, existingEntity.Ratings);
                 UpdateEntities(entity.Logs, existingEntity.Logs);
                 UpdateEntities(entity.Files, existingEntity.Files);

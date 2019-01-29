@@ -27,35 +27,35 @@
                     <!-- Banner -->
                     <Image
                         Height="200"
-                        Source="{x:Bind ViewModel.Code.Banner.Url, Converter={StaticResource ImageConverter}, Mode=OneWay}"
+                        Source="{x:Bind ViewModel.Model.Banner.Url, Converter={StaticResource ImageConverter}, Mode=OneWay}"
                         Stretch="UniformToFill"
-                        Visibility="{x:Bind ViewModel.Code.HasBanners, Converter={StaticResource VisibillityConverter}, Mode=OneWay}"
+                        Visibility="{x:Bind ViewModel.Model.HasBanners, Converter={StaticResource VisibillityConverter}, Mode=OneWay}"
                         RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.AlignHorizontalCenterWithPanel="True" />
-                    <TextBlock Text="{x:Bind ViewModel.Code.Name, Mode=OneWay}" VerticalAlignment="Bottom" Padding="48" FontSize="48" />
+                    <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" VerticalAlignment="Bottom" Padding="48" FontSize="48" />
                 </Grid>
 
                 <RelativePanel Margin="48">
 
                     <!-- Info panel -->
-                    <controls:CodeAuthorBlock Name="Info" MinWidth="150" MaxWidth="200" Code="{x:Bind ViewModel.Code, Mode=OneWay}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
+                    <controls:CodeAuthorBlock Name="Info" MinWidth="150" MaxWidth="200" Code="{x:Bind ViewModel.Model, Mode=OneWay}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
 
                     <!-- Content Panel -->
                     <Pivot RelativePanel.LeftOf="Info" RelativePanel.AlignTopWithPanel="True" Margin="24,0,0,0">
                         <!-- Code -->
                         <PivotItem Header="Code">
-                            <controls:FileListView Files="{x:Bind ViewModel.Code.FilesSorted, Mode=OneWay}" />
+                            <controls:CodeFileListView CodeFiles="{x:Bind ViewModel.Model.Files, Mode=OneWay}" />
                         </PivotItem>
                         <!-- About -->
                         <PivotItem Header="About">
                             <StackPanel>
-                                <xaml:RichTextBox Rtf="{x:Bind ViewModel.Code.About, Mode=OneWay}"/>
+                                <xaml:RichTextBox Rtf="{x:Bind ViewModel.Model.About, Mode=OneWay}"/>
                             </StackPanel>
                         </PivotItem>
                         <!-- Gallery -->
                         <PivotItem Header="Gallery">
                             <StackPanel Spacing="8">
-                                <GridView Header="Screenshots" ItemsSource="{x:Bind ViewModel.Code.Screenshots, Mode=OneWay}" IsItemClickEnabled="True">
+                                <GridView Header="Screenshots" ItemsSource="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" IsItemClickEnabled="True">
                                     <GridView.ItemTemplate>
                                         <DataTemplate x:DataType="model:Screenshot">
                                             <Grid>
@@ -67,7 +67,7 @@
                                         </DataTemplate>
                                     </GridView.ItemTemplate>
                                 </GridView>
-                                <GridView Header="Videos" ItemsSource="{x:Bind ViewModel.Code.Videos, Mode=OneWay}" IsItemClickEnabled="True" >
+                                <GridView Header="Videos" ItemsSource="{x:Bind ViewModel.Model.Videos, Mode=OneWay}" IsItemClickEnabled="True" >
                                     <GridView.ItemTemplate>
                                         <DataTemplate x:DataType="model:Video">
                                             <Grid>
@@ -83,11 +83,11 @@
                         </PivotItem>
                         <!-- Comments -->
                         <PivotItem Header="Comments">
-                            <controls:CommentListView Entity="{x:Bind ViewModel.Code, Mode=TwoWay}" />
+                            <controls:CodeCommentsPanel Code="{x:Bind ViewModel.Model, Mode=TwoWay}" />
                         </PivotItem>
                         <!-- Changes -->
                         <PivotItem Header="Changes">
-                            <controls:ActivityListView LogsSource="{x:Bind ViewModel.Code.Logs, Mode=OneWay}" />
+                            <controls:ActivityListView LogsSource="{x:Bind ViewModel.Model.Logs, Mode=OneWay}" />
                         </PivotItem>
                     </Pivot>
                 </RelativePanel>

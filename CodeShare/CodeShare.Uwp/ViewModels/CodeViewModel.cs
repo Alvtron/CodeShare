@@ -12,24 +12,19 @@ using CodeShare.Uwp.Controls;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public class CodeViewModel : ContentPageViewModel
+    public class CodeViewModel : ContentViewModel<Code>
     {
-        private Code _code = new Code();
-        public Code Code
+        public CodeViewModel(Code code)
+            : base(code)
         {
-            get => _code;
-            set
-            {
-                SetField(ref _code, value);
-                IsUserAuthor = value.User.Equals(AuthService.CurrentUser);
-            }
+            IsUserAuthor = code.User.Equals(AuthService.CurrentUser);
         }
 
         public override async Task<bool> Refresh()
         {
-            if (!(await RestApiService<Code>.Get(Code.Uid) is Code code)) return false;
+            if (!(await RestApiService<Code>.Get(Model.Uid) is Code code)) return false;
 
-            Code = code;
+            Model = code;
             return true;
         }
 
@@ -45,13 +40,13 @@ namespace CodeShare.Uwp.ViewModels
 
         public override async Task ReportAsync()
         {
-            if (AuthService.CurrentUser == null || Code == null)
+            if (AuthService.CurrentUser == null || Model == null)
             {
                 await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
                 return;
             }
 
-            var reportDialog = new ReportDialog(Code?.Name);
+            var reportDialog = new ReportDialog(Model?.Name);
 
             if (await reportDialog.ShowAsync() != ContentDialogResult.Secondary || !reportDialog.Valid)
             {

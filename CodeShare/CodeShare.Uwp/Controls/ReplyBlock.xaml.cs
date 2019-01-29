@@ -3,6 +3,7 @@ using CodeShare.Uwp.DataSource;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
+using CodeShare.Uwp.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,18 +25,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class CommentBlock : UserControl
+    public sealed partial class ReplyBlock : UserControl
     {
-        public delegate void CommentChangedHandler();
-        public event CommentChangedHandler CommentChanged;
+        public static readonly DependencyProperty ReplyProperty = DependencyProperty.Register("Reply", typeof(Reply), typeof(ReplyBlock), new PropertyMetadata(default(Reply)));
 
-        public static readonly DependencyProperty CommentProperty = DependencyProperty.Register("Comment", typeof(Comment), typeof(CommentBlock), new PropertyMetadata(new Comment()));
+        private RelayCommand _navigateToUserCommand;
+        public ICommand NavigateToUserCommand => _navigateToUserCommand = _navigateToUserCommand ?? new RelayCommand(parameter => NavigateToUser());
 
         private RelayCommand _likeCommand;
         public ICommand LikeCommand => _likeCommand = _likeCommand ?? new RelayCommand(async parameter => await Like());
 
         private RelayCommand _replyCommand;
-        public ICommand ReplyCommand => _replyCommand = _replyCommand ?? new RelayCommand(async parameter => await Reply());
+        public ICommand ReplyCommand => _replyCommand = _replyCommand ?? new RelayCommand(async parameter => await AddReply());
 
         private RelayCommand _shareCommand;
         public ICommand ShareCommand => _shareCommand = _shareCommand ?? new RelayCommand(async parameter => await Share());
@@ -43,53 +44,70 @@ namespace CodeShare.Uwp.Controls
         private RelayCommand _reportCommand;
         public ICommand ReportCommand => _reportCommand = _reportCommand ?? new RelayCommand(async parameter => await Report());
 
-        public Comment Comment
+        public Reply Reply
         {
-            get => (Comment)GetValue(CommentProperty);
-            set => SetValue(CommentProperty, value);
+            get => (Reply)GetValue(ReplyProperty);
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                if (value.Replies == null || value.Replies.Count == 0)
+                {
+                    SetValue(ReplyProperty, RestApiService<Reply>.Get(value.Uid).Result);
+                }
+                else
+                {
+                    SetValue(ReplyProperty, value);
+                }
+            }
         }
 
-        private ReplyCommentDialog ReplyDialog { get; set; }
+        private AddReplyDialog ReplyDialog { get; set; }
 
-        public CommentBlock()
+        public ReplyBlock()
         {
             InitializeComponent();
         }
 
-        public async Task UpdateComment()
+        private void NavigateToUser()
         {
-            if (!await RestApiService<Comment>.Update(Comment, Comment.Uid))
+            NavigationService.Navigate(typeof(UserPage), Reply.User);
+        }
+
+        private async Task UpdateComment()
+        {
+            if (!await RestApiService<Reply>.Update(Reply, Reply.Uid))
             {
                 await NotificationService.DisplayErrorMessage("Something went wrong with updating the comment. Try again later.");
                 return;
             }
-
-            CommentChanged();
         }
 
-        public async Task Like()
+        private async Task Like()
         {
-            if (Comment == null)
+            if (Reply == null)
             {
-                await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
+                await NotificationService.DisplayErrorMessage("Developer error.");
                 return;
             }
 
-            Comment.Like(AuthService.CurrentUser);
+            Reply.Like(AuthService.CurrentUser);
 
             await UpdateComment();
         }
 
-        public async Task Reply()
+        private async Task AddReply()
         {
-            if (Comment == null)
+            if (Reply == null)
             {
-                await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
+                await NotificationService.DisplayErrorMessage("Developer error.");
                 return;
             }
             if (ReplyDialog == null)
             {
-                ReplyDialog = new ReplyCommentDialog(Comment);
+                ReplyDialog = new AddReplyDialog(Reply);
             }
             
             await ReplyDialog.ShowAsync();
@@ -97,11 +115,11 @@ namespace CodeShare.Uwp.Controls
             await UpdateComment();
         }
 
-        public async Task Share()
+        private async Task Share()
         {
-            if (Comment == null)
+            if (Reply == null)
             {
-                await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
+                await NotificationService.DisplayErrorMessage("Developer error.");
                 return;
             }
 
@@ -110,15 +128,15 @@ namespace CodeShare.Uwp.Controls
             //await UpdateComment();
         }
 
-        public async Task Report()
+        private async Task Report()
         {
-            if (Comment == null)
+            if (Reply == null)
             {
-                await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
+                await NotificationService.DisplayErrorMessage("Developer error.");
                 return;
             }
 
-            var reportDialog = new ReportDialog("comment by " + Comment.User?.Name);
+            var reportDialog = new ReportDialog("Reply by " + Reply.User?.Name);
 
             if (await reportDialog.ShowAsync() != ContentDialogResult.Secondary || !reportDialog.Valid)
             {

@@ -26,23 +26,43 @@ namespace CodeShare.Model
             set => SetField(ref _views, value);
         }
 
-        public ObservableCollection<Screenshot> Screenshots { get; set; } = new ObservableCollection<Screenshot>();
-        public IEnumerable<Screenshot> ScreenshotsSorted => Screenshots.OrderByDescending(c => c.Created);
+        private ObservableCollection<Screenshot> _screenshots = new ObservableCollection<Screenshot>();
+        public ObservableCollection<Screenshot> Screenshots
+        {
+            get => _screenshots;
+            set => SetField(ref _screenshots, value);
+        }
 
-        public ObservableCollection<Banner> Banners { get; set; } = new ObservableCollection<Banner>();
-        public IEnumerable<Banner> BannersSorted => Banners?.OrderByDescending(c => c.Created);
+        private ObservableCollection<Banner> _banners = new ObservableCollection<Banner>();
+        public ObservableCollection<Banner> Banners
+        {
+            get => _banners;
+            set => SetField(ref _banners, value);
+        }
 
-        public ObservableCollection<Video> Videos { get; set; } = new ObservableCollection<Video>();
-        public IEnumerable<Video> VideosSorted => Videos.OrderByDescending(c => c.Created);
+        private ObservableCollection<Video> _videos = new ObservableCollection<Video>();
+        public ObservableCollection<Video> Videos
+        {
+            get => _videos;
+            set => SetField(ref _videos, value);
+        }
 
-        public ObservableCollection<Comment> Comments { get; set; } = new ObservableCollection<Comment>();
-        public IEnumerable<Comment> CommentsSorted => Comments.OrderByDescending(c => c.Created);
+        private ObservableCollection<Reply> _replies = new ObservableCollection<Reply>();
+        public ObservableCollection<Reply> Replies
+        {
+            get => _replies;
+            set => SetField(ref _replies, value);
+        }
 
-        public IList<Rating> Ratings { get; set; } = new List<Rating>();
+        private ObservableCollection<ContentRating> _ratings = new ObservableCollection<ContentRating>();
+        public ObservableCollection<ContentRating> Ratings
+        {
+            get => _ratings;
+            set => SetField(ref _ratings, value);
+        }
 
         [NotMapped, JsonIgnore]
         public Banner Banner => Banners.FirstOrDefault(p => p.IsPrimary);
-
         [NotMapped, JsonIgnore]
         public bool HasVideos => Videos != null && Videos.Any();
         [NotMapped, JsonIgnore]
@@ -50,11 +70,11 @@ namespace CodeShare.Model
         [NotMapped, JsonIgnore]
         public bool HasBanners => Banners != null && Banners.Any();
         [NotMapped, JsonIgnore]
-        public bool HasReplies => Comments?.Count > 0;
+        public bool HasReplies => Replies?.Count > 0;
         [NotMapped, JsonIgnore]
         public bool HasRatings => Ratings?.Count > 0;
         [NotMapped, JsonIgnore]
-        public int NumberOfReplies => Comments?.Count ?? 0;
+        public int NumberOfReplies => Replies?.Count ?? 0;
         [NotMapped, JsonIgnore]
         public bool HasLikes => Ratings?.Count > 0;
         [NotMapped, JsonIgnore]
@@ -66,12 +86,11 @@ namespace CodeShare.Model
 
         #region Methods
 
-        public void SetBanner(User user, Banner banner)
+        public abstract void SetBanner(User user, Banner banner);
+        protected void SetBanner(Banner banner)
         {
             if (banner == null)
                 throw new NullReferenceException("Video was null.");
-            if (user == null)
-                throw new NullReferenceException("User was null.");
             if (Videos == null)
                 Videos = new ObservableCollection<Video>();
 
@@ -94,26 +113,39 @@ namespace CodeShare.Model
             RefreshBindings();
         }
 
-        public void AddVideo(User user, Video video)
+        public abstract void AddScreenshot(User user, Screenshot screenshot);
+        protected void AddScreenshot(Screenshot screenshot)
+        {
+            if (screenshot == null)
+                throw new NullReferenceException("Screenshot was null.");
+            if (Screenshots == null)
+                Screenshots = new ObservableCollection<Screenshot>();
+
+            Screenshots.Add(screenshot);
+        }
+
+        public abstract void AddVideo(User user, Video video);
+        protected void AddVideo(Video video)
         {
             if (video == null || video.Empty)
                 throw new NullReferenceException("Video was null.");
-            if (user == null)
-                throw new NullReferenceException("User was null.");
             if (Videos == null)
                 Videos = new ObservableCollection<Video>();
 
-            Videos.Insert(0, video);
+            Videos.Add(video);
         }
 
-        public void Reply(Comment comment)
+        public abstract void Reply(User user, Reply comment);
+        protected void Reply(Reply comment)
         {
             if (comment == null)
                 throw new NullReferenceException("Comment was null.");
-            if (Comments == null)
-                Comments = new ObservableCollection<Comment>();
+            if (Replies == null)
+                Replies = new ObservableCollection<Reply>();
 
-            Comments.Add(comment);
+            Replies.Add(comment);
+
+            Replies = new ObservableCollection<Reply>(Replies.OrderByDescending(c => c.Created));
         }
 
         public void Like(User user)
@@ -121,7 +153,7 @@ namespace CodeShare.Model
             if (Ratings == null || HasLiked(user))
                 return;
 
-            Ratings.Add(new Rating(user, true));
+            Ratings.Add(new ContentRating(user, true));
         }
 
         public void Dislike(User user)
@@ -140,18 +172,6 @@ namespace CodeShare.Model
         public bool HasRated(User user)
         {
             return HasRatings && Ratings.Any(x => x.User.Equals(user));
-        }
-
-        public void AddScreenshot(Screenshot screenshot, User user)
-        {
-            if (screenshot == null)
-                throw new NullReferenceException("Screenshot was null.");
-            if (user == null)
-                throw new NullReferenceException("User was null.");
-            if (Screenshots == null)
-                Screenshots = new ObservableCollection<Screenshot>();
-
-            Screenshots.Add(screenshot);
         }
 
         #endregion

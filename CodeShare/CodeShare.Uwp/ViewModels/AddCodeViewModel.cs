@@ -47,17 +47,25 @@ namespace CodeShare.Uwp.ViewModels
         {
             var files = await StorageUtilities.PickMultipleFiles();
 
-            var codeLanguages = await RestApiService<CodeLanguage>.Get();
-
             if (files == null || files.Count == 0)
                 return;
 
+            var codeLanguages = await RestApiService<CodeLanguage>.Get();
+
             foreach (var file in files)
             {
-                if (codeLanguages.Any(cl => cl.Extension == file.FileType)) continue;
+                var fileType = file.FileType.ToLower();
+                var codeLanguage = codeLanguages.FirstOrDefault(cl => cl.Extension.ToLower().Equals(fileType));
+                    
+                if (codeLanguage == null)
+                {
+                    Debug.WriteLine($"Rejected file {file.Name}. Extension is not supported.");
+                    continue;
+                }
+
                 try
                 {
-                    var codeFile = new File(await FileIO.ReadTextAsync(file), file.DisplayName, file.FileType);
+                    var codeFile = new CodeFile(codeLanguage, await FileIO.ReadTextAsync(file), file.DisplayName, file.FileType);
                     Code.AddFile(codeFile, AuthService.CurrentUser);
                 }
                 catch (ArgumentOutOfRangeException)

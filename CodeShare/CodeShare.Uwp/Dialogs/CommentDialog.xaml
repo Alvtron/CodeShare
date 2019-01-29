@@ -16,5 +16,5 @@
         </TextBlock>
     </ContentDialog.Title>
 
-    <controls:CommentBlock Comment="{x:Bind Comment, Mode=OneWay}" />
+    <controls:ReplyBlock Reply="{x:Bind Comment, Mode=OneWay}" />
 </ContentDialog>

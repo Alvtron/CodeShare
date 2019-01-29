@@ -19,9 +19,9 @@ namespace CodeShare.WebApi.Controllers
             .Include(e => e.Codes.Select(f => f.Banners))
             .Include(e => e.Ratings)
             .Include(e => e.Logs)
-            .Include(e => e.Comments.Select(comment => comment.User.ProfilePictures))
-            .Include(e => e.Comments.Select(comment => comment.User.Banners))
-            .Include(e => e.Comments.Select(comment => comment.Ratings))
+            .Include(e => e.Replies.Select(comment => comment.User.ProfilePictures))
+            .Include(e => e.Replies.Select(comment => comment.User.Banners))
+            .Include(e => e.Replies.Select(comment => comment.Ratings))
             .Include(e => e.ProfilePictures)
             .Include(e => e.Banners)
             .Include(e => e.Videos);
@@ -104,7 +104,7 @@ namespace CodeShare.WebApi.Controllers
             {
                 UpdateEntity(entity, existingEntity);
                 UpdateEntities(entity.Friends, existingEntity.Friends);
-                UpdateEntities(entity.Comments, existingEntity.Comments);
+                UpdateEntities(entity.Replies, existingEntity.Replies);
                 UpdateEntities(entity.Ratings, existingEntity.Ratings);
                 UpdateEntities(entity.Logs, existingEntity.Logs);
                 UpdateEntities(entity.ProfilePictures, existingEntity.ProfilePictures);

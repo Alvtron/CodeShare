@@ -40,7 +40,7 @@ namespace CodeShare.Uwp.Controls
         public ICommand UnderlineCommand => _underlineCommand = _underlineCommand ?? new RelayCommand(parameter => OnUnderline());
 
         private RelayCommand _clearCommand;
-        public ICommand ClearCommand => _clearCommand = _clearCommand ?? new RelayCommand(parameter => OnClear());
+        public ICommand ClearCommand => _clearCommand = _clearCommand ?? new RelayCommand(parameter => Clear());
 
         public string Header
         {
@@ -108,7 +108,7 @@ namespace CodeShare.Uwp.Controls
             }
         }
 
-        private void OnClear()
+        public void Clear()
         {
             EditorBox.IsReadOnly = false;
             EditorBox.Document.SetText(TextSetOptions.None, "");

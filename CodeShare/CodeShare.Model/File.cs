@@ -8,10 +8,6 @@ namespace CodeShare.Model
 {
     public class File : Entity, IFile
     {
-        public Code Code { get; set; }
-
-        public Guid? CodeUid { get; set; }
-
         private string _data;
         public string Data
         {

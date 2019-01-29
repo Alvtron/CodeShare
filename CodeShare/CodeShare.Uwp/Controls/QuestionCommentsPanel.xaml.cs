@@ -20,46 +20,28 @@ using System.Threading.Tasks;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.DataSource;
 using CodeShare.Uwp.Dialogs;
+using System.Diagnostics;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class CommentListView : UserControl
+    public sealed partial class QuestionCommentsPanel : UserControl
     {
-        public static readonly DependencyProperty EntityProperty = DependencyProperty.Register("Entity", typeof(Content), typeof(CommentListView), new PropertyMetadata(default(Content)));
+        public static readonly DependencyProperty QuestionProperty = DependencyProperty.Register("Question", typeof(Question), typeof(QuestionCommentsPanel), new PropertyMetadata(default(Question)));
 
         private RelayCommand<Editor> _uploadCommand;
         public ICommand UploadCommand => _uploadCommand = _uploadCommand ?? new RelayCommand<Editor>(async editor => await UploadCommentAsync(editor));
 
-        public Content Entity
+        public Question Question
         {
-            get => GetValue(EntityProperty) as Content;
-            set
-            {
-                if (!(value is Content content)) return;
-                SetValue(EntityProperty, content);
-                UpdateCommentList();
-            }
+            get => GetValue(QuestionProperty) as Question;
+            set => SetValue(QuestionProperty, value);
         }
 
-        public CommentListView()
+        public QuestionCommentsPanel()
         {
             InitializeComponent();
-        }
-
-        public void UpdateCommentList()
-        {
-            CommentList.ItemsSource = Entity.Comments.OrderByDescending(c => c.Created);
-        }
-
-        public async Task Refresh()
-        {
-            for (var index = 0; index < Entity.Comments.Count; index++)
-            {
-                Entity.Comments[index] = await RestApiService<Comment>.Get(Entity.Comments[index].Uid);
-            }
-            UpdateCommentList();
         }
 
         public async Task UploadCommentAsync(Editor editor)
@@ -72,28 +54,26 @@ namespace CodeShare.Uwp.Controls
 
             if (editor == null || string.IsNullOrWhiteSpace(editor.Rtf))
             {
-                await NotificationService.DisplayErrorMessage("Comment is empty");
+                await NotificationService.DisplayErrorMessage("Can't post empty comment!");
                 return;
             }
 
             NavigationService.Lock();
 
-            var comment = new Comment(AuthService.CurrentUser, Entity.Uid, editor.Rtf);
+            var comment = new Reply(Question.Uid, AuthService.CurrentUser, editor.Rtf);
 
-            if (!await RestApiService<Comment>.Add(comment))
+            Question.Reply(AuthService.CurrentUser, comment);
+
+            if (!await RestApiService<Question>.Update(Question, Question.Uid))
             {
                 await NotificationService.DisplayErrorMessage("Something went wrong when uploading your comment.");
             }
-            comment.User = AuthService.CurrentUser;
-            Entity.Comments.Add(comment);
-            UpdateCommentList();
+            else
+            {
+                editor.Clear();
+            }
 
             NavigationService.Unlock();
-        }
-
-        private async void OnCommentChanged()
-        {
-            await Refresh();
         }
     }
 }

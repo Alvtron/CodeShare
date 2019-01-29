@@ -22,9 +22,10 @@
             <StackPanel HorizontalAlignment="Left" Margin="8">
                 <TextBlock Text="{x:Bind Code.Name, Mode=OneWay}" Foreground="White" />
                 <TextBlock Foreground="DimGray">
-                    <Run Text="{x:Bind Code.User.Name, Mode=OneWay}"  />
-                    <Run Text="•" />
-                    <Run Text="{x:Bind Code.Views, Mode=OneWay}" />
+                <Run Text="{x:Bind Code.User.Name, Mode=OneWay}" />
+                <Run Text="•" />
+                <Run Text="{x:Bind Code.Views, Mode=OneWay}" />
+                <Run Text="views" />
                 </TextBlock>
             </StackPanel>
         </Grid>

@@ -12,25 +12,25 @@ using System.Web.Http.Results;
 
 namespace CodeShare.WebApi.Controllers
 {
-    public class CommentController : BaseController, IController<Comment>
+    public class ReplyController : BaseController, IController<Reply>
     {
-        private IQueryable<Comment> Entities => Context.Comments
+        private IQueryable<Reply> Entities => Context.Replies
             .Include(c => c.User)
             .Include(c => c.User.ProfilePictures)
             .Include(c => c.User.Banners)
-            .Include(c => c.Content)
-            .Include(c => c.Replies)
-            .Include(c => c.Replies.Select(reply => reply.User.ProfilePictures))
-            .Include(c => c.Replies.Select(reply => reply.User.Banners))
-            .Include(c => c.Replies.Select(reply => reply.Ratings))
-            .Include(c => c.Ratings);
+            .Include(c => c.User.Screenshots)
+            .Include(e => e.Logs)
+            .Include(c => c.Ratings)
+            .Include(c => c.Replies.Select(comment => comment.User.ProfilePictures))
+            .Include(c => c.Replies.Select(comment => comment.User.Banners))
+            .Include(c => c.Replies.Select(comment => comment.Ratings));
 
         /// <summary>
         /// Gets all entities from database.
         /// </summary>
         /// <returns></returns>
-        [Route("api/comments")]
-        public IQueryable<Comment> Get()
+        [Route("api/replys")]
+        public IQueryable<Reply> Get()
         {
             if (!IsDatabaseOnline) return null;
 
@@ -42,7 +42,7 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        [ResponseType(typeof(Comment)), Route("api/comments/{uid}")]
+        [ResponseType(typeof(Reply)), Route("api/replys/{uid}")]
         public IHttpActionResult Get(Guid uid)
         {
             if (!IsDatabaseOnline) return InternalServerError();
@@ -64,8 +64,8 @@ namespace CodeShare.WebApi.Controllers
         /// <param name="uid">The uid.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [ResponseType(typeof(void)), Route("api/comments/{uid}")]
-        public IHttpActionResult Put(Guid uid, [FromBody] Comment entity)
+        [ResponseType(typeof(void)), Route("api/replys/{uid}")]
+        public IHttpActionResult Put(Guid uid, [FromBody] Reply entity)
         {
             if (!IsDatabaseOnline) return InternalServerError();
 
@@ -82,7 +82,7 @@ namespace CodeShare.WebApi.Controllers
 
             try
             {
-                UpdateEntity(entity, existingEntity);
+                Context.Entry(existingEntity).CurrentValues.SetValues(entity);
                 UpdateEntities(entity.Replies, existingEntity.Replies);
                 UpdateEntities(entity.Ratings, existingEntity.Ratings);
                 UpdateEntities(entity.Logs, existingEntity.Logs);
@@ -103,12 +103,12 @@ namespace CodeShare.WebApi.Controllers
         }
 
         /// <summary>
-        /// Adds the specified entity comment to the database.
+        /// Adds the specified entity to the database.
         /// </summary>
-        /// <param name="entity">The entity comment.</param>
+        /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [ResponseType(typeof(Comment)), Route("api/comments")]
-        public IHttpActionResult Post(Comment entity)
+        [ResponseType(typeof(Reply)), Route("api/replys")]
+        public IHttpActionResult Post(Reply entity)
         {
             if (!IsDatabaseOnline)
                 return InternalServerError();
@@ -119,7 +119,7 @@ namespace CodeShare.WebApi.Controllers
 
             try
             {
-                Context.Comments.Add(entity);
+                Context.Replies.Add(entity);
                 Context.SaveChanges();
 
                 return Ok(entity);
@@ -154,7 +154,7 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        [ResponseType(typeof(Comment)), Route("api/comments/{uid}")]
+        [ResponseType(typeof(Reply)), Route("api/replys/{uid}")]
         public IHttpActionResult Delete(Guid uid)
         {
             if (!IsDatabaseOnline) return InternalServerError();
@@ -165,7 +165,7 @@ namespace CodeShare.WebApi.Controllers
             {
                 Context.SaveChanges();
 
-                return Ok($"The entity {uid} was successfully deleted.");
+                return Ok($"Code {uid} was successfully deleted.");
             }
             catch (Exception exception)
             {

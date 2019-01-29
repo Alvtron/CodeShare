@@ -26,14 +26,20 @@ namespace CodeShare.Uwp.Controls
 {
     public sealed partial class ActivityListView : UserControl
     {
-        public static readonly DependencyProperty LogsSourceProperty = DependencyProperty.Register("Logs", typeof(object), typeof(ActivityListView), new PropertyMetadata(null));
+        public static readonly DependencyProperty LogsSourceProperty = DependencyProperty.Register("LogsSource", typeof(object), typeof(ActivityListView), new PropertyMetadata(null));
 
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(ActivityListView), new PropertyMetadata(null));
 
         public object LogsSource
         {
             get => GetValue(LogsSourceProperty);
-            set => SetValue(LogsSourceProperty, value);
+            set
+            {
+                if (value is IEnumerable<ILog> logs)
+                {
+                    SetValue(LogsSourceProperty, logs.OrderByDescending(l => l.Created));
+                }
+            }
         }
 
         public string Header
@@ -50,9 +56,7 @@ namespace CodeShare.Uwp.Controls
         private async void Actor_Click(object sender, RoutedEventArgs e)
         {
             if (!(sender is HyperlinkButton link)) return;
-            if (!(link.Tag is UserLog log)) return;
-
-            var kek = new ListView();
+            if (!(link.Tag is ILog log)) return;
 
             await NavigationService.Navigate(log.ActorType, log.ActorUid);
         }
@@ -60,25 +64,24 @@ namespace CodeShare.Uwp.Controls
         private async void Subject_Click(object sender, RoutedEventArgs e)
         {
             if (!(sender is HyperlinkButton link)) return;
-            if (!(link.Tag is UserLog log)) return;
+            if (!(link.Tag is ILog log)) return;
 
-            await NavigationService.Navigate(log.ActorType, log.ActorUid);
+            await NavigationService.Navigate(log.SubjectType, log.SubjectUid);
         }
 
         private async void Actor_Loaded(object sender, RoutedEventArgs e)
         {
             if (!(sender is HyperlinkButton link)) return;
-            if (!(link.Tag is UserLog log)) return;
+            if (!(link.Tag is ILog log)) return;
             if (!log.ActorUid.HasValue) return;
 
             await PopulateLinkContent(link, log.ActorType, log.ActorUid.Value);
-
         }
 
         private async void Subject_Loaded(object sender, RoutedEventArgs e)
         {
             if (!(sender is HyperlinkButton link)) return;
-            if (!(link.Tag is UserLog log)) return;
+            if (!(link.Tag is ILog log)) return;
             if (!log.SubjectUid.HasValue) return;
 
             await PopulateLinkContent(link, log.SubjectType, log.SubjectUid.Value);
@@ -95,6 +98,10 @@ namespace CodeShare.Uwp.Controls
                 case "Question":
                     var question = await RestApiService<Question>.Get(uid);
                     if (question != null) link.Content = question?.Name;
+                    return;
+                case "File":
+                    var file = await RestApiService<Model.File>.Get(uid);
+                    if (file != null) link.Content = file?.Name;
                     return;
                 case "User":
                     var user = await RestApiService<User>.Get(uid);

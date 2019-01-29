@@ -15,11 +15,17 @@
         <converters:ColorConverter x:Key="ColorConverter" />
     </UserControl.Resources>
 
-    <Grid Width="200" Height="100">
-        <Image Source="{x:Bind Question.User.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12">
+    <Grid Width="auto" Height="auto" Background="{x:Bind Question.User.Color, Converter={StaticResource ColorConverter}}" Padding="12">
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
             <TextBlock Text="{x:Bind Question.Title, Mode=OneWay}" />
-            <TextBlock Text="{x:Bind Question.User.Name, Mode=OneWay}" Foreground="DimGray" />
+            <TextBlock Foreground="DimGray">
+                <Run Text="{x:Bind Question.CodeLanguage.Name, Mode=OneWay}" />
+                <Run Text="•" />
+                <Run Text="{x:Bind Question.User.Name, Mode=OneWay}" />
+                <Run Text="•" />
+                <Run Text="{x:Bind Question.Views, Mode=OneWay}" />
+                <Run Text="views" />
+            </TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -12,17 +12,18 @@ using System.Web.Http.Results;
 
 namespace CodeShare.WebApi.Controllers
 {
-    public class FileController : BaseController, IController<File>
+    public class CodeFileController : BaseController, IController<CodeFile>
     {
-        private IQueryable<File> Entities => Context.Files
-            .Include(e => e.Code.User);
+        private IQueryable<CodeFile> Entities => Context.CodeFiles
+            .Include(e => e.Code.User)
+            .Include(e => e.CodeLanguage);
 
         /// <summary>
         /// Gets all entities from database.
         /// </summary>
         /// <returns></returns>
-        [Route("api/files")]
-        public IQueryable<File> Get()
+        [Route("api/codefiles")]
+        public IQueryable<CodeFile> Get()
         {
             if (!IsDatabaseOnline) return null;
 
@@ -34,7 +35,7 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        [ResponseType(typeof(File)), Route("api/files/{uid}")]
+        [ResponseType(typeof(CodeFile)), Route("api/codefiles/{uid}")]
         public IHttpActionResult Get(Guid uid)
         {
             if (!IsDatabaseOnline) return InternalServerError();
@@ -56,8 +57,8 @@ namespace CodeShare.WebApi.Controllers
         /// <param name="uid">The uid.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [ResponseType(typeof(void)), Route("api/files/{uid}")]
-        public IHttpActionResult Put(Guid uid, [FromBody] File entity)
+        [ResponseType(typeof(void)), Route("api/codefiles/{uid}")]
+        public IHttpActionResult Put(Guid uid, [FromBody] CodeFile entity)
         {
             if (!IsDatabaseOnline) return InternalServerError();
 
@@ -96,8 +97,8 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [ResponseType(typeof(File)), Route("api/files")]
-        public IHttpActionResult Post(File entity)
+        [ResponseType(typeof(File)), Route("api/codefiles")]
+        public IHttpActionResult Post(CodeFile entity)
         {
             if (!IsDatabaseOnline)
                 return InternalServerError();
@@ -108,7 +109,7 @@ namespace CodeShare.WebApi.Controllers
 
             try
             {
-                Context.Files.Add(entity);
+                Context.CodeFiles.Add(entity);
                 Context.SaveChanges();
 
                 return Ok(entity);
@@ -143,7 +144,7 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        [ResponseType(typeof(File)), Route("api/files/{uid}")]
+        [ResponseType(typeof(File)), Route("api/codefiles/{uid}")]
         public IHttpActionResult Delete(Guid uid)
         {
             if (!IsDatabaseOnline) return InternalServerError();

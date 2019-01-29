@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="CodeShare.Uwp.Controls.FileListView"
+    x:Class="CodeShare.Uwp.Controls.CodeFileListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CodeShare.Uwp.Controls"
@@ -20,13 +20,13 @@
         <SplitView.Pane>
             <StackPanel VerticalAlignment="Stretch" Spacing="10">
                 <TextBlock>
-                    <Run Text="{x:Bind Files.Count, Mode=OneWay}" />
+                    <Run Text="{x:Bind CodeFiles.Count, Mode=OneWay}" />
                     <Run Text="file(s)" />
                 </TextBlock>
-                <ListView x:Name="FilesList" ItemsSource="{x:Bind Files, Mode=OneWay}" SelectedValuePath="Data" SelectionMode="Single" VerticalAlignment="Stretch" IsItemClickEnabled="True">
+                <ListView x:Name="FilesList" ItemsSource="{x:Bind CodeFiles, Mode=OneWay}" SelectedValuePath="Data" SelectionMode="Single" VerticalAlignment="Stretch" IsItemClickEnabled="True">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:File">
-                            <controls:FileItem File="{x:Bind Mode=OneWay}" Width="auto" />
+                        <DataTemplate x:DataType="model:CodeFile">
+                            <controls:CodeFileItem CodeFile="{x:Bind Mode=OneWay}" Width="auto" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

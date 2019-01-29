@@ -23,15 +23,15 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class FileItem : UserControl
+    public sealed partial class CodeFileItem : UserControl
     {
-        public static readonly DependencyProperty FileProperty = DependencyProperty.Register("File", typeof(File), typeof(FileItem), new PropertyMetadata(new File()));
-        public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(FileItem), new PropertyMetadata(false));
+        public static readonly DependencyProperty CodeFileProperty = DependencyProperty.Register("CodeFile", typeof(CodeFile), typeof(CodeFileItem), new PropertyMetadata(default(CodeFile)));
+        public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(CodeFileItem), new PropertyMetadata(false));
 
-        public File File
+        public CodeFile CodeFile
         {
-            get => GetValue(FileProperty) as File;
-            set => SetValue(FileProperty, value);
+            get => GetValue(CodeFileProperty) as CodeFile;
+            set => SetValue(CodeFileProperty, value);
         }
         public bool IsEditable
         {
@@ -48,14 +48,14 @@ namespace CodeShare.Uwp.Controls
         private RelayCommand _deleteFileCommand;
         public ICommand DeleteFileCommand => _deleteFileCommand = _deleteFileCommand ?? new RelayCommand(async file => await DeleteFileAsync());
 
-        public FileItem()
+        public CodeFileItem()
         {
             InitializeComponent();
         }
 
         private async Task EditFileAsync()
         {
-            var dialog = new EditFileDialog(File);
+            var dialog = new EditFileDialog(CodeFile);
             await dialog.ShowAsync();
         }
 
@@ -66,21 +66,21 @@ namespace CodeShare.Uwp.Controls
 
         private async Task DeleteFileAsync()
         {
-            if (!await RestApiService<File>.Delete(File.Uid))
+            if (!await RestApiService<CodeFile>.Delete(CodeFile.Uid))
             {
-                await NotificationService.DisplayErrorMessage($"Deletion of file '{File.FullName}' was unsuccessful. Sorry about that.");
+                await NotificationService.DisplayErrorMessage($"Deletion of file '{CodeFile.FullName}' was unsuccessful. Sorry about that.");
             }
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!(await RestApiService<File>.Get(File.Uid) is File file))
+            if (!(await RestApiService<CodeFile>.Get(CodeFile.Uid) is CodeFile codeFile))
             {
                 return;
             }
 
-            File = file;
-            IsEditable = AuthService.CurrentUser.Uid.Equals(file.Code.User.Uid);
+            CodeFile = codeFile;
+            IsEditable = AuthService.CurrentUser.Uid.Equals(codeFile.Code.User.Uid);
         }
     }
 }

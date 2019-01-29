@@ -13,11 +13,7 @@ using CodeShare.Uwp.DataSource;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="CodeShare.Uwp.ViewModels.BaseViewModel" />
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : ObservableObject
     {
         private List<Code> _allResults;
 

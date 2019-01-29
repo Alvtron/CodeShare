@@ -1,6 +1,8 @@
 ﻿using CodeShare.Model;
+using CodeShare.Uwp.DataSource;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
+using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -12,22 +14,41 @@ namespace CodeShare.Uwp.Views
     {
         public UserSettingsViewModel ViewModel;
 
-        public UserSettingsPage()
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            InitializeComponent();
-        }
+            NavigationService.Lock();
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (e.Parameter is User user)
+            User user;
+
+            switch (e.Parameter)
             {
-                ViewModel = new UserSettingsViewModel(user);
-                NavigationService.SetHeaderTitle("Account Settings");
+                case User _user:
+                    user = _user;
+                    break;
+                case Guid guid:
+                    user = await RestApiService<User>.Get(guid);
+                    break;
+                case IEntity entity:
+                    user = await RestApiService<User>.Get(entity.Uid);
+                    break;
+                default:
+                    await NotificationService.DisplayErrorMessage("Developer error.");
+                    throw new InvalidOperationException();
             }
-            else
+
+            if (user == null)
             {
-                Frame.GoBack();
+                await NotificationService.DisplayErrorMessage("This user does not exist.");
+                NavigationService.GoBack();
             }
+
+            ViewModel = new UserSettingsViewModel(user);
+
+            InitializeComponent();
+
+            NavigationService.Unlock();
+
+            NavigationService.SetHeaderTitle($"{ViewModel.Model?.Name} - Settings");
         }
     }
 }

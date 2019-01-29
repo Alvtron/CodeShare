@@ -107,6 +107,12 @@
     <Compile Include="Controls\CodeBlock.xaml.cs">
       <DependentUpon>CodeBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\QuestionCommentsPanel.xaml.cs">
+      <DependentUpon>QuestionCommentsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CodeCommentsPanel.xaml.cs">
+      <DependentUpon>CodeCommentsPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FileListView.xaml.cs">
       <DependentUpon>FileListView.xaml</DependentUpon>
     </Compile>
@@ -119,11 +125,11 @@
     <Compile Include="Controls\CodeListView.xaml.cs">
       <DependentUpon>CodeListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CommentBlock.xaml.cs">
-      <DependentUpon>CommentBlock.xaml</DependentUpon>
+    <Compile Include="Controls\ReplyBlock.xaml.cs">
+      <DependentUpon>ReplyBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CommentListView.xaml.cs">
-      <DependentUpon>CommentListView.xaml</DependentUpon>
+    <Compile Include="Controls\ReplyListView.xaml.cs">
+      <DependentUpon>ReplyListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CodeAuthorBlock.xaml.cs">
       <DependentUpon>CodeAuthorBlock.xaml</DependentUpon>
@@ -137,8 +143,11 @@
     <Compile Include="Controls\Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FileItem.xaml.cs">
-      <DependentUpon>FileItem.xaml</DependentUpon>
+    <Compile Include="Controls\CodeFileItem.xaml.cs">
+      <DependentUpon>CodeFileItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SaveResetPanel.xaml.cs">
+      <DependentUpon>SaveResetPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ScreenshotGridView.xaml.cs">
       <DependentUpon>ScreenshotGridView.xaml</DependentUpon>
@@ -185,8 +194,8 @@
     <Compile Include="Dialogs\BannerCroppingDialog.xaml.cs">
       <DependentUpon>BannerCroppingDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\AddCommentDialog.xaml.cs">
-      <DependentUpon>AddCommentDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\AddReplyDialog.xaml.cs">
+      <DependentUpon>AddReplyDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditFileDialog.xaml.cs">
       <DependentUpon>EditFileDialog.xaml</DependentUpon>
@@ -226,15 +235,14 @@
     <Compile Include="ViewModels\AddQuestionViewModel.cs" />
     <Compile Include="ViewModels\AddCodeViewModel.cs" />
     <Compile Include="ViewModels\AppSettingsViewModel.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
-    <Compile Include="ViewModels\EditorViewModel.cs" />
+    <Compile Include="ViewModels\ModelSettingsViewModel.cs" />
     <Compile Include="ViewModels\CodeSettingsViewModel.cs" />
     <Compile Include="ViewModels\CodeViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ImageManager.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ContentPageViewModel.cs" />
+    <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\QuestionsViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
@@ -253,9 +261,6 @@
     </Compile>
     <Compile Include="Views\CodeSettingsPage.xaml.cs">
       <DependentUpon>CodeSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ModsPage.xaml.cs">
-      <DependentUpon>ModsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CodePage.xaml.cs">
       <DependentUpon>CodePage.xaml</DependentUpon>
@@ -362,6 +367,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\QuestionCommentsPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CodeCommentsPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\FileListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -378,11 +391,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CommentBlock.xaml">
+    <Page Include="Controls\ReplyBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CommentListView.xaml">
+    <Page Include="Controls\ReplyListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -402,7 +415,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\FileItem.xaml">
+    <Page Include="Controls\CodeFileItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SaveResetPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -450,7 +467,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\AddCommentDialog.xaml">
+    <Page Include="Dialogs\AddReplyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -501,10 +518,6 @@
     <Page Include="Views\CodeSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ModsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CodePage.xaml">
       <Generator>MSBuild:Compile</Generator>

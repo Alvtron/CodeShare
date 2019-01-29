@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -15,8 +14,6 @@ namespace CodeShare.Model
         public User User { get; set; }
 
         public Guid UserUid { get; set; }
-
-        public CodeLanguage CodeLanguage { get; set; }
 
         private string _version;
         public string Version
@@ -39,15 +36,14 @@ namespace CodeShare.Model
             set => SetField(ref _about, value);
         }
 
-        private ObservableCollection<File> _files = new ObservableCollection<File>();
-        public ObservableCollection<File> Files
+        private ObservableCollection<CodeFile> _files = new ObservableCollection<CodeFile>();
+        public ObservableCollection<CodeFile> Files
         {
             get => _files;
             set => SetField(ref _files, value);
         }
-        public IList<File> FilesSorted => Files?.OrderBy(c => c.Name).ToList();
 
-        public ICollection<CodeLog> Logs { get; set; } = new ObservableCollection<CodeLog>();
+        public ObservableCollection<CodeLog> Logs { get; set; } = new ObservableCollection<CodeLog>();
 
         [NotMapped, JsonIgnore]
         public bool Valid => Uid != Guid.Empty && !string.IsNullOrWhiteSpace(Name);
@@ -59,10 +55,10 @@ namespace CodeShare.Model
         {
         }
 
-        public Code(string name, IEnumerable<File> files, User author)
+        public Code(string name, IEnumerable<CodeFile> files, User author)
         {
             Name = name;
-            Files = new ObservableCollection<File>(files);
+            Files = new ObservableCollection<CodeFile>(files);
             UserUid = author.Uid;
             Created = DateTime.Now;
             Logs.Add(new CodeLog(this, author, "created this"));
@@ -73,43 +69,43 @@ namespace CodeShare.Model
 
         public override string ToString() => Name;
 
-        public void AddFile(File file, User user)
+        public void AddFile(CodeFile file, User user)
         {
             if (file == null)
                 throw new NullReferenceException("File was null.");
             if (user == null)
                 throw new NullReferenceException("User was null.");
             if (Files == null)
-                Files = new ObservableCollection<File>();
+                Files = new ObservableCollection<CodeFile>();
 
             Files.Add(file);
 
             Logs.Add(new CodeLog(this, user, $"added", file));
         }
 
-        public new void SetBanner(User user, Banner banner)
+        public override void SetBanner(User user, Banner banner)
         {
-            base.SetBanner(user, banner);
+            SetBanner(banner);
             Logs.Add(new CodeLog(this, user, "uploaded", banner));
         }
 
-        public new void AddVideo(User user, Video video)
+        public override void AddScreenshot(User user, Screenshot screenshot)
         {
-            base.AddVideo(user, video);
+            AddScreenshot(screenshot);
+            Logs.Add(new CodeLog(this, user, "added", screenshot));
+        }
+
+        public override void AddVideo(User user, Video video)
+        {
+            AddVideo(video);
 
             Logs.Add(new CodeLog(this, user, "added", video));
         }
 
-        public new void Reply(Comment comment)
+        public override void Reply(User user, Reply comment)
         {
-            base.Reply(comment);
-            Logs.Add(new CodeLog(this, comment.User, "added", comment));
-        }
-
-        public new void AddScreenshot(Screenshot screenshot, User user)
-        {
-            base.AddScreenshot(screenshot, user);
-            Logs.Add(new CodeLog(this, user, "added", screenshot));
+            Reply(comment);
+            Logs.Add(new CodeLog(this, user, "added", comment));
         }
 
         #endregion

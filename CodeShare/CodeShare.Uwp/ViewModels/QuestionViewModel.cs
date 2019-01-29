@@ -8,25 +8,20 @@ using System.Threading.Tasks;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public class QuestionViewModel : ContentPageViewModel
+    public class QuestionViewModel : ContentViewModel<Question>
     {
-        private Question _question;
-        public Question Question
+        public QuestionViewModel(Question question)
+            : base(question)
         {
-            get => _question;
-            set
-            {
-                SetField(ref _question, value);
-                IsUserAuthor = value.User.Equals(AuthService.CurrentUser);
-            }
+            IsUserAuthor = question.User.Equals(AuthService.CurrentUser);
         }
 
         public override async Task<bool> Refresh()
         {
-            if (!(await RestApiService<Question>.Get(Question.Uid) is Question question))
+            if (!(await RestApiService<Question>.Get(Model.Uid) is Question question))
                 return false;
 
-            Question = question;
+            Model = question;
             return true;
         }
 

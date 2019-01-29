@@ -11,46 +11,47 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class UserPage : Page
     {
-        public UserViewModel ViewModel { get; set; } = new UserViewModel();
-
-        public UserPage()
-        {
-            InitializeComponent();
-        }
+        private UserViewModel ViewModel { get; set; }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationService.Lock();
 
+            User user;
+
             switch (e.Parameter)
             {
                 case Guid guid:
-                    ViewModel.User = await RestApiService<User>.Get(guid);
+                    user = await RestApiService<User>.Get(guid);
                     break;
                 case IEntity entity:
-                    ViewModel.User = await RestApiService<User>.Get(entity.Uid);
+                    user = await RestApiService<User>.Get(entity.Uid);
                     break;
                 default:
-                    NavigationService.GoBack();
-                    return;
+                    await NotificationService.DisplayErrorMessage("Developer error.");
+                    throw new InvalidOperationException();
             }
 
-            NavigationService.Unlock();
-
-            if (ViewModel.User == null)
+            if (user == null)
             {
-                await NotificationService.DisplayErrorMessage("This resource pack do not exist.");
+                await NotificationService.DisplayErrorMessage("This user does not exist.");
                 NavigationService.GoBack();
             }
 
-            ViewModel.User.Views++;
+            ViewModel = new UserViewModel(user);
 
-            if (!await RestApiService<User>.Update(ViewModel.User, ViewModel.User.Uid))
+            InitializeComponent();
+
+            NavigationService.Unlock();
+
+            ViewModel.Model.Views++;
+
+            if (!await RestApiService<User>.Update(ViewModel.Model, ViewModel.Model.Uid))
             {
-                Debug.WriteLine($"Failed to increment view counter for code {ViewModel.User.Uid}.");
+                Debug.WriteLine($"Failed to increment view counter for user {ViewModel.Model.Uid}.");
             }
 
-            NavigationService.SetHeaderTitle($"{ViewModel.User.Name}'s profile");
+            NavigationService.SetHeaderTitle($"{ViewModel.Model?.Name}'s profile");
         }
     }
 }

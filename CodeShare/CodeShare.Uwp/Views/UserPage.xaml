@@ -38,9 +38,9 @@
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     Height="200"
-                    Source="{x:Bind ViewModel.User.Banner.Url, Converter={StaticResource ImageConverter}, Mode=OneWay}"
+                    Source="{x:Bind ViewModel.Model.Banner.Url, Converter={StaticResource ImageConverter}, Mode=OneWay}"
                     Stretch="UniformToFill"
-                    Visibility="{x:Bind ViewModel.User.HasBanners, Converter={StaticResource VisibillityConverter}, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.Model.HasBanners, Converter={StaticResource VisibillityConverter}, Mode=OneWay}"
                     RelativePanel.AlignTopWithPanel="True"
                     RelativePanel.AlignHorizontalCenterWithPanel="True" />
                 <PersonPicture
@@ -51,8 +51,8 @@
                     VerticalAlignment="Bottom"
                     Width="200"
                     Height="200"
-                    ProfilePicture="{x:Bind ViewModel.User.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}"
-                    Initials="{x:Bind ViewModel.User.Initials, Mode=OneWay}" />
+                    ProfilePicture="{x:Bind ViewModel.Model.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+                    Initials="{x:Bind ViewModel.Model.Initials, Mode=OneWay}" />
                 <StackPanel
                     Grid.Row="0"
                     Grid.Column="1"
@@ -60,7 +60,7 @@
                     VerticalAlignment="Bottom">
                     <StackPanel Orientation="Horizontal" Spacing="12">
                         <!-- Username -->
-                        <TextBlock Text="{x:Bind ViewModel.User.Name, Mode=OneWay}" FontSize="48"/>
+                        <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" FontSize="48"/>
                         <!-- Add friend, report -->
                         <Button
                             Command="{x:Bind ViewModel.BefriendCommand}"
@@ -83,15 +83,15 @@
             <Grid>
                 <ProgressBar
                     Height="20"
-                    Value="{x:Bind ViewModel.User.Experience, Mode=OneWay, Converter={StaticResource ExperienceConverter}}"
+                    Value="{x:Bind ViewModel.Model.Experience, Mode=OneWay, Converter={StaticResource ExperienceConverter}}"
                     Maximum="100"
                     VerticalAlignment="Top"
                     Background="Gray"
-                    Foreground="{x:Bind ViewModel.User.Color, Mode=OneWay, Converter={StaticResource ColorConverter}}"/>
+                    Foreground="{x:Bind ViewModel.Model.Color, Mode=OneWay, Converter={StaticResource ColorConverter}}"/>
                 <TextBlock Name="ExperienceBarTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,2" FontSize="12" FontWeight="Thin" Foreground="White">
-                    <Run Text="{x:Bind ViewModel.User.Experience, Mode=OneWay}" />
+                    <Run Text="{x:Bind ViewModel.Model.Experience, Mode=OneWay}" />
                     <Run Text="/" />
-                    <Run Text="{x:Bind ViewModel.User.NextExp, Mode=OneWay}" />
+                    <Run Text="{x:Bind ViewModel.Model.NextExp, Mode=OneWay}" />
                 </TextBlock>
             </Grid>
             <Pivot Padding="48,5">
@@ -113,41 +113,41 @@
                             </Grid.RowDefinitions>
                             <!-- Signed up -->
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Member Since" />
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.User.Created, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Model.Created, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
                             <!-- Signed in -->
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Last login" />
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.User.Updated, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Model.Updated, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
                             <!-- Country -->
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Country" />
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.User.Country, Mode=OneWay}" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Model.Country, Mode=OneWay}" />
                             <!-- Birtday -->
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="Birthday" />
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.User.Birthday, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Model.Birthday, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
                             <!-- Website -->
                             <TextBlock Grid.Row="4" Grid.Column="0" Text="Website" />
                             <TextBlock Grid.Row="4" Grid.Column="1">
-                                <Hyperlink NavigateUri="{x:Bind ViewModel.User.WebsiteUri, Mode=OneWay}">
-                                    <Run Text="{x:Bind ViewModel.User.Website, Mode=OneWay}" />
+                                <Hyperlink NavigateUri="{x:Bind ViewModel.Model.WebsiteUri, Mode=OneWay}">
+                                    <Run Text="{x:Bind ViewModel.Model.Website, Mode=OneWay}" />
                                 </Hyperlink>
                             </TextBlock>
                             <!-- Bio -->
                             <StackPanel Grid.Row="5" Grid.ColumnSpan="2">
-                                <xaml:RichTextBox Header="Bio" Rtf="{x:Bind ViewModel.User.Bio, Mode=OneWay}" />
+                                <xaml:RichTextBox Header="Bio" Rtf="{x:Bind ViewModel.Model.Bio, Mode=OneWay}" />
                             </StackPanel>
                         </Grid>
                     </StackPanel>
                 </PivotItem>
                 <!-- Friends -->
                 <PivotItem Header="Friends" Padding="24">
-                    <controls:UserGridView Users="{x:Bind ViewModel.User.FriendsSorted, Mode=OneWay}" />
+                    <controls:UserGridView Users="{x:Bind ViewModel.Model.FriendsSorted, Mode=OneWay}" />
                 </PivotItem>
                 <!-- Codes -->
                 <PivotItem Header="Codes" Padding="24">
-                    <controls:CodeGridView Codes="{x:Bind ViewModel.User.CodesSorted, Mode=OneWay}" />
+                    <controls:CodeGridView Codes="{x:Bind ViewModel.Model.CodesSorted, Mode=OneWay}" />
                 </PivotItem>
                 <!-- Activity -->
                 <PivotItem Header="Activity" Padding="24">
-                    <controls:ActivityListView LogsSource="{x:Bind ViewModel.User.Logs, Mode=OneWay}" />
+                    <controls:ActivityListView LogsSource="{x:Bind ViewModel.Model.Logs, Mode=OneWay}" />
                 </PivotItem>
             </Pivot>
         </StackPanel>
