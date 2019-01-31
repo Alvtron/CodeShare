@@ -2,13 +2,10 @@
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Views;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using CodeShare.Uwp.Dialogs;
-using CodeShare.Uwp.DataSource;
-using CodeShare.Uwp.Xaml;
-using CodeShare.Uwp.Controls;
+using CodeShare.RestApi;
 
 namespace CodeShare.Uwp.ViewModels
 {

@@ -1,9 +1,9 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
+using CodeShare.Utilities;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Views;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,7 +52,7 @@ namespace CodeShare.Uwp.ViewModels
         {
             if (AuthService.CurrentUser == null || string.IsNullOrWhiteSpace(Title) || string.IsNullOrWhiteSpace(Question) || _language == null)
             {
-                Debug.WriteLine("UploadQuestionAsync: One or more fields are empty or not valid.");
+                Logger.WriteLine("UploadQuestionAsync: One or more fields are empty or not valid.");
                 return false;
             }
 

@@ -1,20 +1,15 @@
 ﻿using CodeShare.Model;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
-using CodeShare.Uwp.Views;
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using CodeShare.Uwp.Dialogs;
-using CodeShare.Uwp.DataSource;
-using CodeShare.Uwp.Xaml;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.Storage;
-using System.Diagnostics;
+using CodeShare.Utilities;
+using CodeShare.RestApi;
 
 namespace CodeShare.Uwp.ViewModels
 {
@@ -57,7 +52,7 @@ namespace CodeShare.Uwp.ViewModels
 
                 if (codeLanguage == null)
                 {
-                    Debug.WriteLine($"Rejected file {file.Name}. Extension is not supported.");
+                    Logger.WriteLine($"Rejected file {file.Name}. Extension is not supported.");
                     continue;
                 }
 

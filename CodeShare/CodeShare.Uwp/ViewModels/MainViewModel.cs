@@ -9,7 +9,7 @@ using CodeShare.Uwp.Dialogs;
 using CodeShare.Model;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Views;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
 
 namespace CodeShare.Uwp.ViewModels
 {

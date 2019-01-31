@@ -1,10 +1,7 @@
 ﻿using CodeShare.Model;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;

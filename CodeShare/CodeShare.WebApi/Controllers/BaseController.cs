@@ -2,11 +2,9 @@
 using System.Web.Http;
 using CodeShare.DataAccess;
 using CodeShare.Model;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.Web.Http.Description;
 using System.Collections.Generic;
 using System;
+using CodeShare.Utilities;
 
 namespace CodeShare.WebApi.Controllers
 {
@@ -49,7 +47,7 @@ namespace CodeShare.WebApi.Controllers
             {
                 if (!Context.Database.Exists())
                 {
-                    Debug.WriteLine($"The database from context {Context.GetType().Name} does not exist. Get failed!");
+                    Logger.WriteLine($"The database from context {Context.GetType().Name} does not exist. Get failed!");
                     return false;
                 }
 
@@ -104,19 +102,19 @@ namespace CodeShare.WebApi.Controllers
         {
             if (uid == Guid.Empty)
             {
-                Debug.WriteLine($"The provided {uid.GetType().Name} parameter is empty! Put denied.");
+                Logger.WriteLine($"The provided {uid.GetType().Name} parameter is empty! Put denied.");
                 return BadRequest($"The provided {uid.GetType().Name} parameter is empty! Put denied.");
             }
 
             if (entity == null)
             {
-                Debug.WriteLine($"The provided {entity.GetType().Name} object is empty! Put denied.");
+                Logger.WriteLine($"The provided {entity.GetType().Name} object is empty! Put denied.");
                 return BadRequest($"The provided {entity.GetType().Name} object is empty! Put denied.");
             }
 
             if (uid != entity.Uid)
             {
-                Debug.WriteLine($"The provided {entity.GetType().Name} object does not match the provided key {uid}. Put denied!");
+                Logger.WriteLine($"The provided {entity.GetType().Name} object does not match the provided key {uid}. Put denied!");
                 return BadRequest($"The provided {entity.GetType().Name} object does not match the provided key {uid}. Put denied!");
             }
 

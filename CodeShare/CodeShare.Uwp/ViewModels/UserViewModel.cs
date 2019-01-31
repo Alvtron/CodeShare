@@ -1,16 +1,12 @@
 ﻿using CodeShare.Model;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
-using CodeShare.Uwp.Views;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using CodeShare.Uwp.Dialogs;
-using CodeShare.Uwp.DataSource;
-using CodeShare.Uwp.Xaml;
-using CodeShare.Uwp.Controls;
+using CodeShare.RestApi;
 
 namespace CodeShare.Uwp.ViewModels
 {

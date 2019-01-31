@@ -1,5 +1,5 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
 using Windows.UI.Xaml.Controls;
@@ -11,7 +11,7 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class CodesPage : Page
     {
-        public CodesViewModel ViewModel;
+        private CodesViewModel ViewModel;
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {

@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utillities\" />
+    <ProjectReference Include="..\CodeShare.Services\CodeShare.Services.csproj" />
+    <ProjectReference Include="..\CodeShare.Utilities\CodeShare.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,25 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using CodeShare.Model;
-using CodeShare.Uwp.Utilities;
-using System.Windows.Input;
-using System.Threading.Tasks;
-using CodeShare.Uwp.Services;
-using CodeShare.Uwp.DataSource;
-using CodeShare.Uwp.Dialogs;
+using CodeShare.Utilities;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -38,10 +21,12 @@ namespace CodeShare.Uwp.Controls
             {
                 if (value == null)
                 {
+                    Logger.WriteLine($"Failed to initialize '{nameof(Replies)}' in {nameof(ReplyListView)}. Value was null.");
                     return;
                 }
 
                 SetValue(RepliesProperty, value);
+                Logger.WriteLine($"Successfully initialized '{nameof(Replies)}' in {nameof(ReplyListView)}.");
 
                 if (!Initialized)
                 {

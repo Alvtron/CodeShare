@@ -1,5 +1,5 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
 using System;
@@ -12,7 +12,7 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class UserSettingsPage : Page
     {
-        public UserSettingsViewModel ViewModel;
+        private UserSettingsViewModel ViewModel { get; set; }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {

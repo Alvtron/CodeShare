@@ -1,5 +1,4 @@
-﻿using CodeShare.Model;
-using CodeShare.Uwp.Services;
+﻿using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -7,8 +6,7 @@ using System.Windows.Input;
 using Windows.Security.Credentials;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
-using CodeShare.Model.Services;
-using System.Diagnostics;
+using CodeShare.Utilities;
 
 namespace CodeShare.Uwp.ViewModels
 {
@@ -27,14 +25,14 @@ namespace CodeShare.Uwp.ViewModels
             ErrorMessage = "";
 
             credential.RetrievePassword();
-            Debug.WriteLine($"Logging in with credential (User name: {credential.UserName}, password:{credential.Password})...");
+            Logger.WriteLine($"Logging in with credential (User name: {credential.UserName}, password:{credential.Password})...");
 
             if (await AuthService.SignInAsync(credential.UserName, credential.Password) == false)
             {
-                Debug.WriteLine($"Login failed. The credential does not match any user from the database.");
+                Logger.WriteLine($"Login failed. The credential does not match any user from the database.");
                 ErrorMessage = "That user is no longer registered. Sorry about that.";
                 CredentialService.Delete(credential);
-                Debug.WriteLine($"Credential (User name: {credential.UserName}, password:{credential.Password}) was deleted.");
+                Logger.WriteLine($"Credential (User name: {credential.UserName}, password:{credential.Password}) was deleted.");
                 return;
             }
 
@@ -54,20 +52,20 @@ namespace CodeShare.Uwp.ViewModels
 
         private async Task SignIn()
         {
-            Debug.WriteLine($"Sign in in user with entered user name: '{SignInName}' and password: '{SignInPassword}'");
+            Logger.WriteLine($"Sign in in user with entered user name: '{SignInName}' and password: '{SignInPassword}'");
 
             ErrorMessage = "";
 
             if (string.IsNullOrWhiteSpace(SignInName) || string.IsNullOrWhiteSpace(SignInPassword))
             {
-                Debug.WriteLine($"Sign in failed. Username or password are empty.");
+                Logger.WriteLine($"Sign in failed. Username or password are empty.");
                 ErrorMessage = "Username or password are empty!";
                 return;
             }
 
             if (await AuthService.SignInAsync(SignInName, SignInPassword) == false)
             {
-                Debug.WriteLine($"Sign in failed. Username and password does not match anything.");
+                Logger.WriteLine($"Sign in failed. Username and password does not match anything.");
                 ErrorMessage = "Wrong username or password.";
                 return;
             }
@@ -201,7 +199,7 @@ namespace CodeShare.Uwp.ViewModels
         
         private bool ValidateEmail()
         {
-            if (ValidationService.ValidateEmail(SignUpEmail) != ValidationResponse.Valid)
+            if (Validate.Email(SignUpEmail) != ValidationResponse.Valid)
             {
                 SignUpEmailBorder = new SolidColorBrush(Colors.Red);
                 return false;
@@ -212,7 +210,7 @@ namespace CodeShare.Uwp.ViewModels
 
         private bool ValidateName()
         {
-            if (ValidationService.ValidateUserName(SignUpName) != ValidationResponse.Valid)
+            if (Validate.UserName(SignUpName) != ValidationResponse.Valid)
             {
                 SignUpNameBorder = new SolidColorBrush(Colors.Red);
                 return false;
@@ -223,7 +221,7 @@ namespace CodeShare.Uwp.ViewModels
         
         private bool ValidatePassword()
         {
-            if (ValidationService.ValidatePassword(SignUpPassword) != ValidationResponse.Valid)
+            if (Validate.Password(SignUpPassword) != ValidationResponse.Valid)
             {
                 SignUpPasswordBorder = new SolidColorBrush(Colors.Red);
                 return false;

@@ -1,9 +1,9 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
+using CodeShare.Utilities;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
 using System;
-using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -13,7 +13,7 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class QuestionPage : Page
     {
-        public QuestionViewModel ViewModel { get; set; }
+        private QuestionViewModel ViewModel { get; set; }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -50,7 +50,7 @@ namespace CodeShare.Uwp.Views
 
             if (!await RestApiService<Question>.Update(ViewModel.Model, ViewModel.Model.Uid))
             {
-                Debug.WriteLine($"Failed to increment view counter for question {ViewModel.Model.Uid}.");
+                Logger.WriteLine($"Failed to increment view counter for question {ViewModel.Model.Uid}.");
             }
 
             NavigationService.SetHeaderTitle(ViewModel.Model?.Name);

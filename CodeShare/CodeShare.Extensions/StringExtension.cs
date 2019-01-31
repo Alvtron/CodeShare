@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CodeShare.Model.Extensions
+namespace CodeShare.Extensions
 {
     public static class StringExtension
     {

@@ -7,7 +7,7 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class AppSettingsPage : Page
     {
-        public AppSettingsViewModel ViewModel { get; private set; } = new AppSettingsViewModel();
+        private AppSettingsViewModel ViewModel { get; set; } = new AppSettingsViewModel();
 
         public AppSettingsPage()
         {

@@ -1,8 +1,5 @@
 ﻿using System;
-using CodeShare.Model;
 using CodeShare.Uwp.Dialogs;
-using CodeShare.Uwp.Services;
-using CodeShare.Uwp.Utilities;
 using CodeShare.Uwp.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

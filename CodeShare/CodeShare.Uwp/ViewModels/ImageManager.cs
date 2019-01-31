@@ -1,17 +1,10 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
-using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml.Data;
-using CodeShare.Uwp.Dialogs;
-using Windows.Storage;
 
 namespace CodeShare.Uwp.ViewModels
 {

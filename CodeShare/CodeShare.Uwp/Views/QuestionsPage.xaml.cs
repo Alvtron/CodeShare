@@ -1,9 +1,7 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
-using System;
-using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -13,7 +11,7 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class QuestionsPage : Page
     {
-        public QuestionsViewModel ViewModel { get; private set; }
+        private QuestionsViewModel ViewModel { get; set; }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {

@@ -10,8 +10,8 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class MediaPage : Page
     {
-        private Video _video;
-        private WebFile _file;
+        private Video Video { get; set; }
+        private WebFile File { get; set; }
 
         public MediaPage()
         {
@@ -23,10 +23,10 @@ namespace CodeShare.Uwp.Views
             switch (e.Parameter)
             {
                 case WebFile file:
-                    _file = file;
+                    File = file;
                     break;
                 case Video video:
-                    _video = video;
+                    Video = video;
                     break;
                 default:
                     Frame.GoBack();
@@ -36,26 +36,26 @@ namespace CodeShare.Uwp.Views
 
         private void ImageView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_file == null || !_file.Exist)
+            if (File == null || !File.Exist)
             {
                 ImageView.Visibility = Visibility.Collapsed;
                 return;
             }
 
             ImageView.Visibility = Visibility.Visible;
-            ImageView.Source = new BitmapImage(_file.Url);
+            ImageView.Source = new BitmapImage(File.Url);
         }
 
         private void VideoView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_video == null || _video.Empty)
+            if (Video == null || Video.Empty)
             {
                 VideoView.Visibility = Visibility.Collapsed;
                 return;
             }
 
             VideoView.Visibility = Visibility.Visible;
-            VideoView.Source = _video.YouTubeUri;
+            VideoView.Source = Video.YouTubeUri;
         }
     }
 }

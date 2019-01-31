@@ -1,6 +1,6 @@
-﻿using CodeShare.Uwp.Services;
+﻿using CodeShare.Utilities;
+using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,7 +9,7 @@ namespace CodeShare.Uwp.Views
 {
     public sealed partial class MainPage : Page
     {
-        public MainViewModel ViewModel { get; private set; } = new MainViewModel();
+        private MainViewModel ViewModel { get; set; } = new MainViewModel();
 
         public MainPage()
         {
@@ -64,7 +64,7 @@ namespace CodeShare.Uwp.Views
         {
             if (!(args.InvokedItem is string viewItemContent))
             {
-                Debug.WriteLine("Invoked navigation item has no content. No navigation can be done.");
+                Logger.WriteLine("Invoked navigation item has no content. No navigation can be done.");
                 return;
             }
 
@@ -77,7 +77,7 @@ namespace CodeShare.Uwp.Views
             await NavigationService.Navigate(viewItemContent);
         }
 
-        public async void ASB_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private async void ASB_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
                 await ViewModel.Search(sender.Text.ToLower());

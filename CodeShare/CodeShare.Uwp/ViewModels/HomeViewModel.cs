@@ -1,10 +1,7 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
-using System;
-using System.Collections.Generic;
+using CodeShare.RestApi;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CodeShare.Uwp.ViewModels

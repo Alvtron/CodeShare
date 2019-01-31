@@ -1,6 +1,6 @@
-﻿using CodeShare.Uwp.Views;
+﻿using CodeShare.Utilities;
+using CodeShare.Uwp.Views;
 using System;
-using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -32,7 +32,7 @@ namespace CodeShare.Uwp
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Debug.WriteLine("Installation Path: " + ApplicationData.Current.LocalFolder.Path);
+            Logger.WriteLine("Installation Path: " + ApplicationData.Current.LocalFolder.Path);
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -57,11 +57,11 @@ namespace CodeShare.Uwp
                 try
                 {
                     if (eo.Exception is Exception ex)
-                        Debug.WriteLine(ex.Message);
+                        Logger.WriteLine(ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
+                    Logger.WriteLine(ex.Message);
                 }
             };
 

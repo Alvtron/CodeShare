@@ -1,11 +1,11 @@
-﻿using CodeShare.Model.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Net.Mail;
+using CodeShare.Utilities;
 
 namespace CodeShare.Model
 {
@@ -23,7 +23,7 @@ namespace CodeShare.Model
 
         public Email(string emailAddress)
         {
-            if (ValidationService.ValidateEmail(emailAddress) != ValidationResponse.Valid)
+            if (Validate.Email(emailAddress) != ValidationResponse.Valid)
             {
                 throw new ArgumentException("Provided E-mail string was invalid.");
             }

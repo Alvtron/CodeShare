@@ -1,9 +1,9 @@
 ﻿using System.Net.Mail;
 using System.Text.RegularExpressions;
 
-namespace CodeShare.Model.Services
+namespace CodeShare.Utilities
 {
-    public static partial class ValidationService
+    public static partial class Validate
     {
         public static int UserNameMinLength = 3;
         public static int UserNameMaxLength = 30;
@@ -11,7 +11,7 @@ namespace CodeShare.Model.Services
         public static int PasswordMinLength = 6;
         public static int PasswordMaxLength = 100;
 
-        public static ValidationResponse ValidateEmail(string email)
+        public static ValidationResponse Email(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return ValidationResponse.Empty;
@@ -27,7 +27,7 @@ namespace CodeShare.Model.Services
             }
         }
 
-        public static ValidationResponse ValidateUserName(string username)
+        public static ValidationResponse UserName(string username)
         {
             var validCharacters = new Regex(@"[a-zA-Z0-9¨_]+$");
 
@@ -46,7 +46,7 @@ namespace CodeShare.Model.Services
             return ValidationResponse.Valid;
         }
 
-        public static ValidationResponse ValidatePassword(string password)
+        public static ValidationResponse Password(string password)
         {
             var regexNumber = new Regex(@"[0-9]+");
             var regexUpperChar = new Regex(@"[A-Z]+");

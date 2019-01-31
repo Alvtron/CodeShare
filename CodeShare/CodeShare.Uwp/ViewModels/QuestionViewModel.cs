@@ -1,8 +1,6 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.Controls;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
 using CodeShare.Uwp.Services;
-using CodeShare.Uwp.Xaml;
 using System;
 using System.Threading.Tasks;
 

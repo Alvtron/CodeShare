@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
 using System.Linq;
-using CodeShare.Model.Services;
+using CodeShare.Services;
+using CodeShare.Utilities;
 
 namespace CodeShare.Model
 {
@@ -141,8 +141,8 @@ namespace CodeShare.Model
 
         public User(string username, string email, string password)
         {
-            if (ValidationService.ValidateUserName(username) != ValidationResponse.Valid) return;
-            if (ValidationService.ValidatePassword(password) != ValidationResponse.Valid) return;
+            if (Validate.UserName(username) != ValidationResponse.Valid) return;
+            if (Validate.Password(password) != ValidationResponse.Valid) return;
 
             Name = username;
             Email = new Email(email);
@@ -226,17 +226,17 @@ namespace CodeShare.Model
         {
             if (friend == null)
             {
-                Debug.WriteLine($"Can't befriend {Name} with an uninitialized user object.");
+                Logger.WriteLine($"Can't befriend {Name} with an uninitialized user object.");
                 return;
             }
             if (Uid == friend.Uid)
             {
-                Debug.WriteLine($"Can't befriend {Name} and {friend.Name} as they are the same user.");
+                Logger.WriteLine($"Can't befriend {Name} and {friend.Name} as they are the same user.");
                 return;
             }
             if (IsFriendsWith(friend))
             {
-                Debug.WriteLine($"Can't befriend {Name} and {friend.Name} as they are already friends.");
+                Logger.WriteLine($"Can't befriend {Name} and {friend.Name} as they are already friends.");
                 return;
             }
 
@@ -248,17 +248,17 @@ namespace CodeShare.Model
         {
             if (friend == null)
             {
-                Debug.WriteLine($"Can't unfriend {Name} with an uninitialized user object.");
+                Logger.WriteLine($"Can't unfriend {Name} with an uninitialized user object.");
                 return;
             }
             if (Uid == friend.Uid)
             {
-                Debug.WriteLine($"Can't unfriend {Name} and {friend.Name} as they are the same user.");
+                Logger.WriteLine($"Can't unfriend {Name} and {friend.Name} as they are the same user.");
                 return;
             }
             if (!IsFriendsWith(friend))
             {
-                Debug.WriteLine($"Can't unfriend {Name} and {friend.Name} as they are not friends.");
+                Logger.WriteLine($"Can't unfriend {Name} and {friend.Name} as they are not friends.");
                 return;
             }
 

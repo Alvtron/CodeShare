@@ -1,26 +1,26 @@
-﻿using System;
+﻿using CodeShare.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace CodeShare.Model.Services
+namespace CodeShare.Services
 {
 
-    public class FtpClient
+    internal class FtpClient
     {
-        public string RootDirectory { get; }
-
+        public readonly string RootDirectory;
         private readonly NetworkCredential _credential;
-
-        private FtpWebRequest Request(string path) => WebRequest.Create(new Uri($"{RootDirectory}/{path}")) as FtpWebRequest;
 
         public FtpClient(string rootDirectory, string userName, string password)
         {
-            RootDirectory = rootDirectory;
+            RootDirectory = rootDirectory ?? throw new ArgumentNullException("Root directory cannot be null.");
+
             _credential = new NetworkCredential(userName, password);
         }
+
+        private FtpWebRequest Request(string path) => WebRequest.Create(new Uri($"{RootDirectory}/{path}")) as FtpWebRequest;
 
         public async Task<byte[]> DownloadAsync(string path)
         {
@@ -37,7 +37,7 @@ namespace CodeShare.Model.Services
                         if (responseStream == null)
                             return null;
 
-                        Debug.WriteLine($"Download Complete. Status: {response.StatusDescription}");
+                        Logger.WriteLine($"Download Complete. Status: {response.StatusDescription}");
 
                         using (var memoryStream = new MemoryStream())
                         {
@@ -68,7 +68,7 @@ namespace CodeShare.Model.Services
                         if (responseStream == null)
                             return null;
 
-                        Debug.WriteLine($"Download Complete. Status: {response.StatusDescription}");
+                        Logger.WriteLine($"Download Complete. Status: {response.StatusDescription}");
 
                         using (var memoryStream = new MemoryStream())
                         {
@@ -100,13 +100,13 @@ namespace CodeShare.Model.Services
             {
                 using (var response = await request.GetResponseAsync() as FtpWebResponse)
                 {
-                    Debug.WriteLine($"Upload File Complete. Status: {response?.StatusDescription}");
+                    Logger.WriteLine($"Upload File Complete. Status: {response?.StatusDescription}");
                     return true;
                 }
             }
             catch (WebException)
             {
-                Debug.WriteLine($"Upload file failed.");
+                Logger.WriteLine($"Upload file failed.");
                 return false;
             }
 }
@@ -127,13 +127,13 @@ namespace CodeShare.Model.Services
             {
                 using (var response = request.GetResponse() as FtpWebResponse)
                 {
-                    Debug.WriteLine($"Upload File Complete. Status: {response?.StatusDescription}");
+                    Logger.WriteLine($"Upload File Complete. Status: {response?.StatusDescription}");
                     return true;
                 }
             }
             catch (WebException)
             {
-                Debug.WriteLine($"Upload file failed.");
+                Logger.WriteLine($"Upload file failed.");
                 return false;
             }
         }
@@ -148,13 +148,13 @@ namespace CodeShare.Model.Services
             {
                 using (var response = request.GetResponse() as FtpWebResponse)
                 {
-                    Debug.WriteLine($"Delete File Complete. Status: {response?.StatusDescription}");
+                    Logger.WriteLine($"Delete File Complete. Status: {response?.StatusDescription}");
                     return true;
                 }
             }
             catch (WebException)
             {
-                Debug.WriteLine($"Deletion of file failed.");
+                Logger.WriteLine($"Deletion of file failed.");
                 return false;
             }
         }
@@ -169,13 +169,13 @@ namespace CodeShare.Model.Services
             {
                 using (var response = await request.GetResponseAsync() as FtpWebResponse)
                 {
-                    Debug.WriteLine($"Delete File Complete. Status: {response?.StatusDescription}");
+                    Logger.WriteLine($"Delete File Complete. Status: {response?.StatusDescription}");
                     return true;
                 }
             }
             catch (WebException)
             {
-                Debug.WriteLine($"Deletion of file failed.");
+                Logger.WriteLine($"Deletion of file failed.");
                 return false;
             }
         }
@@ -218,7 +218,7 @@ namespace CodeShare.Model.Services
             {
                 using (request.GetResponse() as FtpWebResponse)
                 {
-                    Debug.WriteLine($"Directory {request.RequestUri} already exists.");
+                    Logger.WriteLine($"Directory {request.RequestUri} already exists.");
                     return true;
                 }
             }
@@ -229,13 +229,13 @@ namespace CodeShare.Model.Services
                     request.Method = WebRequestMethods.Ftp.MakeDirectory;
                     using (request.GetResponse() as FtpWebResponse)
                     {
-                        Debug.WriteLine($"Directory {request.RequestUri} was successfully created.");
+                        Logger.WriteLine($"Directory {request.RequestUri} was successfully created.");
                         return true;
                     }
                 }
                 catch (WebException)
                 {
-                    Debug.WriteLine($"Something wen't wrong when creating directory {request.RequestUri}.");
+                    Logger.WriteLine($"Something wen't wrong when creating directory {request.RequestUri}.");
                     return false;
                 }
             }
@@ -249,7 +249,7 @@ namespace CodeShare.Model.Services
             {
                 using (await request.GetResponseAsync() as FtpWebResponse)
                 {
-                    Debug.WriteLine($"Directory {request.RequestUri} already exists.");
+                    Logger.WriteLine($"Directory {request.RequestUri} already exists.");
                     return true;
                 }
             }
@@ -260,13 +260,13 @@ namespace CodeShare.Model.Services
                     request.Method = WebRequestMethods.Ftp.MakeDirectory;
                     using (await request.GetResponseAsync() as FtpWebResponse)
                     {
-                        Debug.WriteLine($"Directory {request.RequestUri} was successfully created.");
+                        Logger.WriteLine($"Directory {request.RequestUri} was successfully created.");
                         return true;
                     }
                 }
                 catch (WebException)
                 {
-                    Debug.WriteLine($"Something wen't wrong when creating directory {request.RequestUri}.");
+                    Logger.WriteLine($"Something wen't wrong when creating directory {request.RequestUri}.");
                     return false;
                 }
             }
@@ -293,7 +293,7 @@ namespace CodeShare.Model.Services
                         line = reader.ReadLine();
                     }
 
-                    Debug.WriteLine($"Directory List Complete, status {response.StatusDescription}");
+                    Logger.WriteLine($"Directory List Complete, status {response.StatusDescription}");
 
                     return files;
                 }
@@ -321,7 +321,7 @@ namespace CodeShare.Model.Services
                         line = await reader.ReadLineAsync();
                     }
 
-                    Debug.WriteLine($"Directory List Complete, status {response.StatusDescription}");
+                    Logger.WriteLine($"Directory List Complete, status {response.StatusDescription}");
 
                     return files;
                 }

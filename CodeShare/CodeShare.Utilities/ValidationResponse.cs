@@ -1,4 +1,4 @@
-﻿namespace CodeShare.Model.Services
+﻿namespace CodeShare.Utilities
 {
     public enum ValidationResponse
     {

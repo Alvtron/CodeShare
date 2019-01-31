@@ -1,11 +1,11 @@
 ﻿using CodeShare.Model;
-using CodeShare.Model.Services;
+using CodeShare.Services;
+using CodeShare.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.IO;
 
 namespace CodeShare.DataAccess
@@ -20,13 +20,13 @@ namespace CodeShare.DataAccess
             if (context == null) throw new NullReferenceException("Data context cannot be null.");
 
             // Delete all FTP files
-            Debug.WriteLine($"Deleting all files in FTP directory at {FtpService.Client.RootDirectory}.");
+            Logger.WriteLine($"Deleting all files in FTP directory at {FtpService.RootDirectoryFtp}.");
             FtpService.DeleteAll();
 
-            Debug.WriteLine($"Seeding database at {context.Database.Connection.ConnectionString}...");
+            Logger.WriteLine($"Seeding database at {context.Database.Connection.ConnectionString}...");
             base.Seed(context);
 
-            Debug.WriteLine($"Adding dummy-data to database.");
+            Logger.WriteLine($"Adding seed-data to database.");
             var random = new Random();
 
             var kim = new User("kimdrello", "kim@hiof.no", "#Kimdrello23")
@@ -79,6 +79,8 @@ namespace CodeShare.DataAccess
             context.Users.Add(christoffer);
             context.Users.Add(thomas);
 
+            Logger.WriteLine("Adding code languages and syntaxes to database.");
+
             var fileName = @"developer_file_extensions.json";
             var json = FileToString(fileName);
 
@@ -92,14 +94,14 @@ namespace CodeShare.DataAccess
             }
 
             context.SaveChanges();
-            Debug.WriteLine("Seeding database completed.");
+            Logger.WriteLine("Seeding database completed.");
         }
 
         public static byte[] FileToByteArray(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Debug.WriteLine("FileToByteArray: Provided path was empty.");
+                Logger.WriteLine("Provided path was empty.");
                 return null;
             }
 
@@ -109,7 +111,7 @@ namespace CodeShare.DataAccess
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"FileToString: {e.Message}");
+                Logger.WriteLine($"{e.Message}");
                 return null;
             }
         }
@@ -118,7 +120,7 @@ namespace CodeShare.DataAccess
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Debug.WriteLine("FileToString: Provided path was empty.");
+                Logger.WriteLine("Provided path was empty.");
                 return null;
             }
 
@@ -128,7 +130,7 @@ namespace CodeShare.DataAccess
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"FileToString: {e.Message}");
+                Logger.WriteLine($"{e.Message}");
                 return null;
             }
         }

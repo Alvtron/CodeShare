@@ -1,7 +1,7 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
+using CodeShare.Utilities;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace CodeShare.Uwp.Services
@@ -25,11 +25,11 @@ namespace CodeShare.Uwp.Services
 
         public static async Task<bool> SignOutAsync()
         {
-            Debug.WriteLine("Attempting to sign out user...");
+            Logger.WriteLine("Attempting to sign out user...");
 
             if (CurrentUser == null)
             {
-                Debug.WriteLine("Could not sign out user. No user is signed in.");
+                Logger.WriteLine("Could not sign out user. No user is signed in.");
                 await NotificationService.DisplayErrorMessage("Could not sign out user. No user is signed in.");
                 return false;
             }
@@ -37,7 +37,7 @@ namespace CodeShare.Uwp.Services
             CurrentUser.SignOut();
             if (!await RestApiService<User>.Update(CurrentUser, CurrentUser.Uid))
             {
-                Debug.WriteLine("Could not update signed out user. Sign out was silent.");
+                Logger.WriteLine("Could not update signed out user. Sign out was silent.");
             }
 
             CurrentUser = null;
@@ -52,14 +52,14 @@ namespace CodeShare.Uwp.Services
             if (credential == null)
                 return false;
 
-            Debug.WriteLine("Attempting to sign in user...");
+            Logger.WriteLine("Attempting to sign in user...");
 
             return await AuthenticateAsync(credential.UserName, credential.Password);
         }
 
         public static async Task<bool> SignInAsync(string username, string password)
         {
-            Debug.WriteLine("Attempting to sign in user...");
+            Logger.WriteLine("Attempting to sign in user...");
 
             var credential = CredentialService.Create(username, password);
 

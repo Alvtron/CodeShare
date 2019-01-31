@@ -1,9 +1,6 @@
 ﻿using CodeShare.Model;
-using CodeShare.WebApi.Controllers;
+using CodeShare.Utilities;
 using System;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -64,7 +61,7 @@ namespace CodeShare.WebApi.Controllers
             catch (Exception exception)
             {
 #if DEBUG
-                Debug.WriteLine($"{exception.Source}: {exception.Message}");
+                Logger.WriteLine($"{exception.Source}: {exception.Message}");
                 throw;
 #else
                 return BadRequest($"{exception.Source}: {exception.Message}");

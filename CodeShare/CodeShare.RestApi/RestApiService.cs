@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using System.Text;
 using CodeShare.Model;
 using System.Net.Http.Headers;
-using System.Diagnostics;
+using CodeShare.Utilities;
 
-namespace CodeShare.Uwp.DataSource
+namespace CodeShare.RestApi
 {
     /// <summary>
     /// 
@@ -36,7 +36,7 @@ namespace CodeShare.Uwp.DataSource
 
         public static async Task<T[]> Get()
         {
-            Debug.WriteLine($"Retrieving all {Type}s from the database...");
+            Logger.WriteLine($"Retrieving all {Type}s from the database...");
 
             try
             {
@@ -45,8 +45,8 @@ namespace CodeShare.Uwp.DataSource
             }
             catch (HttpRequestException exception)
             {
-                Debug.WriteLine($"Could not retrieve {Type}s from the REST API.");
-                Debug.WriteLine(exception.Message);
+                Logger.WriteLine($"Could not retrieve {Type}s from the REST API.");
+                Logger.WriteLine(exception.Message);
                 return null;
             }
         }
@@ -55,11 +55,11 @@ namespace CodeShare.Uwp.DataSource
         {
             if (uid == Guid.Empty)
             {
-                Debug.WriteLine($"Provided uid was empty.");
+                Logger.WriteLine($"Provided uid was empty.");
                 return default(T);
             }
 
-            Debug.WriteLine($"Retrieving {Type} {uid} from the database...");
+            Logger.WriteLine($"Retrieving {Type} {uid} from the database...");
 
             try
             {
@@ -68,8 +68,8 @@ namespace CodeShare.Uwp.DataSource
             }
             catch (HttpRequestException exception)
             {
-                Debug.WriteLine($"Could not retrieve {Type} {uid} from the REST API.");
-                Debug.WriteLine(exception.Message);
+                Logger.WriteLine($"Could not retrieve {Type} {uid} from the REST API.");
+                Logger.WriteLine(exception.Message);
                 return default(T);
             }
         }
@@ -78,28 +78,28 @@ namespace CodeShare.Uwp.DataSource
         {
             if (item == null)
             {
-                Debug.WriteLine($"Provided {Type} item was empty.");
+                Logger.WriteLine($"Provided {Type} item was empty.");
                 return false;
             }
 
             if (uid == Guid.Empty)
             {
-                Debug.WriteLine("Provided uid was empty.");
+                Logger.WriteLine("Provided uid was empty.");
                 return false;
             }
 
-            Debug.WriteLine($"Serializing {Type} to Json string.");
+            Logger.WriteLine($"Serializing {Type} to Json string.");
 
             var postBody = JsonConvert.SerializeObject(item, Formatting.None, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
 
-            Debug.WriteLine($"Updating {Type} in the database...");
+            Logger.WriteLine($"Updating {Type} in the database...");
 
             var response = await Client.PutAsync($"{Controller}/{uid}", new StringContent(postBody, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
-            Debug.WriteLine(response.IsSuccessStatusCode
+            Logger.WriteLine(response.IsSuccessStatusCode
                 ? $"{Type} was successfully updated in the database. Response code: {response.StatusCode}."
                 : $"{Type} was not updated in the database. Response code: {response.StatusCode}.");
 
@@ -110,22 +110,22 @@ namespace CodeShare.Uwp.DataSource
         {
             if (item == null)
             {
-                Debug.WriteLine($"Provided {Type} item was empty.");
+                Logger.WriteLine($"Provided {Type} item was empty.");
                 return false;
             }
 
-            Debug.WriteLine($"Serializing {Type} to Json string.");
+            Logger.WriteLine($"Serializing {Type} to Json string.");
 
             var postBody = JsonConvert.SerializeObject(item, Formatting.None, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
 
-            Debug.WriteLine($"Adding {Type} to the database...");
+            Logger.WriteLine($"Adding {Type} to the database...");
 
             var response = await Client.PostAsync(Controller, new StringContent(postBody, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
-            Debug.WriteLine(response.IsSuccessStatusCode
+            Logger.WriteLine(response.IsSuccessStatusCode
                 ? $"{Type} was successfully added to the database. Response code: {response.StatusCode}."
                 : $"{Type} was not added to the database. Response code: {response.StatusCode}.");
 
@@ -136,15 +136,15 @@ namespace CodeShare.Uwp.DataSource
         {
             if (uid == Guid.Empty)
             {
-                Debug.WriteLine("Provided uid was empty.");
+                Logger.WriteLine("Provided uid was empty.");
                 return false;
             }
 
-            Debug.WriteLine($"Deleting {Type} from the database...");
+            Logger.WriteLine($"Deleting {Type} from the database...");
 
             var response = await Client.DeleteAsync($"{Controller}/{uid}").ConfigureAwait(false);
 
-            Debug.WriteLine(response.IsSuccessStatusCode
+            Logger.WriteLine(response.IsSuccessStatusCode
                 ? $"{Type} was successfully deleted from the database. Response code: {response.StatusCode}."
                 : $"{Type} was not deleted from the database. Response code: {response.StatusCode}.");
 

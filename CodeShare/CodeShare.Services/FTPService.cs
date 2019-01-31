@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 
-namespace CodeShare.Model.Services
+namespace CodeShare.Services
 {
     public static class FtpService
     {
-        public static readonly string RootDirectoryHttp = $"https://r3dcraft.net/CodeShare";
+        private static readonly FtpClient Client = new FtpClient(RootDirectoryFtp, "r3dcraft.net", "#Alvtron1");
 
-        public static readonly string RootDirectoryFtp = $"ftp://ftp.r3dcraft.net/CodeShare";
+        public const string RootDirectoryHttp = @"https://r3dcraft.net/CodeShare";
 
-        public static readonly FtpClient Client = new FtpClient(RootDirectoryFtp, "r3dcraft.net", "#Alvtron1");
+        public const string RootDirectoryFtp = @"ftp://ftp.r3dcraft.net/CodeShare";
 
         public static bool Upload(byte[] file, string path) => Client.Upload(file, path);
 

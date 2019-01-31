@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace CodeShare.Model.Extensions
+namespace CodeShare.Extensions
 {
     public static class Reflection
     {

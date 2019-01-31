@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
-using CodeShare.Model.Services;
+using CodeShare.Services;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
 using System.Threading.Tasks;
-
+using CodeShare.Utilities;
 
 namespace CodeShare.Model
 {
@@ -40,20 +38,20 @@ namespace CodeShare.Model
 
         public bool Upload(byte[] fileInBytes)
         {
-            Debug.WriteLine($"Uploading {fileInBytes.Length} bytes at path '{Path}' to FTP web server...");
+            Logger.WriteLine($"Uploading {fileInBytes.Length} bytes at path '{Path}' to FTP web server...");
 
             if (fileInBytes == null || fileInBytes.Length == 0)
             {
-                Debug.WriteLine($"Failed to upload file: {Path}. No bytes were supplied.");
+                Logger.WriteLine($"Failed to upload file: {Path}. No bytes were supplied.");
                 return false;
             }
             if (!FtpService.Upload(fileInBytes, Path))
             {
-                Debug.WriteLine($"Failed to upload file: {Path}. Bad server response.");
+                Logger.WriteLine($"Failed to upload file: {Path}. Bad server response.");
                 return false;
             }
 
-            Debug.WriteLine($"The bytes was successfully uploaded as '{Path}'!");
+            Logger.WriteLine($"The bytes was successfully uploaded as '{Path}'!");
 
             Updated = DateTime.Now;
             return true;
@@ -61,20 +59,20 @@ namespace CodeShare.Model
 
         public async Task<bool> UploadAsync(byte[] fileInBytes)
         {
-            Debug.WriteLine($"Uploading {fileInBytes.Length} bytes at path '{Path}' to FTP web server...");
+            Logger.WriteLine($"Uploading {fileInBytes.Length} bytes at path '{Path}' to FTP web server...");
 
             if (fileInBytes == null || fileInBytes.Length == 0)
             {
-                Debug.WriteLine($"Failed to upload file: {Path}. No bytes were supplied.");
+                Logger.WriteLine($"Failed to upload file: {Path}. No bytes were supplied.");
                 return false;
             }
             if (await FtpService.UploadAsync(fileInBytes, Path) == false)
             {
-                Debug.WriteLine($"Failed to upload file: {Path}. Bad server response.");
+                Logger.WriteLine($"Failed to upload file: {Path}. Bad server response.");
                 return false;
             }
 
-            Debug.WriteLine($"The bytes was successfully uploaded as '{Path}'!");
+            Logger.WriteLine($"The bytes was successfully uploaded as '{Path}'!");
 
             Updated = DateTime.Now;
             return true;

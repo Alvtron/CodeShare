@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CodeShare.Model.Extensions
+namespace CodeShare.Extensions
 {
     public static class MathExtensions
     {

@@ -1,10 +1,8 @@
 ﻿using CodeShare.Model;
-using CodeShare.WebApi.Controllers;
+using CodeShare.Utilities;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -44,7 +42,7 @@ namespace CodeShare.WebApi.Controllers
 
             if (entity == null)
             {
-                Debug.WriteLine($"The provided {uid.GetType().Name} parameter did not match any items in the database.");
+                Logger.WriteLine($"The provided {uid.GetType().Name} parameter did not match any items in the database.");
                 return NotFound();
             }
 
@@ -69,7 +67,7 @@ namespace CodeShare.WebApi.Controllers
 
             if (existingEntity == null)
             {
-                Debug.WriteLine($"The provided {entity.GetType().Name} object with UID {uid} does not exist in the database. Attempting to add it...");
+                Logger.WriteLine($"The provided {entity.GetType().Name} object with UID {uid} does not exist in the database. Attempting to add it...");
                 return Post(entity);
             }
 
@@ -82,7 +80,7 @@ namespace CodeShare.WebApi.Controllers
             catch (Exception exception)
             {
 #if DEBUG
-                Debug.WriteLine($"The provided {entity.GetType().Name} object could not be updated. {exception.Source}: {exception.Message}");
+                Logger.WriteLine($"The provided {entity.GetType().Name} object could not be updated. {exception.Source}: {exception.Message}");
                 throw;
 #else
                 return BadRequest($"The provided {entity.GetType().Name} object could not be updated. {exception.Source}: {exception.Message}");
@@ -119,10 +117,10 @@ namespace CodeShare.WebApi.Controllers
             {
                 foreach (var result in exception.EntityValidationErrors)
                 {
-                    Debug.WriteLine($"Entity of type '{result.Entry.Entity.GetType().Name}' in state '{result.Entry.State}' has the following validation errors:");
+                    Logger.WriteLine($"Entity of type '{result.Entry.Entity.GetType().Name}' in state '{result.Entry.State}' has the following validation errors:");
                     foreach (var _result in result.ValidationErrors)
                     {
-                        Debug.WriteLine($"- Property: '{_result.PropertyName}', Error: '{_result.ErrorMessage}'");
+                        Logger.WriteLine($"- Property: '{_result.PropertyName}', Error: '{_result.ErrorMessage}'");
                     }
                 }
                 throw;
@@ -131,7 +129,7 @@ namespace CodeShare.WebApi.Controllers
             catch (Exception exception)
             {
 #if DEBUG
-                Debug.WriteLine($"The provided {entity.GetType().Name} object could not be added. {exception.Source}: {exception.Message}");
+                Logger.WriteLine($"The provided {entity.GetType().Name} object could not be added. {exception.Source}: {exception.Message}");
                 throw;
 #else
                 return BadRequest($"The provided {entity.GetType().Name} object could not be added. {exception.Source}: {exception.Message}");
@@ -160,7 +158,7 @@ namespace CodeShare.WebApi.Controllers
             catch (Exception exception)
             {
 #if DEBUG
-                Debug.WriteLine($"The provided {uid.GetType().Name} could not be deleted! {exception.Source}: {exception.Message}");
+                Logger.WriteLine($"The provided {uid.GetType().Name} could not be deleted! {exception.Source}: {exception.Message}");
                 throw;
 #else
                 return BadRequest($"The provided {uid.GetType().Name} could not be deleted! {exception.Source}: {exception.Message}");

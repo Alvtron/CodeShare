@@ -1,10 +1,6 @@
 ﻿using CodeShare.Model;
+using CodeShare.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -102,8 +98,8 @@ namespace CodeShare.Uwp.Utilities
             var x = ConvertXToCoordinate(pointer.Position.X);
             var y = ConvertXToCoordinate(pointer.Position.Y);
 
-            Debug.WriteLine($"x({ConvertXToCoordinate(x)}), y({ConvertYToCoordinate(y)}");
-            Debug.WriteLine($": size: {Math.Abs(x) * 2}w x {Math.Abs(y) * 2}h");
+            Logger.WriteLine($"x({ConvertXToCoordinate(x)}), y({ConvertYToCoordinate(y)}");
+            Logger.WriteLine($": size: {Math.Abs(x) * 2}w x {Math.Abs(y) * 2}h");
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using CodeShare.Model;
-using CodeShare.Model.Extensions;
-using CodeShare.Uwp.DataSource;
+using CodeShare.Extensions;
+using CodeShare.RestApi;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 

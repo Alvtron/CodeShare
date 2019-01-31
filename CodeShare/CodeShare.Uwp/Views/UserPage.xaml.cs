@@ -1,9 +1,9 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
+using CodeShare.Utilities;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
 using System;
-using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -48,7 +48,7 @@ namespace CodeShare.Uwp.Views
 
             if (!await RestApiService<User>.Update(ViewModel.Model, ViewModel.Model.Uid))
             {
-                Debug.WriteLine($"Failed to increment view counter for user {ViewModel.Model.Uid}.");
+                Logger.WriteLine($"Failed to increment view counter for user {ViewModel.Model.Uid}.");
             }
 
             NavigationService.SetHeaderTitle($"{ViewModel.Model?.Name}'s profile");

@@ -174,8 +174,6 @@
     <Compile Include="Converters\InverseVisibilityConverter.cs" />
     <Compile Include="Converters\IsAuthorVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
-    <Compile Include="DataSource\AuthDataSource.cs" />
-    <Compile Include="DataSource\RestApiService.cs" />
     <Compile Include="Dialogs\AddQuestionDialog.xaml.cs">
       <DependentUpon>AddQuestionDialog.xaml</DependentUpon>
     </Compile>
@@ -568,9 +566,25 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeShare.Extensions\CodeShare.Extensions.csproj">
+      <Project>{a68e7bdb-0f04-4c82-ad39-d2118f83a9ef}</Project>
+      <Name>CodeShare.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeShare.Model\CodeShare.Model.csproj">
       <Project>{8f723fab-ed50-4a88-a127-e9deeade4ea4}</Project>
       <Name>CodeShare.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeShare.RestApi\CodeShare.RestApi.csproj">
+      <Project>{9a5f2a87-af26-43bd-9f5e-e4c3fee250c8}</Project>
+      <Name>CodeShare.RestApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeShare.Services\CodeShare.Services.csproj">
+      <Project>{e8cdce0c-5798-4f36-bbdf-d66f957b33c0}</Project>
+      <Name>CodeShare.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeShare.Utilities\CodeShare.Utilities.csproj">
+      <Project>{41ceed12-5b94-4c38-8755-31def473d61b}</Project>
+      <Name>CodeShare.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

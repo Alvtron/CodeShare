@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using CodeShare.Model;
+using CodeShare.Utilities;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
@@ -89,7 +89,7 @@ namespace CodeShare.Uwp.Utilities
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Debug.WriteLine("GetStorageFile: Provided file path was empty.");
+                Logger.WriteLine("GetStorageFile: Provided file path was empty.");
                 return null;
             }
 
@@ -107,7 +107,7 @@ namespace CodeShare.Uwp.Utilities
         {
             if (string.IsNullOrWhiteSpace(folderPath))
             {
-                Debug.WriteLine("GetStorageFolder: Provided folder path was empty.");
+                Logger.WriteLine("GetStorageFolder: Provided folder path was empty.");
                 return null;
             }
 
@@ -125,7 +125,7 @@ namespace CodeShare.Uwp.Utilities
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Debug.WriteLine("ConvertFileToBitmapImage: Provided file path was empty.");
+                Logger.WriteLine("ConvertFileToBitmapImage: Provided file path was empty.");
                 return null;
             }
 
@@ -143,7 +143,7 @@ namespace CodeShare.Uwp.Utilities
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Debug.WriteLine("ConvertFileToByteArray: Provided path was empty.");
+                Logger.WriteLine("ConvertFileToByteArray: Provided path was empty.");
                 return null;
             }
 
@@ -160,7 +160,7 @@ namespace CodeShare.Uwp.Utilities
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Debug.WriteLine("ConvertFileToString: Provided path was empty.");
+                Logger.WriteLine("ConvertFileToString: Provided path was empty.");
                 return null;
             }
 
@@ -170,7 +170,7 @@ namespace CodeShare.Uwp.Utilities
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"ConvertFileToString: {e.Message}");
+                Logger.WriteLine($"ConvertFileToString: {e.Message}");
                 return null;
             }
         }
@@ -179,7 +179,7 @@ namespace CodeShare.Uwp.Utilities
         {
             if (file == null)
             {
-                Debug.WriteLine("ConvertStorageFileToBitmapImage: Provided storage file was empty.");
+                Logger.WriteLine("ConvertStorageFileToBitmapImage: Provided storage file was empty.");
                 return null;
             }
 

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using CodeShare.Model;
+﻿using CodeShare.Model;
+using CodeShare.Utilities;
 using Windows.Storage;
 
 /*
@@ -68,11 +67,11 @@ namespace CodeShare.Uwp.Services
 
         public static void PrintSettings()
         {
-            Debug.WriteLine("App settings stored:");
+            Logger.WriteLine("App settings stored:");
 
             foreach (var key in ApplicationData.Current.LocalSettings.Values)
             {
-                Debug.WriteLine($"{key.Key}: {key.Value}");
+                Logger.WriteLine($"{key.Key}: {key.Value}");
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Diagnostics;
 
-namespace CodeShare.Model.Extensions
+namespace CodeShare.Extensions
 {
     public static class ListExtensions
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Windows.Security.Credentials;
 using System.Collections.ObjectModel;
+using CodeShare.Utilities;
 
 namespace CodeShare.Uwp.Services
 {
@@ -165,7 +165,7 @@ namespace CodeShare.Uwp.Services
         /// <returns></returns>
         public static PasswordCredential Create(string username, string password)
         {
-            Debug.WriteLine($"Creating new credential with username {username} and password {password}.");
+            Logger.WriteLine($"Creating new credential with username {username} and password {password}.");
             var credential = new PasswordCredential(ResourceName, username, password);
 
             if (Find(username) is PasswordCredential existingCredential)
@@ -174,19 +174,19 @@ namespace CodeShare.Uwp.Services
 
                 if (existingCredential.Password.Equals(password))
                 {
-                    Debug.WriteLine($"Credential {credential.UserName} already exists. No need to add to vault.");
+                    Logger.WriteLine($"Credential {credential.UserName} already exists. No need to add to vault.");
                     AppSettings.DefaultUser = credential.UserName;
                     return credential;
                 }
 
-                Debug.WriteLine($"Credential {credential.UserName} already exists, but with a different password. Proceeds to update it with the new password.");
+                Logger.WriteLine($"Credential {credential.UserName} already exists, but with a different password. Proceeds to update it with the new password.");
                 Delete(existingCredential);
             }
             
             Vault.Add(credential);
-            Debug.WriteLine($"Credential {credential.UserName} was added to the vault.");
+            Logger.WriteLine($"Credential {credential.UserName} was added to the vault.");
             AppSettings.DefaultUser = credential.UserName;
-            Debug.WriteLine($"Credential {credential.UserName} was set as Default.");
+            Logger.WriteLine($"Credential {credential.UserName} was set as Default.");
 
             return credential;
         }

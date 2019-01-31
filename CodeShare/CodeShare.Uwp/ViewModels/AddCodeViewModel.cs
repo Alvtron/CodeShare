@@ -1,11 +1,10 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
+using CodeShare.Utilities;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
 using CodeShare.Uwp.Views;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -59,7 +58,7 @@ namespace CodeShare.Uwp.ViewModels
                     
                 if (codeLanguage == null)
                 {
-                    Debug.WriteLine($"Rejected file {file.Name}. Extension is not supported.");
+                    Logger.WriteLine($"Rejected file {file.Name}. Extension is not supported.");
                     continue;
                 }
 
@@ -81,7 +80,7 @@ namespace CodeShare.Uwp.ViewModels
         {
             if (!Code.Valid)
             {
-                Debug.WriteLine("UploadCodeAsync: One or more fields are empty or not valid.");
+                Logger.WriteLine("UploadCodeAsync: One or more fields are empty or not valid.");
                 return false;
             }
 
@@ -90,7 +89,7 @@ namespace CodeShare.Uwp.ViewModels
             if (await RestApiService<Code>.Add(Code) == false)
             {
                 NavigationService.Unlock();
-                Debug.WriteLine("UploadCodeAsync: An error occurred during the upload. No changes where made.");
+                Logger.WriteLine("UploadCodeAsync: An error occurred during the upload. No changes where made.");
                 return false;
             }
 

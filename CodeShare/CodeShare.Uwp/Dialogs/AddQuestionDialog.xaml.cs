@@ -1,5 +1,4 @@
-﻿using CodeShare.Model;
-using CodeShare.Uwp.ViewModels;
+﻿using CodeShare.Uwp.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

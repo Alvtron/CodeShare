@@ -1,10 +1,10 @@
 ﻿using CodeShare.Model;
-using CodeShare.Uwp.DataSource;
+using CodeShare.RestApi;
+using CodeShare.Utilities;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Views;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
@@ -23,7 +23,7 @@ namespace CodeShare.Uwp.Services
 
         public static void Initialize(Frame frame, NavigationView navigationView, ProgressRing progressRing)
         {
-            Debug.WriteLine("Initializing NavigationService...");
+            Logger.WriteLine("Initializing NavigationService...");
 
             Frame = frame;
             NavigationView = navigationView;
@@ -41,9 +41,9 @@ namespace CodeShare.Uwp.Services
             };
 
             if (!Initialized)
-                Debug.WriteLine("NavigationService was not properly initialized.");
+                Logger.WriteLine("NavigationService was not properly initialized.");
             else
-                Debug.WriteLine("NavigationService was properly initialized.");
+                Logger.WriteLine("NavigationService was properly initialized.");
         }
 
         public static bool CanGoBack => Frame?.CanGoBack ?? false;
@@ -56,7 +56,7 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't update back-button visibillity. NavigationService is not initialized.");
+                Logger.WriteLine("Can't update back-button visibillity. NavigationService is not initialized.");
                 return;
             }
 
@@ -75,7 +75,7 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't navigate. NavigationService is not initialized.");
+                Logger.WriteLine("Can't navigate. NavigationService is not initialized.");
                 return;
             }
 
@@ -93,7 +93,7 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't navigate. NavigationService is not initialized.");
+                Logger.WriteLine("Can't navigate. NavigationService is not initialized.");
                 return;
             }
 
@@ -134,13 +134,13 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't go back. NavigationService is not initialized.");
+                Logger.WriteLine("Can't go back. NavigationService is not initialized.");
                 return;
             }
 
             if (!CanGoBack)
             {
-                Debug.WriteLine("Can't go backward. No pages are front in the stack.");
+                Logger.WriteLine("Can't go backward. No pages are front in the stack.");
                 return;
             }
 
@@ -152,13 +152,13 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't go forward. NavigationService is not initialized.");
+                Logger.WriteLine("Can't go forward. NavigationService is not initialized.");
                 return;
             }
 
             if (!CanGoForward)
             {
-                Debug.WriteLine("Can't go forward. No pages are front in the stack.");
+                Logger.WriteLine("Can't go forward. No pages are front in the stack.");
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't lock navigator. NavigationService is not initialized.");
+                Logger.WriteLine("Can't lock navigator. NavigationService is not initialized.");
                 return;
             }
 
@@ -181,7 +181,7 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't unlock navigator. NavigationService is not initialized.");
+                Logger.WriteLine("Can't unlock navigator. NavigationService is not initialized.");
                 return;
             }
 
@@ -193,7 +193,7 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't lock frame. NavigationService is not initialized.");
+                Logger.WriteLine("Can't lock frame. NavigationService is not initialized.");
                 return;
             }
 
@@ -205,7 +205,7 @@ namespace CodeShare.Uwp.Services
         {
             if (!Initialized)
             {
-                Debug.WriteLine("Can't unlock frame. NavigationService is not initialized.");
+                Logger.WriteLine("Can't unlock frame. NavigationService is not initialized.");
                 return;
             }
 
