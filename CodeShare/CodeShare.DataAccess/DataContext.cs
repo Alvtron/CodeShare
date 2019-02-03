@@ -14,8 +14,10 @@ namespace CodeShare.DataAccess
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<CodeFile> CodeFiles { get; set; }
         public virtual DbSet<Reply> Replies { get; set; }
+        public virtual DbSet<Report> Reports { get; set; }
 
-        public DataContext() : base("CodeShare")
+        public DataContext(string nameOrConnectionString = "CodeShare")
+            : base(nameOrConnectionString)
         {
             Configuration.ProxyCreationEnabled = false;
 
@@ -150,6 +152,22 @@ namespace CodeShare.DataAccess
                 m.ToTable($"{typeof(Report).Name}s");
             });
             modelBuilder.Entity<Report>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Report>()
+                .HasMany(e => e.ImageAttachments)
+                .WithRequired(e => e.Report)
+                .HasForeignKey(e => e.ReportUid);
+
+            Logger.WriteLine($"Creating model for {typeof(ReportImage).Name} class.");
+            modelBuilder.Entity<ReportImage>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable($"{typeof(ReportImage).Name}s");
+            });
+            modelBuilder.Entity<ReportImage>().HasKey(e => e.Uid);
+            modelBuilder.Entity<ReportImage>()
+                .HasRequired(e => e.Report)
+                .WithMany(e => e.ImageAttachments)
+                .HasForeignKey(e => e.ReportUid);
 
             #endregion
 

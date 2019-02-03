@@ -47,52 +47,72 @@ namespace CodeShare.Uwp.Services
 
         public static async Task<bool> SignInAsync()
         {
+            Logger.WriteLine("Attempting to sign in user with local user credential...");
+
             var credential = CredentialService.Current;
 
             if (credential == null)
+            {
+                Logger.WriteLine("Failed to sign in user. There are no current credential.");
                 return false;
+            }
 
-            Logger.WriteLine("Attempting to sign in user...");
+            if (await AuthenticateAsync(credential.UserName, credential.Password))
+            {
+                Logger.WriteLine("Failed to sign in user. Local credential could not be verified with the database.");
+                return false;
+            }
 
-            return await AuthenticateAsync(credential.UserName, credential.Password);
+            Logger.WriteLine("Sign in succeeded. Local credential matched a user in the database.");
+            return true;
         }
 
         public static async Task<bool> SignInAsync(string username, string password)
         {
-            Logger.WriteLine("Attempting to sign in user...");
+            Logger.WriteLine("Attempting to sign in user with new user credential...");
 
             var credential = CredentialService.Create(username, password);
 
-            return await AuthenticateAsync(credential.UserName, credential.Password);
+            if (credential == null)
+            {
+                Logger.WriteLine("Failed to sign in user. Failed to create credential with the provided parameters.");
+                return false;
+            }
+
+            if (await AuthenticateAsync(credential.UserName, credential.Password))
+            {
+                Logger.WriteLine("Failed to sign in user. The new credential could not be verified with the database.");
+                return false;
+            }
+
+            Logger.WriteLine("Sign in succeeded. The new credential matched a user in the database.");
+            return true;
         }
 
         private static async Task<bool> AuthenticateAsync(string username, string password)
         {
             CurrentUser = await AuthDataSource.SignIn(username, password);
 
-            AppSettings.DefaultUser = _currentUser?.Name;
+            AppSettings.DefaultUser = CurrentUser?.Name;
 
-            return _currentUser != null;
+            return CurrentUser != null;
         }
 
         public static async Task<User> SignUpAsync(string userName, string email, string password)
         {
-            // Create user
-            var newUser = new User(userName, email, password);
-
-            if (!newUser.Valid)
-                return null;
-
-            newUser = await AuthDataSource.SignUp(newUser);
+            var newUser = await AuthDataSource.SignUp(userName, email, password);
 
             if (newUser == null)
+            {
+                Logger.WriteLine("Failed to create new user. Returning empty object.");
                 return null;
+            }
 
             CurrentUser = newUser;
+
             CredentialService.Create(userName, password);
 
-            var settings = new AppSettings();
-            settings.DefaultUser = userName;
+            AppSettings.DefaultUser = userName;
 
             return newUser;
         }

@@ -14,6 +14,8 @@ namespace CodeShare.Uwp.ViewModels
 {
     public class AddCodeViewModel : DialogViewModel
     {
+        private CodeLanguage[] CodeLanguages { get; set; }
+
         private bool _changed;
         public bool Changed
         {
@@ -47,14 +49,19 @@ namespace CodeShare.Uwp.ViewModels
             var files = await StorageUtilities.PickMultipleFiles();
 
             if (files == null || files.Count == 0)
+            {
                 return;
+            }
 
-            var codeLanguages = await RestApiService<CodeLanguage>.Get();
+            if (CodeLanguages == null)
+            {
+                await InitializeCodeLanguages();
+            }
 
             foreach (var file in files)
             {
                 var fileType = file.FileType.ToLower();
-                var codeLanguage = codeLanguages.FirstOrDefault(cl => cl.Extension.ToLower().Equals(fileType));
+                var codeLanguage = CodeLanguages.FirstOrDefault(cl => cl.Extension.ToLower().Equals(fileType));
                     
                 if (codeLanguage == null)
                 {
@@ -74,6 +81,19 @@ namespace CodeShare.Uwp.ViewModels
             }
 
             Changed = true;
+        }
+
+        private async Task InitializeCodeLanguages()
+        {
+            var codeLanguages = await RestApiService<CodeLanguage>.Get();
+
+            if (codeLanguages == null)
+            {
+                Logger.WriteLine($"Failed to retrieve code languages from database.");
+                return;
+            }
+
+            CodeLanguages = codeLanguages;
         }
 
         public async Task<bool> UploadCodeAsync()

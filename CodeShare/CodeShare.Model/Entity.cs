@@ -2,7 +2,7 @@
 
 namespace CodeShare.Model
 {
-    public abstract class Entity : ObservableObject, IEntity, IComparable<Entity>
+    public abstract class Entity : ObservableObject, IEntity, IEquatable<Entity>
     {
         public Guid Uid { get; set; } = Guid.NewGuid();
 
@@ -15,10 +15,14 @@ namespace CodeShare.Model
             set => SetField(ref _updated, value);
         }
 
-        public int CompareTo(Entity entity) =>
-            Created.HasValue && entity.Created.HasValue
-            ? Created.Value.CompareTo(entity.Created.Value)
-            : 0;
+        public bool Equals(Entity other)
+        {
+            return Uid.Equals(other?.Uid);
+        }
 
+        public override int GetHashCode()
+        {
+            return Uid.GetHashCode();
+        }
     }
 }

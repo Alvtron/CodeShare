@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
 using CodeShare.Model;
 using System.Net.Http.Headers;
 using CodeShare.Utilities;
+using System.Collections.Generic;
 
 namespace CodeShare.RestApi
 {
@@ -37,7 +39,7 @@ namespace CodeShare.RestApi
         public static async Task<T[]> Get()
         {
             Logger.WriteLine($"Retrieving all {Type}s from the database...");
-
+            
             try
             {
                 var json = await Client.GetStringAsync(Controller).ConfigureAwait(false);

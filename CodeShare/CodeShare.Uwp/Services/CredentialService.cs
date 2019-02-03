@@ -45,7 +45,7 @@ namespace CodeShare.Uwp.Services
         /// <summary>
         /// The resource name
         /// </summary>
-        private const string ResourceName = "ResPack Studio";
+        private const string ResourceName = "CodeShare";
 
         /// <summary>
         /// The vault

@@ -23,18 +23,26 @@ namespace CodeShare.WebApi.Controllers
         [ResponseType(typeof(User)), Route("api/auth/signin")]
         public IHttpActionResult SignIn([FromBody] EncryptedCredential encryptedCredential)
         {
-            if (encryptedCredential == null) return BadRequest("Provided encrypted credential is empty.");
-            if (!IsDatabaseOnline) return InternalServerError();
+            if (encryptedCredential == null)
+            {
+                return BadRequest("Provided encrypted credential is empty.");
+            }
+            if (!IsDatabaseOnline)
+            {
+                return InternalServerError();
+            }
 
             // Decrypt encrypted user credentials
             var userName = _asymmetricEncryptor.Decrypt(encryptedCredential.UserName);
             var password = _asymmetricEncryptor.Decrypt(encryptedCredential.Password);
 
             // Find user with decrypted credentials
-            var user = Entities.FirstOrDefault(u => u.Name == userName);
+            var user = QueryableEntities.FirstOrDefault(u => u.Name == userName);
 
             if (user == null || !user.Password.ValidatePassword(password))
+            {
                 return NotFound();
+            }
 
             return Content(HttpStatusCode.OK, user);
         }
@@ -43,13 +51,24 @@ namespace CodeShare.WebApi.Controllers
         public IHttpActionResult SignUp([FromBody] User user)
         {
             if (!IsDatabaseOnline)
+            {
+                Logger.WriteLine("Internal Server Error.");
                 return InternalServerError();
+            }
             if (user == null)
+            {
+                Logger.WriteLine("Provided user is empty.");
                 return BadRequest("Provided user is empty.");
-            if (!user.Valid)
+            }
+            if (!user.IsValid)
+            {
+                Logger.WriteLine("Provided user is invalid.");
                 return BadRequest("Provided user is invalid.");
-            if (Entities.Any(u => u.Name == user.Name || u.Email == user.Email))
+            }
+            if (Entities.Any(u => u.Name == user.Name || u.Email.Address == user.Email.Address))
+            {
                 return BadRequest("A user with that username or email already exists.");
+            }
 
             try
             {
@@ -64,6 +83,7 @@ namespace CodeShare.WebApi.Controllers
                 Logger.WriteLine($"{exception.Source}: {exception.Message}");
                 throw;
 #else
+                Logger.WriteLine($"{exception.Source}: {exception.Message}");
                 return BadRequest($"{exception.Source}: {exception.Message}");
 #endif
             }
@@ -73,9 +93,15 @@ namespace CodeShare.WebApi.Controllers
         public IHttpActionResult ChangeCredentials(Guid uid, [FromBody] EncryptedCredential encryptedCredential)
         {
             if (encryptedCredential == null)
+            {
+                Logger.WriteLine("Provided encrypted credential is empty.");
                 return BadRequest("Provided encrypted credential is empty.");
+            }
             if (!IsDatabaseOnline)
+            {
+                Logger.WriteLine("Internal Server Error.");
                 return InternalServerError();
+            }
 
             // Decrypt encrypted user credentials
             var userName = _asymmetricEncryptor.Decrypt(encryptedCredential.UserName);

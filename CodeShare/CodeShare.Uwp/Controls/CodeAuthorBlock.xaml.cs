@@ -20,7 +20,10 @@ namespace CodeShare.Uwp.Controls
             set
             {
                 SetValue(CodeProperty, value);
-                IsUserAuthor = value.UserUid.Equals(AuthService.CurrentUser.Uid);
+
+                IsUserAuthor = AuthService.CurrentUser == null
+                    ? IsUserAuthor = false
+                    : value.UserUid.Equals(AuthService.CurrentUser.Uid);
             }
         }
 

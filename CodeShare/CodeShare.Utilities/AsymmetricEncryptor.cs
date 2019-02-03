@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CodeShare.Model
+namespace CodeShare.Utilities
 {
     // Windows guide on encryption and decryption: https://docs.microsoft.com/en-us/dotnet/standard/security/walkthrough-creating-a-cryptographic-application
 

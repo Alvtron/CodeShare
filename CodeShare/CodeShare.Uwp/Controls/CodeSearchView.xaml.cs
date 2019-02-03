@@ -11,12 +11,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class CodeListView : UserControl
+    public sealed partial class CodeSearchView : UserControl
     {
-        public static readonly DependencyProperty CodesProperty = DependencyProperty.Register("Codes", typeof(IEnumerable<Code>), typeof(CodeListView), new PropertyMetadata(new List<Code>()));
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(CodeListView), new PropertyMetadata(null));
-        public static readonly DependencyProperty SearchQueryProperty = DependencyProperty.Register("SearchQuery", typeof(string), typeof(CodeListView), new PropertyMetadata(null));
-        public static readonly DependencyProperty IsSearchBoxEnabledProperty = DependencyProperty.Register("IsSearchBoxEnabled", typeof(bool), typeof(CodeListView), new PropertyMetadata(false));
+        public static readonly DependencyProperty CodesProperty = DependencyProperty.Register("Codes", typeof(IEnumerable<Code>), typeof(CodeSearchView), new PropertyMetadata(new List<Code>()));
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(CodeSearchView), new PropertyMetadata(null));
+        public static readonly DependencyProperty SearchQueryProperty = DependencyProperty.Register("SearchQuery", typeof(string), typeof(CodeSearchView), new PropertyMetadata(null));
+        public static readonly DependencyProperty IsSearchBoxEnabledProperty = DependencyProperty.Register("IsSearchBoxEnabled", typeof(bool), typeof(CodeSearchView), new PropertyMetadata(true));
 
         private ObservableCollection<Code> FilteredCodes { get; set; } = new ObservableCollection<Code>();
 
@@ -51,7 +51,7 @@ namespace CodeShare.Uwp.Controls
             set => SetValue(IsSearchBoxEnabledProperty, value);
         }
 
-        public CodeListView()
+        public CodeSearchView()
         {
             InitializeComponent();
         }
@@ -92,9 +92,9 @@ namespace CodeShare.Uwp.Controls
                 return;
             }
 
-            query = query?.ToLower();
+            query = query.ToLower();
 
-            UpdateListView(Codes?.Where(u => u.Name.ToLower().StartsWith(query)));
+            UpdateListView(Codes?.Where(u => u.Name.ToLower().Contains(query) || u.User.Name.ToLower().StartsWith(query)));
         }
     }
 }

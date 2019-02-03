@@ -122,7 +122,7 @@ namespace CodeShare.Uwp.Services
                     return;
                 case "Comment":
                     var comment = await RestApiService<Reply>.Get((Guid)parameter);
-                    var dialog = new CommentDialog(comment);
+                    var dialog = new ReplyDialog(comment);
                     await dialog.ShowAsync();
                     return;
                 default:

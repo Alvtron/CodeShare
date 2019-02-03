@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using CodeShare.Utilities;
+using System.Security.Cryptography;
 
 namespace CodeShare.Model
 {

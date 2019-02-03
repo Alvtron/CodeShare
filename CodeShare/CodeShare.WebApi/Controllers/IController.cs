@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeShare.Model;
+using System;
 using System.Linq;
 using System.Web.Http;
 
@@ -8,7 +9,7 @@ namespace CodeShare.WebApi.Controllers
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IController<T>
+    public interface IController<T> where T : class, IEntity
     {
         /// <summary>
         /// Gets all entities from database.
@@ -40,11 +41,5 @@ namespace CodeShare.WebApi.Controllers
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
         IHttpActionResult Delete(Guid uid);
-        /// <summary>
-        /// Exists the specified uid.
-        /// </summary>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
-        bool Exist(Guid uid);
     }
 }

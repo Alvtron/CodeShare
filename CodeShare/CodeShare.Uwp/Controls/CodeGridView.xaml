@@ -18,7 +18,7 @@
             IsItemClickEnabled="True">
         <GridView.ItemTemplate>
             <DataTemplate x:DataType="model:Code">
-                <controls:CodeItem Code="{Binding}" />
+                <controls:CodeItem Code="{x:Bind Mode=OneWay}" />
             </DataTemplate>
         </GridView.ItemTemplate>
     </GridView>

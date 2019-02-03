@@ -7,7 +7,7 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class SignInDialog : ContentDialog
     {
-        public SignInViewModel ViewModel { get; set; } = new SignInViewModel();
+        private SignInViewModel ViewModel { get; set; } = new SignInViewModel();
 
         public SignInDialog()
         {

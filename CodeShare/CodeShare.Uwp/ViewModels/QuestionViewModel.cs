@@ -13,34 +13,5 @@ namespace CodeShare.Uwp.ViewModels
         {
             IsUserAuthor = question.User.Equals(AuthService.CurrentUser);
         }
-
-        public override async Task<bool> Refresh()
-        {
-            if (!(await RestApiService<Question>.Get(Model.Uid) is Question question))
-                return false;
-
-            Model = question;
-            return true;
-        }
-
-        public override Task ReportAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ViewImage(WebFile image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ViewVideo(Video video)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void LogClick(ILog log)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

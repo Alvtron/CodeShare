@@ -31,7 +31,7 @@ namespace CodeShare.Uwp.Controls
 
         public async Task UploadCommentAsync(Editor editor)
         {
-            if (AuthService.CurrentUser == null || !AuthService.CurrentUser.Valid)
+            if (AuthService.CurrentUser == null)
             {
                 await NotificationService.DisplayErrorMessage("You are not logged in!");
                 return;

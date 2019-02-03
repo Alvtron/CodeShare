@@ -1,6 +1,6 @@
 ﻿namespace CodeShare.Model
 {
-    public interface IWebImage
+    public interface IWebImage : IWebFile
     {
         double AspectRatio { get; }
         int Height { get; set; }

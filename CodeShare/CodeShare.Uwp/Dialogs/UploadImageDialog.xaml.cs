@@ -14,7 +14,7 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class UploadImageDialog : ContentDialog
     {
-        public StorageFile ImageFile { get; private set; }
+        private StorageFile ImageFile { get; set; }
 
         public UploadImageDialog()
         {

@@ -189,12 +189,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ReplyController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\CodeLanguageController.cs" />
     <Compile Include="Controllers\CodeController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\EntityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\UserController.cs" />

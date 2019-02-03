@@ -17,81 +17,90 @@
     <Page.Resources>
         <converters:ImageConverter x:Key="ImageConverter" />
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:VisibilityConverter x:Key="VisibillityConverter" />
+        <converters:VisibilityConverter x:Key="VisibilityConverter" />
+        <converters:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
     </Page.Resources>
 
-    <Grid >
-        <ScrollViewer>
-            <StackPanel>
-                <Grid>
-                    <!-- Banner -->
-                    <Image
-                        Height="200"
-                        Source="{x:Bind ViewModel.Model.Banner.Url, Converter={StaticResource ImageConverter}, Mode=OneWay}"
-                        Stretch="UniformToFill"
-                        Visibility="{x:Bind ViewModel.Model.HasBanners, Converter={StaticResource VisibillityConverter}, Mode=OneWay}"
-                        RelativePanel.AlignTopWithPanel="True"
-                        RelativePanel.AlignHorizontalCenterWithPanel="True" />
-                    <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" VerticalAlignment="Bottom" Padding="48" FontSize="48" />
-                </Grid>
+    <ScrollViewer Name="ScrollView">
+        <StackPanel>
+            <Grid>
+                <ParallaxView
+                    Source="{x:Bind ScrollView, Mode=OneWay}"
+                    VerticalShift="200"
+                    Height="400"
+                    Width="auto"
+                    HorizontalAlignment="Center"
+                    Visibility="{x:Bind ViewModel.Model.HasBanners, Converter={StaticResource VisibilityConverter}, Mode=OneWay}">
+                <!-- Banner -->
+                <Image
+                    Width="auto"
+                    Height="auto"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Source="{x:Bind ViewModel.Model.Banner.Url, Converter={StaticResource ImageConverter}, Mode=OneWay}"
+                    Stretch="UniformToFill"/>
+                </ParallaxView>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="48" Spacing="24">
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}"
+                        FontSize="48"
+                        VerticalAlignment="Center" />
+                    <HyperlinkButton
+                        Name="ReportButton"
+                        Content="Report"
+                        VerticalAlignment="Center"
+                        Command="{x:Bind ViewModel.ReportCommand}"
+                        Visibility="{x:Bind ViewModel.IsUserAuthor, Converter={StaticResource InverseVisibilityConverter}, Mode=OneWay}"/>
+                </StackPanel>
+            </Grid>
 
-                <RelativePanel Margin="48">
+            <RelativePanel Margin="48">
 
-                    <!-- Info panel -->
-                    <controls:CodeAuthorBlock Name="Info" MinWidth="150" MaxWidth="200" Code="{x:Bind ViewModel.Model, Mode=OneWay}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
-
-                    <!-- Content Panel -->
-                    <Pivot RelativePanel.LeftOf="Info" RelativePanel.AlignTopWithPanel="True" Margin="24,0,0,0">
-                        <!-- Code -->
-                        <PivotItem Header="Code">
-                            <controls:CodeFileListView CodeFiles="{x:Bind ViewModel.Model.Files, Mode=OneWay}" />
-                        </PivotItem>
-                        <!-- About -->
-                        <PivotItem Header="About">
-                            <StackPanel>
-                                <xaml:RichTextBox Rtf="{x:Bind ViewModel.Model.About, Mode=OneWay}"/>
-                            </StackPanel>
-                        </PivotItem>
-                        <!-- Gallery -->
-                        <PivotItem Header="Gallery">
-                            <StackPanel Spacing="8">
-                                <GridView Header="Screenshots" ItemsSource="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" IsItemClickEnabled="True">
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:Screenshot">
-                                            <Grid>
-                                                <Image Stretch="UniformToFill" Height="108" Width="192" Source="{x:Bind Url, Converter={StaticResource ImageConverter}, Mode=OneWay}" />
-                                                <HyperlinkButton HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Command="{Binding DataContext.ViewImageCommand, ElementName=ViewModelRoot}" CommandParameter="{Binding}">
-                                                    <SymbolIcon Symbol="FullScreen" Foreground="White"/>
-                                                </HyperlinkButton>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
-                                <GridView Header="Videos" ItemsSource="{x:Bind ViewModel.Model.Videos, Mode=OneWay}" IsItemClickEnabled="True" >
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:Video">
-                                            <Grid>
-                                                <Image Stretch="UniformToFill" Height="108" Width="192" Source="{x:Bind YouTubeThumbnail, Converter={StaticResource ImageConverter}}" />
-                                                <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding DataContext.ViewVideoCommand, ElementName=ViewModelRoot}" CommandParameter="{Binding}">
-                                                    <SymbolIcon Symbol="Play"  Foreground="White"/>
-                                                </HyperlinkButton>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
-                            </StackPanel>
-                        </PivotItem>
-                        <!-- Comments -->
-                        <PivotItem Header="Comments">
-                            <controls:CodeCommentsPanel Code="{x:Bind ViewModel.Model, Mode=TwoWay}" />
-                        </PivotItem>
-                        <!-- Changes -->
-                        <PivotItem Header="Changes">
-                            <controls:ActivityListView LogsSource="{x:Bind ViewModel.Model.Logs, Mode=OneWay}" />
-                        </PivotItem>
-                    </Pivot>
-                </RelativePanel>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+                <!-- Info panel -->
+                <controls:CodeAuthorBlock Name="Info" MinWidth="150" MaxWidth="200" Code="{x:Bind ViewModel.Model, Mode=OneWay}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
+                <!-- Content Panel -->
+                <Pivot RelativePanel.LeftOf="Info" RelativePanel.AlignTopWithPanel="True" Margin="24,0,0,0">
+                    <!-- Code -->
+                    <PivotItem Header="Code" Padding="0,24">
+                        <controls:CodeFileListView CodeFiles="{x:Bind ViewModel.Model.Files, Mode=OneWay}" />
+                    </PivotItem>
+                    <!-- About -->
+                    <PivotItem Header="About" Padding="0,24">
+                        <xaml:RichTextBox Rtf="{x:Bind ViewModel.Model.About, Mode=OneWay}"/>
+                    </PivotItem>
+                    <!-- Gallery -->
+                    <PivotItem Header="Gallery" Padding="0,24">
+                        <StackPanel Spacing="24">
+                            <GridView Header="Screenshots" ItemsSource="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" IsItemClickEnabled="True">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Screenshot">
+                                        <HyperlinkButton Background="Transparent" Command="{Binding DataContext.ViewImageCommand, ElementName=ViewModelRoot}" CommandParameter="{Binding}">
+                                            <Image Stretch="UniformToFill" Height="108" Width="192" Source="{x:Bind Url, Converter={StaticResource ImageConverter}, Mode=OneWay}" />
+                                        </HyperlinkButton>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                            <GridView Header="Videos" ItemsSource="{x:Bind ViewModel.Model.Videos, Mode=OneWay}" IsItemClickEnabled="True" >
+                                <GridView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Video">
+                                        <HyperlinkButton Background="Transparent" Command="{Binding DataContext.ViewVideoCommand, ElementName=ViewModelRoot}" CommandParameter="{Binding}">
+                                            <Image Stretch="UniformToFill" Height="108" Width="192" Source="{x:Bind YouTubeThumbnail, Converter={StaticResource ImageConverter}}" />
+                                        </HyperlinkButton>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                        </StackPanel>
+                    </PivotItem>
+                    <!-- Comments -->
+                    <PivotItem Header="Comments" Padding="0,24">
+                        <controls:CodeCommentsPanel Code="{x:Bind ViewModel.Model, Mode=TwoWay}" />
+                    </PivotItem>
+                    <!-- Changes -->
+                    <PivotItem Header="Changes" Padding="0,24">
+                        <controls:ActivityListView LogsSource="{x:Bind ViewModel.Model.Logs, Mode=OneWay}" />
+                    </PivotItem>
+                </Pivot>
+            </RelativePanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

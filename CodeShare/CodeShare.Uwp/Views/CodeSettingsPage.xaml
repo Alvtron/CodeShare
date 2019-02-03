@@ -95,6 +95,31 @@
                         </TextBlock>
                     </StackPanel>
                 </PivotItem>
+                <PivotItem Header="Delete" Padding="0,24">
+                    <StackPanel Spacing="8">
+                        <RelativePanel>
+                            <TextBlock
+                                Name="DeleteTitleText"
+                                Text="Delete this code"
+                                FontWeight="Bold"
+                                RelativePanel.AlignLeftWithPanel="True"/>
+                            <TextBlock
+                                Name="DeleteSubText"
+                                Text="Once you delete this code, there is no going back. Please be certain."
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                RelativePanel.Below="DeleteTitleText"
+                                RelativePanel.AlignLeftWithPanel="True"/>
+                            <Button
+                                Name="DeleteButton"
+                                Content="Delete this code"
+                                Foreground="Red"
+                                HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.DeleteCommand}"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                        </RelativePanel>
+                    </StackPanel>
+                </PivotItem>
             </Pivot>
         </ScrollViewer>
         <controls:SaveResetPanel

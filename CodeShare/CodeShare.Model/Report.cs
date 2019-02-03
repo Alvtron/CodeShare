@@ -1,33 +1,30 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using CodeShare.Utilities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CodeShare.Model
 {
     public class Report : Entity
     {
-        [Required]
-        public User User { get; set; }
+        public Guid? TargetUid { get; set; }
 
-        [Required]
-        public DateTime? Date { get; set; } = DateTime.Now;
-
-        [Required]
-        public Guid Target { get; set; }
+        public string TargetType { get; set; }
 
         public string Message { get; set; }
 
-        [NotMapped]
-        public bool Valid => User != null && string.IsNullOrWhiteSpace(Message);
+        public bool Valid => string.IsNullOrWhiteSpace(Message);
+
+        public ICollection<ReportImage> ImageAttachments { get; set; } = new List<ReportImage>();
 
         public Report()
         {
         }
 
-        public Report(Guid target, User user, string message)
+        public Report(IEntity target, string message)
         {
-            Target = target;
-            User = user;
+            TargetUid = target?.Uid;
+            TargetType = target?.GetType()?.Name;
             Message = message;
         }
     }

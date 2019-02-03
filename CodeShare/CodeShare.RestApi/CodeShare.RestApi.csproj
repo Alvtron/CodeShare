@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CodeShare.DataAccess\CodeShare.DataAccess.csproj" />
     <ProjectReference Include="..\CodeShare.Model\CodeShare.Model.csproj" />
     <ProjectReference Include="..\CodeShare.Utilities\CodeShare.Utilities.csproj" />
   </ItemGroup>

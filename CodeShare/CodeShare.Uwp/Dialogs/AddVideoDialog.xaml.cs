@@ -6,7 +6,7 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class AddVideoDialog : ContentDialog
     {
-        public Video VideoData { get; } = new Video();
+        public Video Video { get; private set; } = new Video();
 
         public AddVideoDialog()
         {
@@ -24,7 +24,7 @@ namespace CodeShare.Uwp.Dialogs
         private void ViewVideoButton_Click(object sender, RoutedEventArgs e)
         {
             VideoPlayer.Visibility = Visibility.Visible;
-            VideoPlayer.Source = VideoData.YouTubeUri;
+            VideoPlayer.Source = Video.YouTubeUri;
         }
     }
 }

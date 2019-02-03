@@ -5,11 +5,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace CodeShare.Uwp.Dialogs
 {
-    public sealed partial class CommentDialog : ContentDialog
+    public sealed partial class ReplyDialog : ContentDialog
     {
-        public Reply Comment { get; private set; }
+        private Reply Comment { get; }
 
-        public CommentDialog(Reply comment)
+        public ReplyDialog(Reply comment)
         {
             InitializeComponent();
             Comment = comment;

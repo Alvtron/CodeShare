@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using CodeShare.Services;
 using CodeShare.Utilities;
+using System.Collections;
 
 namespace CodeShare.Model
 {
@@ -116,22 +117,20 @@ namespace CodeShare.Model
         }
 
         public ObservableCollection<User> Friends { get; set; } = new ObservableCollection<User>();
-        public IEnumerable<User> FriendsSorted => Friends?.OrderBy(c => c.Name);
 
         public ObservableCollection<Code> Codes { get; set; } = new ObservableCollection<Code>();
-        public IEnumerable<Code> CodesSorted => Codes?.OrderBy(c => c.Name);
 
         public ObservableCollection<Question> Questions { get; set; } = new ObservableCollection<Question>();
-        public IEnumerable<Question> QuestionsSorted => Questions?.OrderByDescending(c => c.Created);
 
         public ObservableCollection<ProfilePicture> ProfilePictures { get; set; } = new ObservableCollection<ProfilePicture>();
-        public IEnumerable<ProfilePicture> ProfilePicturesSorted => ProfilePictures.OrderByDescending(c => c.Created);
 
         public ICollection<UserLog> Logs { get; set; } = new ObservableCollection<UserLog>();
 
         [NotMapped, JsonIgnore]
         public ProfilePicture ProfilePicture => ProfilePictures.FirstOrDefault(p => p.IsPrimary);
 
+        [NotMapped, JsonIgnore]
+        public bool IsValid => Validate.UserName(Name) == ValidationResponse.Valid && Validate.Email(Email.Address) == ValidationResponse.Valid && Password != null;
 
         // CONSTRUCTORS
 
@@ -141,8 +140,18 @@ namespace CodeShare.Model
 
         public User(string username, string email, string password)
         {
-            if (Validate.UserName(username) != ValidationResponse.Valid) return;
-            if (Validate.Password(password) != ValidationResponse.Valid) return;
+            if (Validate.UserName(username) != ValidationResponse.Valid)
+            {
+                throw new ArgumentException("Username is invalid.", "username");
+            }
+            if (Validate.Email(email) != ValidationResponse.Valid)
+            {
+                throw new ArgumentException("Email is invalid.", "email");
+            }
+            if (Validate.Password(password) != ValidationResponse.Valid)
+            {
+                throw new ArgumentException("Password is invalid.", "password");
+            }
 
             Name = username;
             Email = new Email(email);
@@ -151,8 +160,6 @@ namespace CodeShare.Model
         }
 
         // FUNCTIONS
-
-        public bool Equals(User user) => Uid == user?.Uid || Name == user?.Name || Email == user?.Email;
 
         public int IncreaseExperience(Experience.Action action) => Experience += (int)action;
 
@@ -309,9 +316,6 @@ namespace CodeShare.Model
         public string Initials => (!string.IsNullOrWhiteSpace(FirstName) || !string.IsNullOrWhiteSpace(LastName)) ? FirstName?.Substring(0, 1) + LastName?.Substring(0, 1) : "";
 
         [NotMapped, JsonIgnore]
-        public bool Valid => !string.IsNullOrWhiteSpace(Name) && Email != null && Password != null;
-
-        [NotMapped, JsonIgnore]
         public int CurrentLevel => Model.Experience.ExpToLevel(Experience);
 
         [NotMapped, JsonIgnore]
@@ -323,9 +327,5 @@ namespace CodeShare.Model
         // OVERRIDES
 
         public override string ToString() => Name;
-
-        public override bool Equals(object obj) =>  (obj is User user) ? Equals(user) : false;
-
-        public override int GetHashCode() => base.GetHashCode();
     }
 }

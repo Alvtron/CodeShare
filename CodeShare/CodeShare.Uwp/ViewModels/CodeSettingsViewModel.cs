@@ -102,14 +102,14 @@ namespace CodeShare.Uwp.ViewModels
             var dialog = new AddVideoDialog();
             NavigationService.Lock();
 
-            if (await dialog.ShowAsync() != ContentDialogResult.Secondary || dialog.VideoData == null)
+            if (await dialog.ShowAsync() != ContentDialogResult.Secondary || dialog.Video == null)
             {
                 await NotificationService.DisplayErrorMessage("Video was invalid");
                 NavigationService.Unlock();
                 return;
             }
 
-            Model?.AddVideo(AuthService.CurrentUser, dialog.VideoData);
+            Model?.AddVideo(AuthService.CurrentUser, dialog.Video);
             NavigationService.Unlock();
 
             IsModelChanged = true;

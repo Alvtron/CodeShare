@@ -42,6 +42,7 @@ namespace CodeShare.Uwp.ViewModels
 
             if (codeLanguages == null)
             {
+                Logger.WriteLine($"Failed to retrieve code languages from database.");
                 return;
             }
 
@@ -76,10 +77,14 @@ namespace CodeShare.Uwp.ViewModels
         public void FilterCodeLanguage(string query)
         {
             if (string.IsNullOrWhiteSpace(query))
+            {
                 return;
+            }
 
             if (UnfilteredCodeLanguages == null)
+            {
                 return;
+            }
 
             //Check each item in search list if it contains the query
             FilteredCodeLanguages = UnfilteredCodeLanguages?

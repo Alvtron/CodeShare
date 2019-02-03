@@ -18,11 +18,13 @@ namespace CodeShare.Uwp.Dialogs
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private bool SetField<T>(ref T field, T value,
-        [CallerMemberName] string propertyName = null)
+        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value))
+            {
                 return false;
+            }
+                
             field = value;
             OnPropertyChanged(propertyName);
             return true;
@@ -35,11 +37,14 @@ namespace CodeShare.Uwp.Dialogs
             set => SetField(ref _color, value);
         }
 
-        public ColorPickerDialog(CodeShare.Model.Color color)
+        public ColorPickerDialog(Model.Color color)
         {
             InitializeComponent();
 
-            if (color != null) Color = Color.FromArgb(color.A, color.R, color.G, color.B);
+            if (color != null)
+            {
+                Color = Color.FromArgb(color.A, color.R, color.G, color.B);
+            }
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

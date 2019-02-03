@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeShare.Services", "CodeS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeShare.Extensions", "CodeShare.Extensions\CodeShare.Extensions.csproj", "{A68E7BDB-0F04-4C82-AD39-D2118F83A9EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeShare.Utilities", "CodeShare.Utilities\CodeShare.Utilities.csproj", "{41CEED12-5B94-4C38-8755-31DEF473D61B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeShare.Utilities", "CodeShare.Utilities\CodeShare.Utilities.csproj", "{41CEED12-5B94-4C38-8755-31DEF473D61B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeShare.RestApi", "CodeShare.RestApi\CodeShare.RestApi.csproj", "{9A5F2A87-AF26-43BD-9F5E-E4C3FEE250C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeShare.RestApi", "CodeShare.RestApi\CodeShare.RestApi.csproj", "{9A5F2A87-AF26-43BD-9F5E-E4C3FEE250C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

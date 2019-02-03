@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <converters:ImageConverter x:Key="ImageConverter" />
         <converters:VisibilityConverter x:Key="VisibillityConverter" />
+        <converters:ColorConverter x:Key="ColorConverter" />
     </UserControl.Resources>
     
     <Grid>
@@ -30,12 +31,19 @@
         </Grid.RowDefinitions>
         <!-- Comment user photo -->
         <HyperlinkButton Padding="0" Command="{x:Bind NavigateToUserCommand}">
-            <PersonPicture Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="40" Width="40" ProfilePicture="{x:Bind Reply.User.ProfilePicture, Mode=OneWay, Converter={StaticResource ImageConverter}}" VerticalAlignment="Top" />
+            <PersonPicture
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Height="40"
+                Width="40"
+                ProfilePicture="{x:Bind Reply.User.ProfilePicture, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+                VerticalAlignment="Top" />
         </HyperlinkButton>
         <!-- Comment username & date -->
         <HyperlinkButton Grid.Column="1" Grid.Row="0" Command="{x:Bind NavigateToUserCommand}" Background="Transparent" Padding="0" >
             <TextBlock Style="{StaticResource CaptionTextBlockStyle}">
-                <Run Text="{x:Bind Reply.User.Name, Mode=OneWay}" Foreground="{StaticResource RPSColor}"/>
+                <Run Text="{x:Bind Reply.User.Name, Mode=OneWay}" Foreground="{x:Bind Reply.User.Color, Mode=OneWay, Converter={StaticResource ColorConverter}}"/>
                 <Run Text="·" Foreground="LightGray"/>
                 <Run Text="{x:Bind Reply.Created, Mode=OneWay}" Foreground="LightGray"/>
             </TextBlock>

@@ -70,7 +70,9 @@ namespace CodeShare.Uwp.Controls
             }
 
             CodeFile = codeFile;
-            IsEditable = AuthService.CurrentUser.Uid.Equals(codeFile.Code.User.Uid);
+            IsEditable = (AuthService.CurrentUser == null)
+                ? false
+                : AuthService.CurrentUser.Equals(codeFile.Code.User);
         }
     }
 }

@@ -12,11 +12,11 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <StackPanel DataContext="{x:Bind VideoData}" Spacing="8">
-        <WebView Name="VideoPlayer" Height="108" Width="192" Visibility="Collapsed" />
+    <StackPanel Spacing="8">
         <RelativePanel>
-            <TextBox Name="URLInput" PlaceholderText="YouTube Video ID" Text="{Binding Path=YouTubeID, Mode=TwoWay}" Margin="0,0,10,0" RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="ViewVideoButton"/>
+            <TextBox Name="URLInput" PlaceholderText="YouTube Video ID" Text="{x:Bind Video.YouTubeId, Mode=TwoWay}" Margin="0,0,10,0" RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="ViewVideoButton"/>
             <HyperlinkButton Name="ViewVideoButton" Content="View" RelativePanel.AlignRightWithPanel="True" Click="ViewVideoButton_Click" />
         </RelativePanel>
+        <WebView Name="VideoPlayer" Height="108" Width="192" Visibility="Collapsed" />
     </StackPanel>
 </ContentDialog>

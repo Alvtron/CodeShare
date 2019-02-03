@@ -9,14 +9,29 @@ namespace CodeShare.Utilities
 {
     public static class Logger
     {
-        private static readonly string _filePath;
+        public static readonly string FilePath;
 
-        static Logger()
+        public static string Entries
         {
-            _filePath = Path.Combine(Path.GetTempPath(), $"log_{CurrentDateTimeString}.txt");
+            get
+            {
+                if (!File.Exists(FilePath))
+                {
+                    return null;
+                }
+
+                try
+                {
+                    return File.ReadAllText(FilePath);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
-        private static string CurrentDateTimeString
+        private static string Time
         {
             get
             {
@@ -24,6 +39,12 @@ namespace CodeShare.Utilities
 
                 return $"{time.Year}{time.Month}{time.Day}{time.Hour}_{time.Minute}{time.Second}{time.Millisecond}";
             }
+        }
+
+        static Logger()
+        {
+            FilePath = Path.Combine(Path.GetTempPath(), $"codeshare_log_{Time}.txt");
+            WriteLine($"Log file is saved to '{FilePath}'.");
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -79,13 +100,13 @@ namespace CodeShare.Utilities
 
         private static void AppendTextToFile(string text)
         {
-            if (!File.Exists(_filePath))
+            if (!File.Exists(FilePath))
             {
-                text = $"{CurrentDateTimeString} {text}";
+                text = $"{Time} {text}";
 
                 try
                 {
-                    using (var streamWriter = File.CreateText(_filePath))
+                    using (var streamWriter = File.CreateText(FilePath))
                     {
                         streamWriter.WriteLine(text);
                     }
@@ -97,11 +118,11 @@ namespace CodeShare.Utilities
             }
             else
             {
-                text = $"\n{CurrentDateTimeString} {text}";
+                text = $"\n{Time} {text}";
 
                 try
                 {
-                    File.AppendAllText(_filePath, text);
+                    File.AppendAllText(FilePath, text);
                 }
                 catch (Exception)
                 {

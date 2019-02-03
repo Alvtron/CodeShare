@@ -95,28 +95,46 @@ namespace CodeShare.RestApi
             return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
         }
 
-        public static async Task<User> SignUp(User user)
+        public static async Task<User> SignUp(string userName, string email, string password)
         {
-            if (user == null)
+            if (Validate.UserName(userName) == ValidationResponse.Invalid)
             {
-                Logger.WriteLine("Can't sign up user. Provided user was empty.");
-                return null;
+                Logger.WriteLine("Can't sign up user. Provided user name was invalid.");
+                throw new ArgumentException("Provided user name was invalid.", "userName");
             }
 
-            if (!user.Valid)
+            if (Validate.Email(email) == ValidationResponse.Invalid)
             {
-                Logger.WriteLine("Can't sign up user. Provided user was invalid.");
-                return null;
+                Logger.WriteLine("Can't sign up user. Provided email was invalid.");
+                throw new ArgumentException("Provided email was invalid.", "email");
             }
 
-            Logger.WriteLine("Signing up user to database...");
+            if (Validate.Password(password) == ValidationResponse.Invalid)
+            {
+                Logger.WriteLine("Can't sign up user. Provided password was invalid.");
+                throw new ArgumentException("Provided password was invalid.", "password");
+            }
+
+            User user;
+
+            try
+            {
+                user = new User(userName, email, password);
+            }
+            catch(ArgumentException)
+            {
+                Logger.WriteLine("Can't sign up user. Provided parameters are invalid.");
+                throw;
+            }
+
+            Logger.WriteLine("Searlizing new user to JSON string.");
 
             var postBody = JsonConvert.SerializeObject(user, Formatting.None, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
 
-            Logger.WriteLine("Sending user to REST API.");
+            Logger.WriteLine("Saving new user to database with REST API.");
             var response = await Client.PostAsync($"{Controller}/signup", new StringContent(postBody, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)

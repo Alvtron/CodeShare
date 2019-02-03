@@ -15,7 +15,8 @@
         <converters:ColorConverter x:Key="ColorConverter" />
     </UserControl.Resources>
 
-    <Grid Width="200" Height="130">
+    <Border CornerRadius="12">
+        <Grid Width="200" Height="130">
         <Image Source="{x:Bind Code.Banner, Mode=OneWay, Converter={StaticResource ImageConverter}}" Stretch="UniformToFill" />
         <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
             <Rectangle Fill="Black" Opacity="0.4" Width="auto" Height="auto" />
@@ -29,5 +30,6 @@
                 </TextBlock>
             </StackPanel>
         </Grid>
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

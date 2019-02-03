@@ -8,7 +8,8 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class AddReplyDialog : ContentDialog
     {
-        private Reply ParentComment { get; set; }
+        private Reply ParentComment { get; }
+
         private string Text { get; set; } = string.Empty;
 
         public AddReplyDialog(Reply parentComment)

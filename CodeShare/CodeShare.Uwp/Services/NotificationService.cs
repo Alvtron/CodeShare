@@ -10,20 +10,15 @@ namespace CodeShare.Uwp.Services
     /// </summary>
     public static class NotificationService
     {
-        /// <summary>
-        /// Displays the general message.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="message">The message.</param>
-        /// <param name="buttonText">The button text.</param>
-        /// <returns></returns>
-        public static async Task<ContentDialogResult> DisplayGeneralMessage(string title, string message, string buttonText)
+        public static async Task<ContentDialogResult> DisplayGeneralMessage(string title, string message, string primaryButtonText = "", string secondaryButtonText = "", string closeButtonText = "")
         {
             var dialog = new ContentDialog
             {
                 Title = title,
                 Content = message,
-                PrimaryButtonText = buttonText
+                PrimaryButtonText = primaryButtonText,
+                SecondaryButtonText = secondaryButtonText,
+                CloseButtonText = closeButtonText
             };
 
             return await dialog.ShowAsync();

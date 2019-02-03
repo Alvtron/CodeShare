@@ -7,7 +7,7 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class EditFileDialog : ContentDialog
     {
-        public File File { get; set; }
+        private File File { get; }
         private string OriginalFileData { get; set; }
 
         public EditFileDialog(File file)

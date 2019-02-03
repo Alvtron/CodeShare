@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace CodeShare.Uwp.Converters
@@ -7,18 +8,22 @@ namespace CodeShare.Uwp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (targetType != typeof(bool))
-                throw new InvalidOperationException("The target must be a boolean");
+            if (value is bool boolean)
+            {
+                return !boolean;
+            }
 
-            return !(bool)value;
+            else throw new InvalidCastException();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if (targetType != typeof(bool))
-                throw new InvalidOperationException("The target must be a boolean");
+            if (value is bool boolean)
+            {
+                return !boolean;
+            }
 
-            return !(bool)value;
+            else throw new InvalidCastException();
         }
     }
 }

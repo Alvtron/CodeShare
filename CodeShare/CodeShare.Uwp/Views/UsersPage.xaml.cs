@@ -36,7 +36,7 @@ namespace CodeShare.Uwp.Views
 
         private async void UserList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!(e.ClickedItem is User user) || !user.Valid)
+            if (!(e.ClickedItem is User user))
             {
                 await NotificationService.DisplayErrorMessage("There seems to be something wrong with that user. Sorry about that.");
                 return;

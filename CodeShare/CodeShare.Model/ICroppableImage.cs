@@ -1,8 +1,8 @@
 ﻿namespace CodeShare.Model
 {
-    public interface ICroppableImage
+    public interface ICroppableImage : IWebImage
     {
         Crop Crop { get; set; }
-        void CreateNewCrop();
+        void CreateCrop(double aspectRatio);
     }
 }

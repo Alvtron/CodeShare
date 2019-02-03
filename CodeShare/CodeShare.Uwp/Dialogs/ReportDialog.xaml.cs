@@ -7,6 +7,7 @@ namespace CodeShare.Uwp.Dialogs
     public sealed partial class ReportDialog : ContentDialog
     {
         public string Message { get; set; }
+
         public bool Valid => !string.IsNullOrWhiteSpace(Message);
 
         public ReportDialog(string targetName = null)

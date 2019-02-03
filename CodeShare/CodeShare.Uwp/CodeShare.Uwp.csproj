@@ -122,8 +122,8 @@
     <Compile Include="Controls\CodeItem.xaml.cs">
       <DependentUpon>CodeItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CodeListView.xaml.cs">
-      <DependentUpon>CodeListView.xaml</DependentUpon>
+    <Compile Include="Controls\CodeSearchView.xaml.cs">
+      <DependentUpon>CodeSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ReplyBlock.xaml.cs">
       <DependentUpon>ReplyBlock.xaml</DependentUpon>
@@ -186,8 +186,11 @@
     <Compile Include="Dialogs\ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\CommentDialog.xaml.cs">
-      <DependentUpon>CommentDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\ImageViewDialog.xaml.cs">
+      <DependentUpon>ImageViewDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ReplyDialog.xaml.cs">
+      <DependentUpon>ReplyDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\BannerCroppingDialog.xaml.cs">
       <DependentUpon>BannerCroppingDialog.xaml</DependentUpon>
@@ -227,6 +230,7 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Utilities\ItemClickCommand.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\StorageUtilities.cs" />
     <Compile Include="Services\AppSettings.cs" />
@@ -238,7 +242,7 @@
     <Compile Include="ViewModels\CodeSettingsViewModel.cs" />
     <Compile Include="ViewModels\CodeViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\ImageManager.cs" />
+    <Compile Include="Utilities\ImageManager.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\QuestionsViewModel.cs" />
@@ -385,7 +389,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CodeListView.xaml">
+    <Page Include="Controls\CodeSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -457,7 +461,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\CommentDialog.xaml">
+    <Page Include="Dialogs\ImageViewDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ReplyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

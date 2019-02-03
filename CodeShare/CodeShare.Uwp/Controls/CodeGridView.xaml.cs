@@ -33,7 +33,9 @@ namespace CodeShare.Uwp.Controls
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Code code)
+            {
                 NavigationService.Navigate(typeof(CodePage), code.Uid, code.Name);
+            }
         }
     }
 }

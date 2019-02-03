@@ -8,10 +8,11 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class AddQuestionDialog : ContentDialog
     {
-        public AddQuestionViewModel ViewModel { get; private set; } = new AddQuestionViewModel();
+        private AddQuestionViewModel ViewModel { get; }
 
         public AddQuestionDialog()
         {
+            ViewModel = new AddQuestionViewModel();
             InitializeComponent();
         }
 

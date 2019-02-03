@@ -5,25 +5,27 @@
     xmlns:local="using:CodeShare.Uwp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:services="using:CodeShare.Uwp.Services"
+    xmlns:utilities="using:CodeShare.Uwp.Utilities"
     xmlns:credentials="using:Windows.Security.Credentials"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    x:Name="ViewModelRoot">
+    x:Name="ViewModelRoot"
+    DataContext="{x:Bind ViewModel, Mode=OneWay}">
 
     <Grid>
         <StackPanel Padding="48" Spacing="20" HorizontalAlignment="Left">
             <StackPanel>
-                <!-- All users list (for developing purposes) -->
                 <StackPanel Spacing="10">
                     <TextBlock Text="Choose an account" Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <ListView ItemsSource="{x:Bind ViewModel.Credentials, Mode=OneWay}">
+                    <ListView 
+                        Name="StoredUsersList"
+                        ItemsSource="{x:Bind ViewModel.Credentials, Mode=OneWay}"
+                        IsItemClickEnabled="True"
+                        utilities:ItemClickCommand.Command="{x:Bind ViewModel.LogInCommand, Mode=OneWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="credentials:PasswordCredential">
-                                <Button Background="Transparent" Command="{Binding ViewModel.LogInCommand, ElementName=ViewModelRoot}" CommandParameter="{Binding}">
-                                    <StackPanel Spacing="20" Orientation="Horizontal">
-                                        <PersonPicture Width="30" VerticalAlignment="Center" />
-                                        <TextBlock Text="{x:Bind UserName, Mode=OneWay}" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                </Button>
+                                <StackPanel Spacing="20" Orientation="Horizontal">
+                                    <PersonPicture Width="30" VerticalAlignment="Center" />
+                                    <TextBlock Text="{x:Bind UserName, Mode=OneWay}" VerticalAlignment="Center" />
+                                </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

@@ -7,10 +7,11 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class AddCodeDialog : ContentDialog
     {
-        public AddCodeViewModel ViewModel { get; private set; } = new AddCodeViewModel();
+        private AddCodeViewModel ViewModel { get; }
 
         public AddCodeDialog()
         {
+            ViewModel = new AddCodeViewModel();
             InitializeComponent();
         }
 

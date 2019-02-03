@@ -1,4 +1,6 @@
-﻿using System.Net.Mail;
+﻿using System;
+using System.Globalization;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace CodeShare.Utilities
@@ -14,14 +16,44 @@ namespace CodeShare.Utilities
         public static ValidationResponse Email(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 return ValidationResponse.Empty;
+            }
 
             try
             {
-                var mailAddress = new MailAddress(email);
-                return (mailAddress.Address == email) ? ValidationResponse.Valid : ValidationResponse.Invalid;
+                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+                string DomainMapper(Match match)
+                {
+                    var idn = new IdnMapping();
+                    var domainName = idn.GetAscii(match.Groups[2].Value);
+                    return match.Groups[1].Value + domainName;
+                }
             }
-            catch
+            catch (RegexMatchTimeoutException)
+            {
+                return ValidationResponse.Invalid;
+            }
+            catch (ArgumentException)
+            {
+                return ValidationResponse.Invalid;
+            }
+
+            try
+            {
+                var regex = @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
+
+                if (Regex.IsMatch(email, regex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)))
+                {
+                    return ValidationResponse.Valid;
+                }
+                else
+                {
+                    return ValidationResponse.Invalid;
+                }
+            }
+            catch (RegexMatchTimeoutException)
             {
                 return ValidationResponse.Invalid;
             }

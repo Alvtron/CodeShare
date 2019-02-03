@@ -18,6 +18,6 @@
     </Page.Resources>
 
     <Grid>
-        <controls:CodeListView Codes="{x:Bind ViewModel.Codes, Mode=OneWay}" IsSearchBoxEnabled="True" />
+        <controls:CodeSearchView Codes="{x:Bind ViewModel.Codes, Mode=OneWay}" IsSearchBoxEnabled="True" />
     </Grid>
 </Page>

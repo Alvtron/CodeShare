@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace CodeShare.Uwp.ViewModels
+namespace CodeShare.Uwp.Utilities
 {
     public class ImageManager<T> : ObservableObject where T : WebImage
     {

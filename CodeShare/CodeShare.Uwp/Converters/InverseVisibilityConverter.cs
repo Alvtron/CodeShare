@@ -7,21 +7,24 @@ namespace CodeShare.Uwp.Converters
     public class InverseVisibilityConverter : IValueConverter
     {
         private const Visibility Visible = Visibility.Visible;
-        private const Visibility Collapsed = Visibility.Collapsed;
+        private const Visibility Invisible = Visibility.Collapsed;
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return value != null ? Collapsed : Visible;
+            if (value is bool isVisible) return (isVisible) ? Invisible : Visible;
+
+            return value != null ? Invisible : Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if (value is Visibility visibility)
+            switch (value)
             {
-                return (visibility != Visible);
+                case Visible: return true;
+                case Invisible: return false;
             }
 
-            return true;
+            return false;
         }
     }
 }

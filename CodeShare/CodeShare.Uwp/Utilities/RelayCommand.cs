@@ -13,18 +13,24 @@ namespace CodeShare.Uwp.Utilities
         /// <summary>
         /// The execute
         /// </summary>
-        readonly Action<object> _execute;
+        private readonly Action<object> _execute;
         /// <summary>
         /// The can execute
         /// </summary>
-        readonly Predicate<object> _canExecute;
+        private readonly Predicate<object> _canExecute;
+
+        /// <summary>
+        /// Occurs when changes occur that affect whether or not the command should execute.
+        /// </summary>
+        /// <returns></returns>
+        public event EventHandler CanExecuteChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand"/> class.
         /// </summary>
         /// <param name="execute">The execute.</param>
         public RelayCommand(Action<object> execute)
-        : this(execute, null) { }
+            : this(execute, null) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand"/> class.
@@ -52,12 +58,6 @@ namespace CodeShare.Uwp.Utilities
         }
 
         /// <summary>
-        /// Occurs when changes occur that affect whether or not the command should execute.
-        /// </summary>
-        /// <returns></returns>
-        public event EventHandler CanExecuteChanged;
-
-        /// <summary>
         /// Defines the method to be called when the command is invoked.
         /// </summary>
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
@@ -77,11 +77,17 @@ namespace CodeShare.Uwp.Utilities
         /// <summary>
         /// The execute
         /// </summary>
-        readonly Action<T> _execute;
+        private readonly Action<T> _execute;
         /// <summary>
         /// The can execute
         /// </summary>
-        readonly Predicate<T> _canExecute;
+        private readonly Predicate<T> _canExecute;
+
+        /// <summary>
+        /// Occurs when changes occur that affect whether or not the command should execute.
+        /// </summary>
+        /// <returns></returns>
+        public event EventHandler CanExecuteChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand{T}"/> class.
@@ -114,12 +120,6 @@ namespace CodeShare.Uwp.Utilities
         {
             return _canExecute?.Invoke((T)parameter) ?? true;
         }
-
-        /// <summary>
-        /// Occurs when changes occur that affect whether or not the command should execute.
-        /// </summary>
-        /// <returns></returns>
-        public event EventHandler CanExecuteChanged;
 
         /// <summary>
         /// Defines the method to be called when the command is invoked.

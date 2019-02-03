@@ -77,24 +77,33 @@
                             <SymbolIcon Symbol="Flag" />
                         </Button>
                     </StackPanel>
+                    <!-- Experience bar -->
+                    <Grid MinWidth="250" MaxWidth="500" HorizontalAlignment="Left">
+                        <Border CornerRadius="10">
+                            <ProgressBar
+                                Height="20"
+                                Value="{x:Bind ViewModel.Model.Experience, Mode=OneWay, Converter={StaticResource ExperienceConverter}}"
+                                Maximum="100"
+                                VerticalAlignment="Top"
+                                Background="Gray"
+                                Foreground="{x:Bind ViewModel.Model.Color, Mode=OneWay, Converter={StaticResource ColorConverter}}"/>
+                        </Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,0,0,2"
+                            FontSize="12"
+                            FontWeight="Thin"
+                            Foreground="White">
+                            <Run Text="{x:Bind ViewModel.Model.Experience, Mode=OneWay}" />
+                            <Run Text="/" />
+                            <Run Text="{x:Bind ViewModel.Model.NextExp, Mode=OneWay}" />
+                        </TextBlock>
+                    </Grid>
                 </StackPanel>
             </Grid>
-            <!-- Experience bar -->
-            <Grid>
-                <ProgressBar
-                    Height="20"
-                    Value="{x:Bind ViewModel.Model.Experience, Mode=OneWay, Converter={StaticResource ExperienceConverter}}"
-                    Maximum="100"
-                    VerticalAlignment="Top"
-                    Background="Gray"
-                    Foreground="{x:Bind ViewModel.Model.Color, Mode=OneWay, Converter={StaticResource ColorConverter}}"/>
-                <TextBlock Name="ExperienceBarTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,2" FontSize="12" FontWeight="Thin" Foreground="White">
-                    <Run Text="{x:Bind ViewModel.Model.Experience, Mode=OneWay}" />
-                    <Run Text="/" />
-                    <Run Text="{x:Bind ViewModel.Model.NextExp, Mode=OneWay}" />
-                </TextBlock>
-            </Grid>
-            <Pivot Padding="48,5">
+            
+            <Pivot Padding="48,32">
                 <!-- About -->
                 <PivotItem Header="About">
                     <StackPanel Spacing="24" Padding="24">
@@ -114,9 +123,6 @@
                             <!-- Signed up -->
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Member Since" />
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Model.Created, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
-                            <!-- Signed in -->
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Last login" />
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Model.Updated, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
                             <!-- Country -->
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Country" />
                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Model.Country, Mode=OneWay}" />
@@ -139,11 +145,11 @@
                 </PivotItem>
                 <!-- Friends -->
                 <PivotItem Header="Friends" Padding="24">
-                    <controls:UserGridView Users="{x:Bind ViewModel.Model.FriendsSorted, Mode=OneWay}" />
+                    <controls:UserGridView Users="{x:Bind ViewModel.Model.Friends, Mode=OneWay}" />
                 </PivotItem>
                 <!-- Codes -->
                 <PivotItem Header="Codes" Padding="24">
-                    <controls:CodeGridView Codes="{x:Bind ViewModel.Model.CodesSorted, Mode=OneWay}" />
+                    <controls:CodeGridView Codes="{x:Bind ViewModel.Model.Codes, Mode=OneWay}" />
                 </PivotItem>
                 <!-- Activity -->
                 <PivotItem Header="Activity" Padding="24">

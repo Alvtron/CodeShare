@@ -24,40 +24,6 @@ namespace CodeShare.Uwp.ViewModels
             IsUserAuthor = user.Equals(AuthService.CurrentUser);
         }
 
-        public override async Task<bool> Refresh()
-        {
-            if (!(await RestApiService<User>.Get(Model.Uid) is User user)) return false;
-
-            Model = user;
-            return true;
-        }
-
-        public override async Task ReportAsync()
-        {
-            if (AuthService.CurrentUser == null || Model == null)
-            {
-                await NotificationService.DisplayErrorMessage("Something went wrong. Try again later.");
-                return;
-            }
-
-            if (AuthService.CurrentUser.Equals(Model))
-            {
-                await NotificationService.DisplayErrorMessage("You can't report yourself!");
-                return;
-            }
-
-            var reportDialog = new ReportDialog(Model.Name);
-
-            if (await reportDialog.ShowAsync() != ContentDialogResult.Secondary || !reportDialog.Valid)
-            {
-                return;
-            }
-
-            // TODO: REPORTING
-            // await RestApiService.Report(new Report(User.Uid, AuthService.CurrentUser, reportDialog.Message));
-            await NotificationService.DisplayThankYouMessage("Thanks for contributing to a nicer and safer community! You rock!");
-        }
-
         public async Task<bool> Befriend()
         {
             if (AuthService.CurrentUser == null || Model == null)
@@ -73,6 +39,7 @@ namespace CodeShare.Uwp.ViewModels
             }
 
             AuthService.CurrentUser.AddFriend(Model);
+            Model.AddFriend(Model);
             await RestApiService<User>.Update(Model, Model.Uid);
             await RestApiService<User>.Update(AuthService.CurrentUser, AuthService.CurrentUser.Uid);
             return true;
@@ -89,21 +56,6 @@ namespace CodeShare.Uwp.ViewModels
 
             Model.SetColor(dialog.Color.R, dialog.Color.G, dialog.Color.B, dialog.Color.A);
             return true;
-        }
-
-        public override void ViewVideo(Video video)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ViewImage(WebFile image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void LogClick(ILog log)
-        {
-            throw new NotImplementedException();
         }
     }
 }

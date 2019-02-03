@@ -10,9 +10,11 @@ using System.Web.Http.Results;
 
 namespace CodeShare.WebApi.Controllers
 {
-    public class CodeController : BaseController, IController<Code>
+    public class CodeController : EntityController<Code>
     {
-        private IQueryable<Code> Entities => Context.Codes
+        protected override DbSet<Code> Entities => Context.Codes;
+
+        protected override IQueryable<Code> QueryableEntities => Entities
             .Include(a => a.Banners)
             .Include(c => c.Screenshots)
             .Include(c => c.Videos)
@@ -27,175 +29,44 @@ namespace CodeShare.WebApi.Controllers
             .Include(c => c.Replies.Select(comment => comment.User.Banners))
             .Include(c => c.Replies.Select(comment => comment.Ratings));
 
-        /// <summary>
-        /// Gets all entities from database.
-        /// </summary>
-        /// <returns></returns>
+        protected override IQueryable<Code> QueryableEntitiesMinimal => Entities
+            .Include(e => e.Banners)
+            .Include(e => e.User.ProfilePictures);
+
         [Route("api/codes")]
-        public IQueryable<Code> Get()
-        {
-            if (!IsDatabaseOnline) return null;
+        public new IQueryable<Code> Get() => base.Get();
 
-            var entities = Context.Codes
-                .Include(a => a.Banners)
-                .Include(c => c.User);
-
-            return entities;
-        }
-
-        /// <summary>
-        /// Gets the entity bound to the specified uid from the database.
-        /// </summary>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
         [ResponseType(typeof(Code)), Route("api/codes/{uid}")]
-        public IHttpActionResult Get(Guid uid)
-        {
-            if (!IsDatabaseOnline) return InternalServerError();
+        public new IHttpActionResult Get(Guid uid) => base.Get(uid);
 
-            var entity = Entities.FirstOrDefault(u => u.Uid == uid);
-
-            if (entity == null)
-            {
-                Logger.WriteLine($"The provided {uid.GetType().Name} parameter did not match any items in the database.");
-                return NotFound();
-            }
-
-            return Ok(entity);
-        }
-
-        /// <summary>
-        /// Updates the entity to equal entity bound to the specified uid.
-        /// </summary>
-        /// <param name="uid">The uid.</param>
-        /// <param name="entity">The entity.</param>
-        /// <returns></returns>
         [ResponseType(typeof(void)), Route("api/codes/{uid}")]
-        public IHttpActionResult Put(Guid uid, [FromBody] Code entity)
-        {
-            if (!IsDatabaseOnline) return InternalServerError();
+        public new IHttpActionResult Put(Guid uid, [FromBody] Code entity) => base.Put(uid, entity);
 
-            if (CheckUpdateParameters(uid, entity) is BadRequestResult badRequest)
-                return badRequest;
-
-            var existingEntity = Entities.FirstOrDefault(u => u.Uid.Equals(uid));
-
-            if (existingEntity == null)
-            {
-                Logger.WriteLine($"The provided {entity.GetType().Name} object with UID {uid} does not exist in the database. Attempting to add it...");
-                return Post(entity);
-            }
-
-            try
-            {
-                Context.Entry(existingEntity).CurrentValues.SetValues(entity);
-                UpdateEntities(entity.Replies, existingEntity.Replies);
-                UpdateEntities(entity.Ratings, existingEntity.Ratings);
-                UpdateEntities(entity.Logs, existingEntity.Logs);
-                UpdateEntities(entity.Files, existingEntity.Files);
-                UpdateEntities(entity.Banners, existingEntity.Banners);
-                UpdateEntities(entity.Screenshots, existingEntity.Screenshots);
-                UpdateEntities(entity.Videos, existingEntity.Videos);
-
-                Context.SaveChanges();
-            }
-            catch (Exception exception)
-            {
-#if DEBUG
-                Logger.WriteLine($"The provided {entity.GetType().Name} object could not be updated. {exception.Source}: {exception.Message}");
-                throw;
-#else
-                return BadRequest($"The provided {entity.GetType().Name} object could not be updated. {exception.Source}: {exception.Message}");
-#endif
-            }
-
-            return Ok(true);
-        }
-
-        /// <summary>
-        /// Adds the specified entity to the database.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns></returns>
         [ResponseType(typeof(Code)), Route("api/codes")]
-        public IHttpActionResult Post(Code entity)
-        {
-            if (!IsDatabaseOnline)
-                return InternalServerError();
-            if (entity == null)
-                return BadRequest($"The provided {entity.GetType().Name} object is empty! Post denied.");
-            if (Exist(entity.Uid))
-                return BadRequest($"The provided {entity.GetType().Name} object already exists! Post denied.");
+        public new IHttpActionResult Post(Code entity) =>  base.Post(entity);
 
-            try
-            {
-                Context.Codes.Add(entity);
-                Context.SaveChanges();
-
-                return Ok(entity);
-            }
-#if DEBUG
-            catch (DbEntityValidationException exception)
-            {
-                foreach (var result in exception.EntityValidationErrors)
-                {
-                    Logger.WriteLine($"Entity of type '{result.Entry.Entity.GetType().Name}' in state '{result.Entry.State}' has the following validation errors:");
-                    foreach (var _result in result.ValidationErrors)
-                    {
-                        Logger.WriteLine($"- Property: '{_result.PropertyName}', Error: '{_result.ErrorMessage}'");
-                    }
-                }
-                throw;
-            }
-#endif
-            catch (Exception exception)
-            {
-#if DEBUG
-                Logger.WriteLine($"The provided {entity.GetType().Name} object could not be added. {exception.Source}: {exception.Message}");
-                throw;
-#else
-                return BadRequest($"The provided {entity.GetType().Name} object could not be added. {exception.Source}: {exception.Message}");
-#endif
-            }
-        }
-
-        /// <summary>
-        /// Deletes the entity bound to the specified uid from the database.
-        /// </summary>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
         [ResponseType(typeof(Code)), Route("api/codes/{uid}")]
-        public IHttpActionResult Delete(Guid uid)
+        public new IHttpActionResult Delete(Guid uid) => base.Delete(uid);
+
+        protected override void OnPut(Code entity, Code existingEntity)
         {
-            if (!IsDatabaseOnline) return InternalServerError();
-            if (uid == null) return BadRequest($"The provided {uid.GetType().Name} is empty! Delete denied.");
-            if (!Exist(uid)) return BadRequest($"The provided {uid.GetType().Name} does not exist in the database! Delete denied.");
-
-            try
-            {
-                Context.SaveChanges();
-
-                return Ok($"Code {uid} was successfully deleted.");
-            }
-            catch (Exception exception)
-            {
-#if DEBUG
-                Logger.WriteLine($"The provided {uid.GetType().Name} could not be deleted! {exception.Source}: {exception.Message}");
-                throw;
-#else
-                return BadRequest($"The provided {uid.GetType().Name} could not be deleted! {exception.Source}: {exception.Message}");
-#endif
-            }
+            UpdateEntities(entity.Replies, existingEntity.Replies);
+            UpdateEntities(entity.Ratings, existingEntity.Ratings);
+            UpdateEntities(entity.Logs, existingEntity.Logs);
+            UpdateEntities(entity.Files, existingEntity.Files);
+            UpdateEntities(entity.Banners, existingEntity.Banners);
+            UpdateEntities(entity.Screenshots, existingEntity.Screenshots);
+            UpdateEntities(entity.Videos, existingEntity.Videos);
         }
 
-        /// <summary>
-        /// Checks if the entity specified by uid exists in the database.
-        /// </summary>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
-        public bool Exist(Guid uid)
+        protected override void OnPost(Code entity)
         {
-            return IsDatabaseOnline && Entities.Any(e => e.Uid == uid);
+
+        }
+
+        protected override void OnDelete(Code entity)
+        {
+
         }
     }
 }
