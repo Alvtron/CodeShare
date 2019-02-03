@@ -57,7 +57,7 @@ namespace CodeShare.Uwp.Services
                 return false;
             }
 
-            if (await AuthenticateAsync(credential.UserName, credential.Password))
+            if (!await AuthenticateAsync(credential.UserName, credential.Password))
             {
                 Logger.WriteLine("Failed to sign in user. Local credential could not be verified with the database.");
                 return false;
@@ -79,7 +79,7 @@ namespace CodeShare.Uwp.Services
                 return false;
             }
 
-            if (await AuthenticateAsync(credential.UserName, credential.Password))
+            if (!await AuthenticateAsync(credential.UserName, credential.Password))
             {
                 Logger.WriteLine("Failed to sign in user. The new credential could not be verified with the database.");
                 return false;

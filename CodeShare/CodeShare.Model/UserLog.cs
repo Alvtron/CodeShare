@@ -7,7 +7,7 @@ namespace CodeShare.Model
     public class UserLog : Log
     {
         public User User { get; set; }
-        public Guid UserUid { get; set; }
+        public Guid? UserUid { get; set; }
 
         public UserLog()
         {

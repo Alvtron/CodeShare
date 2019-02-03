@@ -17,7 +17,7 @@
 
     <Grid Width="auto" Height="auto" Background="{x:Bind Question.User.Color, Converter={StaticResource ColorConverter}}" Padding="12">
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBlock Text="{x:Bind Question.Title, Mode=OneWay}" />
+            <TextBlock Text="{x:Bind Question.Name, Mode=OneWay}" />
             <TextBlock Foreground="DimGray">
                 <Run Text="{x:Bind Question.CodeLanguage.Name, Mode=OneWay}" />
                 <Run Text="•" />

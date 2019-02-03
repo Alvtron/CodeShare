@@ -9,12 +9,6 @@ namespace CodeShare.Model
 {
     public class Question : Content
     {
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetField(ref _title, value);
-        }
         private string _text;
         public string Text
         {
@@ -22,24 +16,17 @@ namespace CodeShare.Model
             set => SetField(ref _text, value);
         }
 
-        public Guid? CodeLanguageUid { get; set; }
-
         public CodeLanguage CodeLanguage { get; set; }
-
+        public Guid? CodeLanguageUid { get; set; }
         public User User { get; set; }
-
-        public Guid UserUid { get; set; }
-
+        public Guid? UserUid { get; set; }
         public Reply Solution { get; set; }
-
         public Guid? SolutionUid { get; set; }
-
         public DateTime? DateTimeSolved { get; set; }
-
         public ICollection<QuestionLog> Logs { get; set; } = new ObservableCollection<QuestionLog>();
 
         [NotMapped, JsonIgnore]
-        public bool IsValid => UserUid != Guid.Empty && !string.IsNullOrWhiteSpace(Title) && !string.IsNullOrWhiteSpace(Text) && CodeLanguageUid != null && CodeLanguageUid != Guid.Empty;
+        public bool IsValid => UserUid != Guid.Empty && !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Text) && CodeLanguageUid != null && CodeLanguageUid != Guid.Empty;
         [NotMapped, JsonIgnore]
         public bool IsSolved => Solution != null;
 
@@ -50,7 +37,7 @@ namespace CodeShare.Model
         public Question(User user, string title, string text, CodeLanguage codeLanguage)
         {
             UserUid = user.Uid;
-            Title = title;
+            Name = title;
             Text = text;
             CodeLanguageUid = codeLanguage.Uid;
             Logs.Add(new QuestionLog(this, user, "created this"));

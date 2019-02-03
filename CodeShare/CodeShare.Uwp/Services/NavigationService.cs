@@ -41,9 +41,13 @@ namespace CodeShare.Uwp.Services
             };
 
             if (!Initialized)
+            {
                 Logger.WriteLine("NavigationService was not properly initialized.");
+            }
             else
+            {
                 Logger.WriteLine("NavigationService was properly initialized.");
+            }
         }
 
         public static bool CanGoBack => Frame?.CanGoBack ?? false;
@@ -60,8 +64,9 @@ namespace CodeShare.Uwp.Services
                 return;
             }
 
-            NavigationView.IsBackButtonVisible = Frame.CanGoBack ?
-                NavigationViewBackButtonVisible.Auto : NavigationViewBackButtonVisible.Collapsed;
+            NavigationView.IsBackButtonVisible = Frame.CanGoBack
+                ? NavigationViewBackButtonVisible.Auto
+                : NavigationViewBackButtonVisible.Collapsed;
         }
 
         public static void Clear()
@@ -94,6 +99,12 @@ namespace CodeShare.Uwp.Services
             if (!Initialized)
             {
                 Logger.WriteLine("Can't navigate. NavigationService is not initialized.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(pageName))
+            {
+                Logger.WriteLine("Can't navigate. Provided page name is empty.");
                 return;
             }
 

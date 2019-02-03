@@ -42,7 +42,7 @@ namespace CodeShare.Uwp.Views
                 return;
             }
 
-            NavigationService.Navigate(typeof(QuestionPage), question, $"{question.Title}");
+            NavigationService.Navigate(typeof(QuestionPage), question, $"{question.Name}");
         }
     }
 }

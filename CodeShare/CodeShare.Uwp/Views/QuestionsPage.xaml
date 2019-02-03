@@ -24,7 +24,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Question">
                     <StackPanel Orientation="Vertical" Spacing="10">
-                        <TextBlock Text="{x:Bind Title}" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
+                        <TextBlock Text="{x:Bind Name}" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
                         <TextBlock Text="{x:Bind User.Name}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
                     </StackPanel>
                 </DataTemplate>

@@ -1,6 +1,7 @@
 ﻿using CodeShare.Model;
 using CodeShare.Utilities;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -39,7 +40,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(UserLog).Name}s");
             });
-            modelBuilder.Entity<UserLog>().HasKey(e => e.Uid);
+            modelBuilder.Entity<UserLog>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<UserLog>()
                 .HasRequired(c => c.User)
                 .WithMany(u => u.Logs)
@@ -51,7 +53,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(CodeLog).Name}s");
             });
-            modelBuilder.Entity<CodeLog>().HasKey(e => e.Uid);
+            modelBuilder.Entity<CodeLog>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<CodeLog>()
                 .HasRequired(c => c.Code)
                 .WithMany(u => u.Logs)
@@ -63,7 +66,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(QuestionLog).Name}s");
             });
-            modelBuilder.Entity<QuestionLog>().HasKey(e => e.Uid);
+            modelBuilder.Entity<QuestionLog>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<QuestionLog>()
                 .HasRequired(c => c.Question)
                 .WithMany(u => u.Logs)
@@ -75,7 +79,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(CommentLog).Name}s");
             });
-            modelBuilder.Entity<CommentLog>().HasKey(e => e.Uid);
+            modelBuilder.Entity<CommentLog>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<CommentLog>()
                 .HasRequired(c => c.Comment)
                 .WithMany(u => u.Logs)
@@ -91,7 +96,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(Video).Name}s");
             });
-            modelBuilder.Entity<Video>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Video>()
+                .HasKey(e => e.Uid);
 
             #endregion
 
@@ -103,7 +109,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(ProfilePicture).Name}s");
             });
-            modelBuilder.Entity<ProfilePicture>().HasKey(e => e.Uid);
+            modelBuilder.Entity<ProfilePicture>()
+                .HasKey(e => e.Uid);
             modelBuilder.Types<ProfilePicture>()
                 .Configure(ctc => ctc.Property(p => p.Crop.X).HasColumnName("Crop_X"));
             modelBuilder.Types<ProfilePicture>()
@@ -121,7 +128,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(Banner).Name}s");
             });
-            modelBuilder.Entity<Banner>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Banner>()
+                .HasKey(e => e.Uid);
             modelBuilder.Types<Banner>()
                 .Configure(ctc => ctc.Property(p => p.Crop.X).HasColumnName("Crop_X"));
             modelBuilder.Types<Banner>()
@@ -139,7 +147,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(Screenshot).Name}s");
             });
-            modelBuilder.Entity<Screenshot>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Screenshot>()
+                .HasKey(e => e.Uid);
 
             #endregion
 
@@ -151,7 +160,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(Report).Name}s");
             });
-            modelBuilder.Entity<Report>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Report>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<Report>()
                 .HasMany(e => e.ImageAttachments)
                 .WithRequired(e => e.Report)
@@ -163,7 +173,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(ReportImage).Name}s");
             });
-            modelBuilder.Entity<ReportImage>().HasKey(e => e.Uid);
+            modelBuilder.Entity<ReportImage>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<ReportImage>()
                 .HasRequired(e => e.Report)
                 .WithMany(e => e.ImageAttachments)
@@ -179,7 +190,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(CodeLanguage).Name}s");
             });
-            modelBuilder.Entity<CodeLanguage>().HasKey(e => e.Uid);
+            modelBuilder.Entity<CodeLanguage>()
+                .HasKey(e => e.Uid);
             modelBuilder.Types<CodeLanguage>()
                 .Configure(ctc => ctc.Property(c => c.Syntax.Delimiter).HasColumnName("Syntax_Delimiter"));
             modelBuilder.Types<CodeLanguage>()
@@ -192,7 +204,8 @@ namespace CodeShare.DataAccess
             #region Content
 
             Logger.WriteLine($"Creating model for {typeof(Content).Name} class.");
-            modelBuilder.Entity<Content>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Content>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<Content>()
                 .HasMany(c => c.Banners)
                 .WithRequired(c => c.Content)
@@ -275,7 +288,12 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(CodeFile).Name}s");
             });
-            modelBuilder.Entity<CodeFile>().HasKey(e => e.Uid);
+            modelBuilder.Entity<CodeFile>()
+                .HasKey(e => e.Uid);
+            modelBuilder.Entity<CodeFile>()
+                .HasRequired(c => c.Code)
+                .WithMany(e => e.Files)
+                .HasForeignKey(c => c.CodeUid);
             modelBuilder.Entity<CodeFile>()
                 .HasRequired(c => c.CodeLanguage)
                 .WithMany()
@@ -286,7 +304,8 @@ namespace CodeShare.DataAccess
             #region Comments
 
             Logger.WriteLine($"Creating model for {typeof(Comment).Name} class.");
-            modelBuilder.Entity<Comment>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Comment>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<Comment>()
                 .HasMany(e => e.Logs)
                 .WithRequired(e => e.Comment)
@@ -302,7 +321,8 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"Replies");
             });
-            modelBuilder.Entity<Reply>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Reply>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<Reply>()
                 .HasMany(u => u.Replies)
                 .WithMany()
@@ -323,7 +343,6 @@ namespace CodeShare.DataAccess
 
             Logger.WriteLine($"Creating model for {typeof(Question).Name} class.");
             modelBuilder.Entity<Question>().ToTable($"{typeof(Question).Name}s");
-            modelBuilder.Entity<Question>().HasKey(e => e.Uid);
             modelBuilder.Entity<Question>()
                 .HasOptional(q => q.Solution)
                 .WithMany()
@@ -347,11 +366,17 @@ namespace CodeShare.DataAccess
                 m.MapInheritedProperties();
                 m.ToTable($"{typeof(Rating).Name}s");
             });
-            modelBuilder.Entity<Rating>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Rating>()
+                .HasKey(e => e.Uid);
+            modelBuilder.Entity<Rating>()
+                .HasRequired(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserUid);
 
             Logger.WriteLine($"Creating model for {typeof(ContentRating).Name} class.");
             modelBuilder.Entity<ContentRating>().ToTable($"{typeof(ContentRating).Name}s");
-            modelBuilder.Entity<ContentRating>().HasKey(e => e.Uid);
+            modelBuilder.Entity<ContentRating>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<ContentRating>()
                 .HasRequired(c => c.Content)
                 .WithMany(c => c.Ratings)
@@ -359,7 +384,8 @@ namespace CodeShare.DataAccess
 
             Logger.WriteLine($"Creating model for {typeof(CommentRating).Name} class.");
             modelBuilder.Entity<CommentRating>().ToTable($"{typeof(CommentRating).Name}s");
-            modelBuilder.Entity<CommentRating>().HasKey(e => e.Uid);
+            modelBuilder.Entity<CommentRating>()
+                .HasKey(e => e.Uid);
             modelBuilder.Entity<CommentRating>()
                 .HasRequired(c => c.Comment)
                 .WithMany(c => c.Ratings)
@@ -371,4 +397,3 @@ namespace CodeShare.DataAccess
         }
     }
 }
- 

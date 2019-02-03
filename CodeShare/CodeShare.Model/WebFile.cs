@@ -10,7 +10,6 @@ namespace CodeShare.Model
     public class WebFile : Entity, IWebFile
     {
         public string Extension { get; set; }
-
         public string Description { get; set; }
 
         [NotMapped, JsonIgnore]

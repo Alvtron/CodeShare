@@ -7,7 +7,7 @@ namespace CodeShare.Model
     public class ContentRating : Rating
     {
         public Content Content { get; set; }
-        public Guid ContentUid { get; set; }
+        public Guid? ContentUid { get; set; }
         
 
         public ContentRating()

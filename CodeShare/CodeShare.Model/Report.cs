@@ -8,13 +8,9 @@ namespace CodeShare.Model
     public class Report : Entity
     {
         public Guid? TargetUid { get; set; }
-
         public string TargetType { get; set; }
-
         public string Message { get; set; }
-
         public bool Valid => string.IsNullOrWhiteSpace(Message);
-
         public ICollection<ReportImage> ImageAttachments { get; set; } = new List<ReportImage>();
 
         public Report()

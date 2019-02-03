@@ -7,7 +7,7 @@ namespace CodeShare.Model
     public class CommentLog : Log
     {
         public Comment Comment { get; set; }
-        public Guid CommentUid { get; set; }
+        public Guid? CommentUid { get; set; }
 
         public CommentLog()
         {

@@ -33,7 +33,7 @@ namespace CodeShare.Uwp.Controls
         public void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Question question)
-                NavigationService.Navigate(typeof(QuestionPage), question.Uid, question.Title);
+                NavigationService.Navigate(typeof(QuestionPage), question.Uid, question.Name);
         }
     }
 }

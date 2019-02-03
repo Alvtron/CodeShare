@@ -30,17 +30,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <PersonPicture
-                    Grid.Column="0"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    ProfilePicture="{x:Bind ViewModel.Model.User.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}"
-                    Height="48"
-                    Width="48"/>
-                <xaml:RichTextBox
-                    Grid.Column="1"
-                    Height="auto"
-                    Rtf="{x:Bind ViewModel.Model.Text, Mode=OneWay}"/>
+                <controls:QuestionAuthorBlock Grid.Column="0" Question="{x:Bind ViewModel.Model}" Width="75" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <StackPanel Grid.Column="1" Spacing="24" Height="auto">
+                    <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" Style="{StaticResource HeaderTextBlockStyle}" />
+                    <xaml:RichTextBox Height="auto" Rtf="{x:Bind ViewModel.Model.Text, Mode=OneWay}"/>
+                </StackPanel>
+                
             </Grid>
             <!-- Replies -->
             <TextBlock Text="Replies"/>

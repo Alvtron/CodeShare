@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="CodeShare.Uwp.Controls.CodeAuthorBlock"
+    x:Class="CodeShare.Uwp.Controls.QuestionAuthorBlock"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CodeShare.Uwp.Controls"
@@ -18,7 +18,7 @@
 
     <StackPanel Name="Info" Spacing="20" Padding="12">
         <!-- Photo -->
-        <controls:ProfilePictureItem User="{x:Bind Code.User, Mode=OneWay}" Width="auto" Height="auto" />
+        <controls:ProfilePictureItem User="{x:Bind Question.User, Mode=OneWay}" Width="auto" Height="auto" />
         <!-- Edit Button -->
         <Button
             Name="EditButton"
@@ -28,13 +28,13 @@
             Width="auto"/>
         <!-- Infodata -->
         <StackPanel Orientation="Vertical" Spacing="8" HorizontalAlignment="Center">
-            <TextBlock Text="{x:Bind Code.Created, Mode=OneWay, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter='MMMMM dd yyyy'}" HorizontalAlignment="Center" Foreground="Gray"/>
+            <TextBlock Text="{x:Bind Question.Created, Mode=OneWay, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter='MMMMM dd yyyy'}" HorizontalAlignment="Center" Foreground="Gray"/>
             <TextBlock HorizontalAlignment="Center" Foreground="Gray" >
-                <Run Text="{x:Bind Code.Views, Mode=OneWay}" />
+                <Run Text="{x:Bind Question.Views, Mode=OneWay}" />
                 <Run Text="views"/>
             </TextBlock>
             <TextBlock HorizontalAlignment="Center" Foreground="Gray" >
-                <Run Text="{x:Bind Code.Ratings.Count, Mode=OneWay}" />
+                <Run Text="{x:Bind Question.Ratings.Count, Mode=OneWay}" />
                 <Run Text="ratings"/>
             </TextBlock>
         </StackPanel>

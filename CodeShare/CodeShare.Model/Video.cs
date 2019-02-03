@@ -6,8 +6,7 @@ namespace CodeShare.Model
     public class Video : Entity
     {
         public Content Content { get; set; }
-
-        public Guid ContentUid { get; set; }
+        public Guid? ContentUid { get; set; }
 
         private string _youTubeId;
         public string YouTubeId

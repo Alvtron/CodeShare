@@ -6,7 +6,7 @@ namespace CodeShare.Model
     public class Banner : WebImage
     {
         public Content Content { get; set; }
-        public Guid ContentUid { get; set; }
+        public Guid? ContentUid { get; set; }
         public bool IsPrimary { get; set; }
 
         public Banner()

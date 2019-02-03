@@ -7,7 +7,7 @@ namespace CodeShare.Model
     public class CommentRating : Rating
     {
         public Comment Comment { get; set; }
-        public Guid CommentUid { get; set; }
+        public Guid? CommentUid { get; set; }
 
         public CommentRating()
         {

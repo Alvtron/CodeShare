@@ -6,7 +6,7 @@ namespace CodeShare.Model
     public class Screenshot : WebImage, ICroppableImage
     {
         public Content Content { get; set; }
-        public Guid ContentUid { get; set; }
+        public Guid? ContentUid { get; set; }
 
         public Screenshot()
         {

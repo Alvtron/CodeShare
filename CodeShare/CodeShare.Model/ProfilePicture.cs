@@ -6,7 +6,7 @@ namespace CodeShare.Model
     public class ProfilePicture : WebImage, ICroppableImage
     {
         public User User { get; set; }
-        public Guid UserUid { get; set; }
+        public Guid? UserUid { get; set; }
         public bool IsPrimary { get; set; }
 
         public ProfilePicture()

@@ -12,7 +12,7 @@ namespace CodeShare.Model
     public abstract class Comment : Entity
     {
         public User User { get; set; }
-        public Guid UserUid { get; set; }
+        public Guid? UserUid { get; set; }
 
         private string _text;
         public string Text

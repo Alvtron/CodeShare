@@ -219,7 +219,7 @@ namespace CodeShare.WebApi.Controllers
 
             try
             {
-                Context.Entry(entity).State = EntityState.Deleted;
+                Entities.Remove(entity);
 
                 OnDelete(entity);
 
@@ -280,7 +280,7 @@ namespace CodeShare.WebApi.Controllers
                 return;
             }
 
-            if (newEntity.Uid == null || newEntity.Uid == Guid.Empty || existingEntity.Uid == null || existingEntity.Uid == Guid.Empty || newEntity.Uid.Equals(existingEntity.Uid))
+            if (newEntity.Uid == null || newEntity.Uid == Guid.Empty || existingEntity.Uid == null || existingEntity.Uid == Guid.Empty || !newEntity.Uid.Equals(existingEntity.Uid))
             {
                 return;
             }

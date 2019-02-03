@@ -13,7 +13,7 @@ namespace CodeShare.Model
 
         public User User { get; set; }
 
-        public Guid UserUid { get; set; }
+        public Guid? UserUid { get; set; }
 
         private string _version;
         public string Version

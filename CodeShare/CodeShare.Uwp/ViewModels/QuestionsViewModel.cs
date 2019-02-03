@@ -56,7 +56,7 @@ namespace CodeShare.Uwp.ViewModels
 
             query = query?.ToLower();
 
-            FilteredQuestions = new ObservableCollection<Question>(UnfilteredQuestions?.Where(u => u.Title.ToLower().StartsWith(query)));
+            FilteredQuestions = new ObservableCollection<Question>(UnfilteredQuestions?.Where(u => u.Name.ToLower().StartsWith(query)));
         }
     }
 }

@@ -70,7 +70,7 @@ namespace CodeShare.Uwp.ViewModels
 
             NavigationService.Unlock();
 
-            NavigationService.Navigate(typeof(QuestionPage), question, question.Title);
+            NavigationService.Navigate(typeof(QuestionPage), question, question.Name);
             return true;
         }
 

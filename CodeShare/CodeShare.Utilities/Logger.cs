@@ -9,6 +9,8 @@ namespace CodeShare.Utilities
 {
     public static class Logger
     {
+        private static List<string> FailedEntries { get; } = new List<string>();
+
         public static readonly string FilePath;
 
         public static string Entries
@@ -100,34 +102,27 @@ namespace CodeShare.Utilities
 
         private static void AppendTextToFile(string text)
         {
-            if (!File.Exists(FilePath))
+            try
             {
-                text = $"{Time} {text}";
-
-                try
+                if (!File.Exists(FilePath))
                 {
+                    text = $"{Time} {text}";
+
                     using (var streamWriter = File.CreateText(FilePath))
                     {
                         streamWriter.WriteLine(text);
                     }
                 }
-                catch(Exception)
+                else
                 {
-                    throw;
-                }
-            }
-            else
-            {
-                text = $"\n{Time} {text}";
-
-                try
-                {
+                    text = $"\n{Time} {text}";
                     File.AppendAllText(FilePath, text);
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
+            }
+            catch (Exception)
+            {
+                FailedEntries.Add(text);
+                return;
             }
         }
     }

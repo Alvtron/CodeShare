@@ -101,6 +101,9 @@
     <Compile Include="Controls\BindableRichTextBlock.xaml.cs">
       <DependentUpon>BindableRichTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\QuestionAuthorBlock.xaml.cs">
+      <DependentUpon>QuestionAuthorBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CodeBox.xaml.cs">
       <DependentUpon>CodeBox.xaml</DependentUpon>
     </Compile>
@@ -237,6 +240,7 @@
     <Compile Include="ViewModels\AddQuestionViewModel.cs" />
     <Compile Include="ViewModels\AddCodeViewModel.cs" />
     <Compile Include="ViewModels\AppSettingsViewModel.cs" />
+    <Compile Include="ViewModels\QuestionSettingsViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\ModelSettingsViewModel.cs" />
     <Compile Include="ViewModels\CodeSettingsViewModel.cs" />
@@ -252,6 +256,9 @@
     <Compile Include="ViewModels\UsersViewModel.cs" />
     <Compile Include="ViewModels\UserSettingsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="Views\QuestionSettingsPage.xaml.cs">
+      <DependentUpon>QuestionSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\QuestionPage.xaml.cs">
       <DependentUpon>QuestionPage.xaml</DependentUpon>
     </Compile>
@@ -360,6 +367,10 @@
     <Page Include="Controls\BindableRichTextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\QuestionAuthorBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CodeBox.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -508,6 +519,10 @@
     <Page Include="Dialogs\UploadImageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuestionSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\QuestionPage.xaml">
       <SubType>Designer</SubType>

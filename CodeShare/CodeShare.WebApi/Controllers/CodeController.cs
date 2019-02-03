@@ -1,8 +1,10 @@
 ﻿using CodeShare.Model;
 using CodeShare.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
