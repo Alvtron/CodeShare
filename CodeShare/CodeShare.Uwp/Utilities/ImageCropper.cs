@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Input;
 
 namespace CodeShare.Uwp.Utilities
 {
-    public class ImageCropper<T> where T : WebImage, ICroppableImage, new()
+    public class ImageCropper<T> where T : IWebImage, ICroppableImage, new()
     {
         public T Image { get; }
 

@@ -15,10 +15,8 @@ namespace CodeShare.Uwp.Services
         private static Frame Frame { get; set; }
         private static NavigationView NavigationView { get; set; }
         private static ProgressRing ProgressRing { get; set; }
-
         private static ObservableStack<string> Headers { get; } = new ObservableStack<string>();
         private static Dictionary<Type, Action<Type, object, string>> Navigations { get; set; }
-
         public static bool Initialized => Frame != null && NavigationView != null && ProgressRing != null && Headers != null;
 
         public static void Initialize(Frame frame, NavigationView navigationView, ProgressRing progressRing)
@@ -132,9 +130,14 @@ namespace CodeShare.Uwp.Services
                     Navigate(typeof(UsersPage), parameter, pageName);
                     return;
                 case "Comment":
-                    var comment = await RestApiService<Reply>.Get((Guid)parameter);
-                    var dialog = new ReplyDialog(comment);
-                    await dialog.ShowAsync();
+                    var codeComment = await RestApiService<Comment>.Get((Guid)parameter);
+                    await new CommentDialog(codeComment).ShowAsync();
+                    return;
+                case "Upload code":
+                    await new AddCodeDialog().ShowAsync();
+                    return;
+                case "Ask a question":
+                    await new AddQuestionDialog().ShowAsync();
                     return;
                 default:
                     break;

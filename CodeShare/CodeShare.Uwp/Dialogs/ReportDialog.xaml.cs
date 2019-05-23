@@ -8,8 +8,6 @@ namespace CodeShare.Uwp.Dialogs
     {
         public string Message { get; set; }
 
-        public bool Valid => !string.IsNullOrWhiteSpace(Message);
-
         public ReportDialog(string targetName = null)
         {
             InitializeComponent();
@@ -19,7 +17,7 @@ namespace CodeShare.Uwp.Dialogs
         private void ReportMessage_TextChanged(object sender, TextChangedEventArgs e)
         {
             Message = ReportMessage.Text;
-            IsSecondaryButtonEnabled = Valid;
+            IsPrimaryButtonEnabled = !string.IsNullOrWhiteSpace(Message);
         }
     }
 }

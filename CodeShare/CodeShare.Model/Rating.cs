@@ -6,7 +6,7 @@ namespace CodeShare.Model
 {
     public class Rating : Entity, IRating
     {
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public Guid? UserUid { get; set; }
         public bool Value { get; set; }
         public DateTime? Date { get; set; } = DateTime.Now;

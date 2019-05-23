@@ -17,18 +17,6 @@ namespace CodeShare.Uwp.Views
             InitializeComponent();
         }
 
-        private async void AddCode_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new AddCodeDialog();
-            await dialog.ShowAsync();
-        }
-
-        private async void AddQuestion_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new AddQuestionDialog();
-            await dialog.ShowAsync();
-        }
-
         private async void MostPopularCodesGridView_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewModel.RefreshMostPopularCodes();

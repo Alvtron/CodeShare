@@ -8,13 +8,13 @@ namespace CodeShare.Uwp.Dialogs
 {
     public sealed partial class BannerCroppingDialog : ContentDialog
     {
-        private ImageCropper<Banner> ImageCropper { get; }
+        private ImageCropper<WebImage> ImageCropper { get; }
 
-        public Banner Result => ImageCropper.Image;
+        public WebImage Result => ImageCropper.Image;
 
-        public BannerCroppingDialog(Banner banner)
+        public BannerCroppingDialog(WebImage banner)
         {
-            ImageCropper = new ImageCropper<Banner>(banner);
+            ImageCropper = new ImageCropper<WebImage>(banner);
             InitializeComponent();
         }
     }

@@ -8,9 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Crop"
-    PrimaryButtonText="Discard"
-    SecondaryButtonText="Save"
-    SecondaryButtonClick="{x:Bind ImageCropper.Save}">
+    CloseButtonText="Discard"
+    PrimaryButtonText="Save"
+    PrimaryButtonClick="{x:Bind ImageCropper.Save}">
 
     <ContentDialog.Resources>
         <converters:ImageConverter x:Key="ImageConverter" />

@@ -1,8 +1,13 @@
 ﻿using CodeShare.Model;
 using CodeShare.RestApi;
+using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Services;
+using CodeShare.Uwp.Utilities;
+using CodeShare.Uwp.Views;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
 
 namespace CodeShare.Uwp.ViewModels
 {
@@ -11,7 +16,11 @@ namespace CodeShare.Uwp.ViewModels
         public QuestionViewModel(Question question)
             : base(question)
         {
-            IsUserAuthor = question.User.Equals(AuthService.CurrentUser);
+        }
+
+        public override bool OnSetAuthorPrivileges(Question model)
+        {
+            return (model.User == null) ? false : model.User.Equals(AuthService.CurrentUser);
         }
     }
 }

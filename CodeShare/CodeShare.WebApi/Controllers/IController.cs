@@ -1,7 +1,8 @@
 ﻿using CodeShare.Model;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
 
 namespace CodeShare.WebApi.Controllers
 {
@@ -15,31 +16,31 @@ namespace CodeShare.WebApi.Controllers
         /// Gets all entities from database.
         /// </summary>
         /// <returns></returns>
-        IQueryable<T> Get();
+        ActionResult<IEnumerable<T>> Get();
         /// <summary>
         /// Gets the entity bound to the specified uid from the database.
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        IHttpActionResult Get(Guid uid);
+        ActionResult<T> Get(Guid uid);
         /// <summary>
         /// Updates the entity to equal entity bound to the specified uid.
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        IHttpActionResult Put(Guid uid, T entity);
+        ActionResult<T> Put(Guid uid, T entity);
         /// <summary>
         /// Adds the specified entity comment to the database.
         /// </summary>
         /// <param name="entity">The entity comment.</param>
         /// <returns></returns>
-        IHttpActionResult Post(T entity);
+        ActionResult<T> Post(T entity);
         /// <summary>
         /// Deletes the entity bound to the specified uid from the database.
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        IHttpActionResult Delete(Guid uid);
+        IActionResult Delete(Guid uid);
     }
 }

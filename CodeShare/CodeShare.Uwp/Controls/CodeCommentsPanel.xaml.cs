@@ -45,19 +45,25 @@ namespace CodeShare.Uwp.Controls
 
             NavigationService.Lock();
 
-            var comment = new Reply(Code.Uid, AuthService.CurrentUser, editor.Rtf);
+            var comment = new Comment(Code.CommentSection, AuthService.CurrentUser, editor.Rtf);
+
+            if (!await RestApiService<Comment>.Update(comment, comment.Uid))
+            {
+                await NotificationService.DisplayErrorMessage("Something went wrong when posting your comment.");
+                NavigationService.Unlock();
+                return;
+            }
 
             Code.Reply(AuthService.CurrentUser, comment);
 
             if (!await RestApiService<Code>.Update(Code, Code.Uid))
             {
-                await NotificationService.DisplayErrorMessage("Something went wrong when uploading your comment.");
-            }
-            else
-            {
-                editor.Clear();
+                await NotificationService.DisplayErrorMessage("Something went wrong when posting your comment.");
+                NavigationService.Unlock();
+                return;
             }
 
+            editor.Clear();
             NavigationService.Unlock();
         }
     }

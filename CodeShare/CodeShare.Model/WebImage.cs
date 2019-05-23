@@ -9,7 +9,7 @@ namespace CodeShare.Model
         public int Width { get; set; }
         public int Height { get; set; }
         private Crop _crop;
-        public Crop Crop
+        public virtual Crop Crop
         {
             get => _crop;
             set => SetField(ref _crop, value);
@@ -28,8 +28,14 @@ namespace CodeShare.Model
         }
 
         public WebImage(int width, int height, double cropAspectRatio, byte[] fileInBytes, string extension)
-            : base(fileInBytes, extension)
         {
+            Extension = extension;
+
+            if (!Exist)
+            {
+                Upload(fileInBytes);
+            }
+
             Width = width;
             Height = height;
 

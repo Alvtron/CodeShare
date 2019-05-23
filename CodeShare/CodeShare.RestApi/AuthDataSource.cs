@@ -7,22 +7,28 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using CodeShare.Utilities;
+using System.Net;
 
 namespace CodeShare.RestApi
 {
     public static class AuthDataSource
     {
-        private const string BaseUri = @"http://localhost:58669/api/";
+        private const string BaseUri = @"http://localhost:50214/api/";
 
         private static HttpClient _client;
         public static HttpClient Client
         {
             get
             {
-                if (_client != null) return _client;
+                if (_client != null)
+                {
+                    return _client;
+                }
 
-                _client = new HttpClient();
-                _client.BaseAddress = new Uri(BaseUri);
+                _client = new HttpClient
+                {
+                    BaseAddress = new Uri(BaseUri)
+                };
                 _client.DefaultRequestHeaders.Accept.Clear();
                 _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 return _client;
@@ -135,16 +141,25 @@ namespace CodeShare.RestApi
             });
 
             Logger.WriteLine("Saving new user to database with REST API.");
-            var response = await Client.PostAsync($"{Controller}/signup", new StringContent(postBody, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
-            if (!response.IsSuccessStatusCode)
+            HttpResponseMessage response = null;
+
+            try
+            {
+                response = await Client.PostAsync($"{Controller}/signup", new StringContent(postBody, Encoding.UTF8, "application/json")).ConfigureAwait(false);
+            }
+            catch(HttpRequestException e)
+            {
+                Logger.WriteLine(e.Message);
+            }
+
+            if (response == null || !response.IsSuccessStatusCode)
             {
                 Logger.WriteLine($"The sign up was unsuccessful. Response code: {response.StatusCode}.");
                 return null;
             }
 
             Logger.WriteLine($"The sign up was successful. Response code: {response.StatusCode}.");
-
             return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
         }
     }

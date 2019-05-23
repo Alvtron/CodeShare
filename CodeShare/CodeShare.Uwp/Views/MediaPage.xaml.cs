@@ -13,11 +13,6 @@ namespace CodeShare.Uwp.Views
         private Video Video { get; set; }
         private WebFile File { get; set; }
 
-        public MediaPage()
-        {
-            InitializeComponent();
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             switch (e.Parameter)
@@ -32,6 +27,8 @@ namespace CodeShare.Uwp.Views
                     Frame.GoBack();
                     break;
             }
+
+            InitializeComponent();
         }
 
         private void ImageView_Loaded(object sender, RoutedEventArgs e)

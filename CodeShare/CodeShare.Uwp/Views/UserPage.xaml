@@ -106,7 +106,7 @@
             <Pivot Padding="48,32">
                 <!-- About -->
                 <PivotItem Header="About">
-                    <StackPanel Spacing="24" Padding="24">
+                    <StackPanel Spacing="24" Padding="0,24">
                         <Grid RowSpacing="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="144" />
@@ -144,15 +144,15 @@
                     </StackPanel>
                 </PivotItem>
                 <!-- Friends -->
-                <PivotItem Header="Friends" Padding="24">
+                <PivotItem Header="Friends" Padding="0,24">
                     <controls:UserGridView Users="{x:Bind ViewModel.Model.Friends, Mode=OneWay}" />
                 </PivotItem>
                 <!-- Codes -->
-                <PivotItem Header="Codes" Padding="24">
+                <PivotItem Header="Codes" Padding="0,24">
                     <controls:CodeGridView Codes="{x:Bind ViewModel.Model.Codes, Mode=OneWay}" />
                 </PivotItem>
                 <!-- Activity -->
-                <PivotItem Header="Activity" Padding="24">
+                <PivotItem Header="Activity" Padding="0,24">
                     <controls:ActivityListView LogsSource="{x:Bind ViewModel.Model.Logs, Mode=OneWay}" />
                 </PivotItem>
             </Pivot>

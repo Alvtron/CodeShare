@@ -21,19 +21,13 @@ namespace CodeShare.Uwp.Views
             await InitializeApplication();
         }
 
-        public async Task InitializeApplication()
+        private async Task InitializeApplication()
         {
             NavigationService.Lock();
-
-            //var loadingDialog = await NotificationService.CreateAndDisplayLoadingDialog();
-
-            AppSettings.DeleteAllSettings();
 
             await AuthService.SignInAsync();
 
             AppSettings.PrintSettings();
-
-            //loadingDialog.Close();
 
             NavigationService.Unlock();
         }

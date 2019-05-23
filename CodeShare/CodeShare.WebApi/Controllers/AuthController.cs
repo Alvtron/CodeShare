@@ -1,35 +1,38 @@
 ﻿using CodeShare.Model;
 using CodeShare.Utilities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
-using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace CodeShare.WebApi.Controllers
 {
+    [Route("api/auth")]
+    [ApiController]
     public class AuthController : UsersController
     {
         // Encryptor that stores the public and private parameters, and encrypts and decrypts
         private static readonly AsymmetricEncryptor _asymmetricEncryptor = new AsymmetricEncryptor();
 
-        [ResponseType(typeof(RSAParameters)), Route("api/auth/publickey")]
-        public IHttpActionResult GetPublicKey()
+        [HttpGet("publickey")]
+        public ActionResult<RSAParameters> GetPublicKey()
         {
             return Ok(_asymmetricEncryptor.PublicParameters);
         }
 
-        [ResponseType(typeof(User)), Route("api/auth/signin")]
-        public IHttpActionResult SignIn([FromBody] EncryptedCredential encryptedCredential)
+        [HttpPost("signin")]
+        public ActionResult<User> SignIn([FromBody] EncryptedCredential encryptedCredential)
         {
             if (encryptedCredential == null)
             {
+                Logger.WriteLine("Provided encrypted credential is empty.");
                 return BadRequest("Provided encrypted credential is empty.");
             }
             if (!IsDatabaseOnline)
             {
-                return InternalServerError();
+                Logger.WriteLine("Internal Server Error.");
+                return BadRequest("Internal Server Error.");
             }
 
             // Decrypt encrypted user credentials
@@ -44,16 +47,16 @@ namespace CodeShare.WebApi.Controllers
                 return NotFound();
             }
 
-            return Content(HttpStatusCode.OK, user);
+            return Ok(user);
         }
 
-        [ResponseType(typeof(User)), Route("api/auth/signup")]
-        public IHttpActionResult SignUp([FromBody] User user)
+        [HttpPost("signup")]
+        public ActionResult<User> SignUp([FromBody] User user)
         {
             if (!IsDatabaseOnline)
             {
                 Logger.WriteLine("Internal Server Error.");
-                return InternalServerError();
+                return BadRequest("Internal Server Error.");
             }
             if (user == null)
             {
@@ -75,7 +78,7 @@ namespace CodeShare.WebApi.Controllers
                 Context.Users.Add(user);
                 Context.SaveChanges();
 
-                return Content(HttpStatusCode.OK, user);
+                return Ok(user);
             }
             catch (Exception exception)
             {
@@ -89,8 +92,8 @@ namespace CodeShare.WebApi.Controllers
             }
         }
 
-        [ResponseType(typeof(User)), Route("api/auth/change/{uid}")]
-        public IHttpActionResult ChangeCredentials(Guid uid, [FromBody] EncryptedCredential encryptedCredential)
+        [HttpPost("change/{uid}")]
+        public ActionResult<User> ChangeCredentials(Guid uid, [FromBody] EncryptedCredential encryptedCredential)
         {
             if (encryptedCredential == null)
             {
@@ -100,7 +103,7 @@ namespace CodeShare.WebApi.Controllers
             if (!IsDatabaseOnline)
             {
                 Logger.WriteLine("Internal Server Error.");
-                return InternalServerError();
+                return BadRequest("Internal Server Error.");
             }
 
             // Decrypt encrypted user credentials
@@ -118,7 +121,7 @@ namespace CodeShare.WebApi.Controllers
 
             Context.SaveChanges();
 
-            return Content(HttpStatusCode.OK, user);
+            return Ok(user);
         }
     }
 }

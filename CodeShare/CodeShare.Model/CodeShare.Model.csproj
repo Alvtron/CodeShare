@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CodeShare.Extensions\CodeShare.Extensions.csproj" />
     <ProjectReference Include="..\CodeShare.Services\CodeShare.Services.csproj" />
     <ProjectReference Include="..\CodeShare.Utilities\CodeShare.Utilities.csproj" />
   </ItemGroup>

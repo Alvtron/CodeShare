@@ -8,10 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Edit file"
-    PrimaryButtonText="Discard"
-    SecondaryButtonText="Save"
-    PrimaryButtonClick="Discard_PrimaryButtonClick"
-    SecondaryButtonClick="Save_SecondaryButtonClick">
+    CloseButtonText="Discard"
+    PrimaryButtonText="Save"
+    CloseButtonClick="Discard_CloseButtonClick"
+    PrimaryButtonClick="Save_PrimaryButtonClick">
 
     <controls:CodeBox Code="{x:Bind File.Data, Mode=TwoWay}" />
 </ContentDialog>

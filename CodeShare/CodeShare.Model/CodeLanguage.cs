@@ -8,14 +8,10 @@ namespace CodeShare.Model
     public class CodeLanguage : Entity
     {
         public string Name { get; set; }
-
         public string Extension { get; set; }
-
         public string Description { get; set; }
-
         public string About { get; set; }
-
-        public Syntax Syntax { get; set; } = new Syntax();
+        public virtual Syntax Syntax { get; set; } = new Syntax();
 
         public override string ToString()
         {

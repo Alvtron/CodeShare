@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CodeShare.Model
 {
-    public class Log : Entity, ILog
+    public abstract class Log : Entity, ILog
     {
         public bool IsPublic { get; set; }
         public string Action { get; set; }

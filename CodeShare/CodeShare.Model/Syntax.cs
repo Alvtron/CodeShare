@@ -5,8 +5,7 @@ using System.Text;
 
 namespace CodeShare.Model
 {
-    [ComplexType]
-    public class Syntax
+    public class Syntax : ValueObject
     {
         public string Delimiter { get; set; } = "";
         public string Keywords { get; set; } = "";
@@ -19,6 +18,13 @@ namespace CodeShare.Model
             Delimiter = delimiter ?? "";
             Keywords = keywords ?? "";
             Comments = comments ?? "";
+        }
+
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return Delimiter;
+            yield return Keywords;
+            yield return Comments;
         }
     }
 }

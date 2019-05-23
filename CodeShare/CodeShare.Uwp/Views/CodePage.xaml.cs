@@ -5,6 +5,7 @@ using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -35,8 +36,8 @@ namespace CodeShare.Uwp.Views
                     code = await RestApiService<Code>.Get(entity.Uid);
                     break;
                 default:
-                    await NotificationService.DisplayErrorMessage("Developer error.");
-                    throw new InvalidOperationException();
+                    Logger.WriteLine("Developer error.");
+                    throw new ArgumentException("Developer error.");
             }
 
             if (code == null)
@@ -46,19 +47,12 @@ namespace CodeShare.Uwp.Views
             }
 
             ViewModel = new CodeViewModel(code);
-
             InitializeComponent();
-
             NavigationService.Unlock();
-
-            ViewModel.Model.Views++;
-
-            if (!await RestApiService<Code>.Update(ViewModel.Model, ViewModel.Model.Uid))
-            {
-                Logger.WriteLine($"Failed to increment view counter for code {ViewModel.Model.Uid}.");
-            }
-
+            await ViewModel.IncrementViewsAsync();
             NavigationService.SetHeaderTitle(ViewModel.Model?.Name);
         }
+
+
     }
 }

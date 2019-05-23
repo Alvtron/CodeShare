@@ -98,7 +98,7 @@ namespace CodeShare.Uwp.Controls
         {
             EditorBox.IsReadOnly = false;
             EditorBox.Document.SetText(TextSetOptions.None, "");
-            EditorBox.IsReadOnly = true;
+            EditorBox.IsReadOnly = !Editable;
         }
 
         private static void RtfPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)

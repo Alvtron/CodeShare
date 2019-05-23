@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace CodeShare.Model
 {
-    public interface IEntity
+    public interface IEntity : ITimeRecord, IComparable
     {
         Guid Uid { get; set; }
-        DateTime? Created { get; set; }
-        DateTime? Updated { get; set; }
     }
 }

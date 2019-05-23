@@ -1,15 +1,15 @@
 ﻿using CodeShare.Model;
 using CodeShare.Utilities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
-using System.Web.Http.Description;
-using System.Web.Http.Results;
 
 namespace CodeShare.WebApi.Controllers
 {
+    [Route("api/codelanguages")]
+    [ApiController]
     public class CodeLanguageController : EntityController<CodeLanguage>
     {
         protected override DbSet<CodeLanguage> Entities => Context.CodeLanguages;
@@ -18,20 +18,20 @@ namespace CodeShare.WebApi.Controllers
 
         protected override IQueryable<CodeLanguage> QueryableEntitiesMinimal => Entities;
 
-        [Route("api/codelanguages")]
-        public new IQueryable<CodeLanguage> Get() => base.Get();
+        [HttpGet]
+        public new ActionResult<IEnumerable<CodeLanguage>> Get() => base.Get();
 
-        [ResponseType(typeof(CodeLanguage)), Route("api/codelanguages/{uid}")]
-        public new IHttpActionResult Get(Guid uid) => base.Get(uid);
+        [HttpGet("{uid}")]
+        public new ActionResult<CodeLanguage> Get(Guid uid) => base.Get(uid);
 
-        [ResponseType(typeof(void)), Route("api/codelanguages/{uid}")]
-        public new IHttpActionResult Put(Guid uid, [FromBody] CodeLanguage entity) => base.Put(uid, entity);
+        [HttpPut("{uid}")]
+        public new ActionResult<CodeLanguage> Put(Guid uid, [FromBody] CodeLanguage entity) => base.Put(uid, entity);
 
-        [ResponseType(typeof(CodeLanguage)), Route("api/codelanguages")]
-        public new IHttpActionResult Post(CodeLanguage entity) => base.Post(entity);
+        [HttpPost]
+        public new ActionResult<CodeLanguage> Post(CodeLanguage entity) => base.Post(entity);
 
-        [ResponseType(typeof(CodeLanguage)), Route("api/codelanguages/{uid}")]
-        public new IHttpActionResult Delete(Guid uid) => base.Delete(uid);
+        [HttpDelete("{uid}")]
+        public new IActionResult Delete(Guid uid) => base.Delete(uid);
 
         protected override void OnPost(CodeLanguage entity)
         {

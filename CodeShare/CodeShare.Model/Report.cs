@@ -11,7 +11,7 @@ namespace CodeShare.Model
         public string TargetType { get; set; }
         public string Message { get; set; }
         public bool Valid => string.IsNullOrWhiteSpace(Message);
-        public ICollection<ReportImage> ImageAttachments { get; set; } = new List<ReportImage>();
+        public virtual ICollection<ReportImage> ImageAttachments { get; set; } = new List<ReportImage>();
 
         public Report()
         {

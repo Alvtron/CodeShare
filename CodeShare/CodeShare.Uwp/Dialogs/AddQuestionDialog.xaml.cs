@@ -1,4 +1,5 @@
-﻿using CodeShare.Uwp.ViewModels;
+﻿using CodeShare.Uwp.Services;
+using CodeShare.Uwp.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,16 +13,14 @@ namespace CodeShare.Uwp.Dialogs
 
         public AddQuestionDialog()
         {
-            ViewModel = new AddQuestionViewModel();
-            InitializeComponent();
-        }
-
-        private async void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            if (await ViewModel.UploadQuestionAsync())
+            if (AuthService.CurrentUser == null)
             {
                 Hide();
+                return;
             }
+
+            ViewModel = new AddQuestionViewModel();
+            InitializeComponent();
         }
 
         public void ASB_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -39,6 +38,14 @@ namespace CodeShare.Uwp.Dialogs
         private async void ASB_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewModel.Initialize();
+        }
+
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            if (await ViewModel.UploadQuestionAsync())
+            {
+                Hide();
+            }
         }
     }
 }

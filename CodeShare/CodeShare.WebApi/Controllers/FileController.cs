@@ -1,15 +1,15 @@
 ﻿using CodeShare.Model;
 using CodeShare.Utilities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
-using System.Web.Http.Description;
-using System.Web.Http.Results;
 
 namespace CodeShare.WebApi.Controllers
 {
+    [Route("api/files")]
+    [ApiController]
     public class CodeFileController : EntityController<CodeFile>
     {
         protected override DbSet<CodeFile> Entities => Context.CodeFiles;
@@ -20,20 +20,20 @@ namespace CodeShare.WebApi.Controllers
 
         protected override IQueryable<CodeFile> QueryableEntitiesMinimal => Entities;
 
-        [Route("api/codefiles")]
-        public new IQueryable<CodeFile> Get() => base.Get();
+        [HttpGet]
+        public new ActionResult<IEnumerable<CodeFile>> Get() => base.Get();
 
-        [ResponseType(typeof(CodeFile)), Route("api/codefiles/{uid}")]
-        public new IHttpActionResult Get(Guid uid) => base.Get(uid);
+        [HttpGet("{uid}")]
+        public new ActionResult<CodeFile> Get(Guid uid) => base.Get(uid);
 
-        [ResponseType(typeof(void)), Route("api/codefiles/{uid}")]
-        public new IHttpActionResult Put(Guid uid, [FromBody] CodeFile entity) => base.Put(uid, entity);
-        
-        [ResponseType(typeof(File)), Route("api/codefiles")]
-        public new IHttpActionResult Post(CodeFile entity) => base.Post(entity);
-        
-        [ResponseType(typeof(File)), Route("api/codefiles/{uid}")]
-        public new IHttpActionResult Delete(Guid uid) => base.Delete(uid);
+        [HttpPut("{uid}")]
+        public new ActionResult<CodeFile> Put(Guid uid, [FromBody] CodeFile entity) => base.Put(uid, entity);
+
+        [HttpPost]
+        public new ActionResult<CodeFile> Post(CodeFile entity) => base.Post(entity);
+
+        [HttpDelete("{uid}")]
+        public new IActionResult Delete(Guid uid) => base.Delete(uid);
 
         protected override void OnPost(CodeFile entity)
         {

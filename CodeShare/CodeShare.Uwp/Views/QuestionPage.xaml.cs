@@ -41,18 +41,9 @@ namespace CodeShare.Uwp.Views
             }
 
             ViewModel = new QuestionViewModel(question);
-
             InitializeComponent();
-
             NavigationService.Unlock();
-
-            ViewModel.Model.Views++;
-
-            if (!await RestApiService<Question>.Update(ViewModel.Model, ViewModel.Model.Uid))
-            {
-                Logger.WriteLine($"Failed to increment view counter for question {ViewModel.Model.Uid}.");
-            }
-
+            await ViewModel.IncrementViewsAsync();
             NavigationService.SetHeaderTitle(ViewModel.Model?.Name);
         }
     }

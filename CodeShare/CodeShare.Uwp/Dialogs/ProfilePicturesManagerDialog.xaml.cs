@@ -19,10 +19,6 @@ namespace CodeShare.Uwp.Dialogs
             Title = dialogTitle;
         }
 
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
-
         private void ImageGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateSelectedItemsCounter();

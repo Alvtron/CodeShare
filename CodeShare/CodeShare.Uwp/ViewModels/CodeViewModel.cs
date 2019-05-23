@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.RestApi;
+using System.Windows.Input;
+using CodeShare.Uwp.Utilities;
+using CodeShare.Utilities;
 
 namespace CodeShare.Uwp.ViewModels
 {
@@ -14,7 +17,11 @@ namespace CodeShare.Uwp.ViewModels
         public CodeViewModel(Code code)
             : base(code)
         {
-            IsUserAuthor = (code.User == null) ? false : code.User.Equals(AuthService.CurrentUser);
+        }
+
+        public override bool OnSetAuthorPrivileges(Code model)
+        {
+            return (model.User == null) ? false : model.User.Equals(AuthService.CurrentUser);
         }
     }
 }

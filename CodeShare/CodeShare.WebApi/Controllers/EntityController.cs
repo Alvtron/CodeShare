@@ -5,10 +5,10 @@ using CodeShare.Model;
 using System.Collections.Generic;
 using System;
 using CodeShare.Utilities;
-using System.Data.Entity;
-using System.Web.Http.Results;
-using System.Data.Entity.Validation;
-using System.Web.Http.Description;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CodeShare.WebApi.Controllers
 {
@@ -16,7 +16,7 @@ namespace CodeShare.WebApi.Controllers
     /// 
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
-    public abstract class EntityController<T> : ApiController, IController<T> where T : class, IEntity
+    public abstract class EntityController<T> : ControllerBase, IController<T> where T : class, IEntity
     {
         /// <summary>
         /// Gets or sets the context.
@@ -38,11 +38,12 @@ namespace CodeShare.WebApi.Controllers
         {
             get
             {
-                if (!Context.Database.Exists())
-                {
-                    Logger.WriteLine($"The database from context {Context.GetType().Name} does not exist. Get failed!");
-                    return false;
-                }
+                // Not working
+                //if (!Context.Database.GetService<IRelationalDatabaseCreator>().Exists())
+                //{
+                //    Logger.WriteLine($"The database from context {Context.GetType().Name} does not exist.");
+                //    return false;
+                //}
 
                 return true;
             }
@@ -59,21 +60,21 @@ namespace CodeShare.WebApi.Controllers
 
         protected abstract void OnDelete(T entity);
 
-        public IQueryable<T> Get()
+        public ActionResult<IEnumerable<T>> Get()
         {
             if (!IsDatabaseOnline)
             {
                 return null;
             }
 
-            return QueryableEntitiesMinimal;
+            return Ok(QueryableEntitiesMinimal);
         }
 
-        public IHttpActionResult Get(Guid uid)
+        public ActionResult<T> Get(Guid uid)
         {
             if (!IsDatabaseOnline)
             {
-                return InternalServerError();
+                return BadRequest("The server is not available.");
             }
 
             var entity = QueryableEntities.FirstOrDefault(u => u.Uid == uid);
@@ -93,11 +94,11 @@ namespace CodeShare.WebApi.Controllers
         /// <param name="uid">The uid.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public IHttpActionResult Put(Guid uid, T entity)
+        public ActionResult<T> Put(Guid uid, T entity)
         {
             if (!IsDatabaseOnline)
             {
-                return InternalServerError();
+                return BadRequest("The server is not available.");
             }
 
             if (CheckUpdateParameters(uid, entity) is BadRequestResult badRequest)
@@ -139,11 +140,11 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public IHttpActionResult Post(T entity)
+        public ActionResult<T> Post(T entity)
         {
             if (!IsDatabaseOnline)
             {
-                return InternalServerError();
+                return BadRequest("The server is not available.");
             }
             if (entity == null)
             {
@@ -164,20 +165,6 @@ namespace CodeShare.WebApi.Controllers
 
                 return Ok(entity);
             }
-#if DEBUG
-            catch (DbEntityValidationException exception)
-            {
-                foreach (var result in exception.EntityValidationErrors)
-                {
-                    Logger.WriteLine($"Entity of type '{result.Entry.Entity.GetType().Name}' in state '{result.Entry.State}' has the following validation errors:");
-                    foreach (var _result in result.ValidationErrors)
-                    {
-                        Logger.WriteLine($"\tProperty: '{_result.PropertyName}', Error: '{_result.ErrorMessage}'");
-                    }
-                }
-                throw;
-            }
-#endif
             catch (Exception exception)
             {
                 Logger.WriteLine($"The provided {typeof(T).GetType().Name} object could not be added. {exception.Message}");
@@ -194,11 +181,11 @@ namespace CodeShare.WebApi.Controllers
         /// </summary>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        public IHttpActionResult Delete(Guid uid)
+        public IActionResult Delete(Guid uid)
         {
             if (!IsDatabaseOnline)
             {
-                return InternalServerError();
+                return BadRequest("The server is not available.");
             }
             if (uid == null || uid == Guid.Empty)
             {
@@ -249,25 +236,6 @@ namespace CodeShare.WebApi.Controllers
         }
 
         /// <summary>
-        /// Releases the unmanaged resources that are used by the object and, optionally, releases the managed resources.
-        /// </summary>
-        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!Context.Database.Exists())
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                Context.Dispose();
-            }
-
-            base.Dispose(disposing);
-        }
-
-        /// <summary>
         /// Updates the properties of the provided entity.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -315,7 +283,7 @@ namespace CodeShare.WebApi.Controllers
             }
         }
 
-        protected IHttpActionResult CheckUpdateParameters(Guid uid, T entity)
+        protected IActionResult CheckUpdateParameters(Guid uid, T entity)
         {
             if (uid == null || uid == Guid.Empty)
             {

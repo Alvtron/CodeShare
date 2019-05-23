@@ -1,4 +1,5 @@
 ﻿using CodeShare.Model;
+using CodeShare.Uwp.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -10,15 +11,13 @@ namespace CodeShare.Uwp.Dialogs
 
         public AddVideoDialog()
         {
+            if (AuthService.CurrentUser == null)
+            {
+                Hide();
+                return;
+            }
+
             InitializeComponent();
-        }
-
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
         }
 
         private void ViewVideoButton_Click(object sender, RoutedEventArgs e)

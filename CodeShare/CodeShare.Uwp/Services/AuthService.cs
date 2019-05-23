@@ -23,6 +23,10 @@ namespace CodeShare.Uwp.Services
             }
         }
 
+        /// <summary>
+        /// Signs out an existing user asynchronously.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<bool> SignOutAsync()
         {
             Logger.WriteLine("Attempting to sign out user...");
@@ -45,6 +49,10 @@ namespace CodeShare.Uwp.Services
             return true;
         }
 
+        /// <summary>
+        /// Signs in an existing user with a stored user credential asynchronously.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<bool> SignInAsync()
         {
             Logger.WriteLine("Attempting to sign in user with local user credential...");
@@ -67,11 +75,17 @@ namespace CodeShare.Uwp.Services
             return true;
         }
 
-        public static async Task<bool> SignInAsync(string username, string password)
+        /// <summary>
+        /// Signs in an existing user asynchronously.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        public static async Task<bool> SignInAsync(string userName, string password)
         {
             Logger.WriteLine("Attempting to sign in user with new user credential...");
 
-            var credential = CredentialService.Create(username, password);
+            var credential = CredentialService.Create(userName, password);
 
             if (credential == null)
             {
@@ -89,15 +103,28 @@ namespace CodeShare.Uwp.Services
             return true;
         }
 
-        private static async Task<bool> AuthenticateAsync(string username, string password)
+        /// <summary>
+        /// Authenticates user with a provided user name and password.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        private static async Task<bool> AuthenticateAsync(string userName, string password)
         {
-            CurrentUser = await AuthDataSource.SignIn(username, password);
+            CurrentUser = await AuthDataSource.SignIn(userName, password);
 
             AppSettings.DefaultUser = CurrentUser?.Name;
 
             return CurrentUser != null;
         }
 
+        /// <summary>
+        /// Signs up a new user asynchronously.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         public static async Task<User> SignUpAsync(string userName, string email, string password)
         {
             var newUser = await AuthDataSource.SignUp(userName, email, password);

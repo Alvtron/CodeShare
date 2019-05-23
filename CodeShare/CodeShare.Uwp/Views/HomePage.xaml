@@ -17,10 +17,8 @@
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
         <converters:VisibilityConverter x:Key="VisibillityConverter" />
     </Page.Resources>
-    
+
     <StackPanel Padding="48" Spacing="20">
-        <Button Content="Add code" Click="AddCode_Click" />
-        <Button Content="Add question" Click="AddQuestion_Click" />
         <controls:CodeGridView Header="Most popular Codes" Codes="{x:Bind ViewModel.MostPopularCodes, Mode=OneWay}" Loaded="MostPopularCodesGridView_Loaded" />
         <controls:QuestionGridView Header="New Questions" Questions="{x:Bind ViewModel.NewestQuestions, Mode=OneWay}" Loaded="NewQuestionsGridView_Loaded" />
         <controls:UserGridView Header="New Users" Users="{x:Bind ViewModel.NewestUsers, Mode=OneWay}" Loaded="NewUsersGridView_Loaded" />

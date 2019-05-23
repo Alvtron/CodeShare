@@ -24,6 +24,6 @@
             <Button Margin="0,10,0,0" Content="Post comment" Command="{x:Bind UploadCommand}" CommandParameter="{x:Bind NewCommentBox, Mode=OneWay}"/>
         </StackPanel>
         <!-- Comment list -->
-        <controls:ReplyListView Replies="{x:Bind Question.Replies, Mode=OneWay}" />
+        <controls:CommentListView Replies="{x:Bind Question.CommentSection.Replies, Mode=OneWay}" />
     </StackPanel>
 </UserControl>

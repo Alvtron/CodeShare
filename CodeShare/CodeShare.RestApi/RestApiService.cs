@@ -8,6 +8,7 @@ using CodeShare.Model;
 using System.Net.Http.Headers;
 using CodeShare.Utilities;
 using System.Collections.Generic;
+using System.Net;
 
 namespace CodeShare.RestApi
 {
@@ -16,17 +17,22 @@ namespace CodeShare.RestApi
     /// </summary>
     public static class RestApiService<T> where T : IEntity
     {
-        private const string BaseUri = @"http://localhost:58669/api/";
+        private const string BaseUri = @"http://localhost:50214/api/";
 
         private static HttpClient _client;
         public static HttpClient Client
         {
             get
             {
-                if (_client != null) return _client;
+                if (_client != null)
+                {
+                    return _client;
+                }
 
-                _client = new HttpClient();
-                _client.BaseAddress = new Uri(BaseUri);
+                _client = new HttpClient
+                {
+                    BaseAddress = new Uri(BaseUri)
+                };
                 _client.DefaultRequestHeaders.Accept.Clear();
                 _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 return _client;

@@ -101,6 +101,12 @@
     <Compile Include="Controls\BindableRichTextBlock.xaml.cs">
       <DependentUpon>BindableRichTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\QuestionScreenshotGridView.xaml.cs">
+      <DependentUpon>QuestionScreenshotGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditableUserBanner.xaml.cs">
+      <DependentUpon>EditableUserBanner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\QuestionAuthorBlock.xaml.cs">
       <DependentUpon>QuestionAuthorBlock.xaml</DependentUpon>
     </Compile>
@@ -128,17 +134,17 @@
     <Compile Include="Controls\CodeSearchView.xaml.cs">
       <DependentUpon>CodeSearchView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ReplyBlock.xaml.cs">
-      <DependentUpon>ReplyBlock.xaml</DependentUpon>
+    <Compile Include="Controls\CommentBlock.xaml.cs">
+      <DependentUpon>CommentBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ReplyListView.xaml.cs">
-      <DependentUpon>ReplyListView.xaml</DependentUpon>
+    <Compile Include="Controls\CommentListView.xaml.cs">
+      <DependentUpon>CommentListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CodeAuthorBlock.xaml.cs">
       <DependentUpon>CodeAuthorBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditableBanner.xaml.cs">
-      <DependentUpon>EditableBanner.xaml</DependentUpon>
+    <Compile Include="Controls\EditableCodeBanner.xaml.cs">
+      <DependentUpon>EditableCodeBanner.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditableProfilePicture.xaml.cs">
       <DependentUpon>EditableProfilePicture.xaml</DependentUpon>
@@ -152,9 +158,6 @@
     <Compile Include="Controls\SaveResetPanel.xaml.cs">
       <DependentUpon>SaveResetPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ScreenshotGridView.xaml.cs">
-      <DependentUpon>ScreenshotGridView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ProfilePictureItem.xaml.cs">
       <DependentUpon>ProfilePictureItem.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,9 @@
     </Compile>
     <Compile Include="Controls\QuestionItem.xaml.cs">
       <DependentUpon>QuestionItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CodeScreenshotGridView.xaml.cs">
+      <DependentUpon>CodeScreenshotGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\UserGridView.xaml.cs">
       <DependentUpon>UserGridView.xaml</DependentUpon>
@@ -186,20 +192,20 @@
     <Compile Include="Dialogs\AddVideoDialog.xaml.cs">
       <DependentUpon>AddVideoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\UserBannersManagerDialog.xaml.cs">
+      <DependentUpon>UserBannersManagerDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ImageViewDialog.xaml.cs">
-      <DependentUpon>ImageViewDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\ReplyDialog.xaml.cs">
-      <DependentUpon>ReplyDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\CommentDialog.xaml.cs">
+      <DependentUpon>CommentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\BannerCroppingDialog.xaml.cs">
       <DependentUpon>BannerCroppingDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\AddReplyDialog.xaml.cs">
-      <DependentUpon>AddReplyDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\AddCommentDialog.xaml.cs">
+      <DependentUpon>AddCommentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditFileDialog.xaml.cs">
       <DependentUpon>EditFileDialog.xaml</DependentUpon>
@@ -207,8 +213,8 @@
     <Compile Include="Dialogs\ProfilePictureCroppingDialog.xaml.cs">
       <DependentUpon>ProfilePictureCroppingDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ContentBannerManagerDialog.xaml.cs">
-      <DependentUpon>ContentBannerManagerDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\CodeBannersManagerDialog.xaml.cs">
+      <DependentUpon>CodeBannersManagerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ProfilePicturesManagerDialog.xaml.cs">
       <DependentUpon>ProfilePicturesManagerDialog.xaml</DependentUpon>
@@ -240,6 +246,8 @@
     <Compile Include="ViewModels\AddQuestionViewModel.cs" />
     <Compile Include="ViewModels\AddCodeViewModel.cs" />
     <Compile Include="ViewModels\AppSettingsViewModel.cs" />
+    <Compile Include="ViewModels\CommentViewModel.cs" />
+    <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\QuestionSettingsViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\ModelSettingsViewModel.cs" />
@@ -248,7 +256,6 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="Utilities\ImageManager.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\QuestionsViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
@@ -368,6 +375,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\QuestionScreenshotGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\EditableUserBanner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\QuestionAuthorBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -404,11 +419,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ReplyBlock.xaml">
+    <Page Include="Controls\CommentBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ReplyListView.xaml">
+    <Page Include="Controls\CommentListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -416,7 +431,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\EditableBanner.xaml">
+    <Page Include="Controls\EditableCodeBanner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -436,10 +451,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ScreenshotGridView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\ProfilePictureItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -451,6 +462,10 @@
     <Page Include="Controls\QuestionItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CodeScreenshotGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\UserGridView.xaml">
       <SubType>Designer</SubType>
@@ -468,15 +483,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dialogs\UserBannersManagerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\ColorPickerDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\ImageViewDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\ReplyDialog.xaml">
+    <Page Include="Dialogs\CommentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -484,7 +499,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\AddReplyDialog.xaml">
+    <Page Include="Dialogs\AddCommentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -496,7 +511,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\ContentBannerManagerDialog.xaml">
+    <Page Include="Dialogs\CodeBannersManagerDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -575,17 +590,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.9</Version>
+      <Version>6.2.8</Version>
     </PackageReference>
     <PackageReference Include="NETStandard.Library">
       <Version>2.0.3</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.1</Version>
+      <Version>12.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -594,7 +608,7 @@
       <Name>CodeShare.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeShare.Model\CodeShare.Model.csproj">
-      <Project>{8f723fab-ed50-4a88-a127-e9deeade4ea4}</Project>
+      <Project>{31714b00-13d7-4e7b-aa9c-505be34802e8}</Project>
       <Name>CodeShare.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeShare.RestApi\CodeShare.RestApi.csproj">

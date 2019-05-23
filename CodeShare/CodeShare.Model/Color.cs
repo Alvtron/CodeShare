@@ -2,7 +2,6 @@
 
 namespace CodeShare.Model
 {
-    [ComplexType]
     public class Color
     {
         public byte R { get; set; } = 255;

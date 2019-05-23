@@ -39,18 +39,9 @@ namespace CodeShare.Uwp.Views
             }
 
             ViewModel = new UserViewModel(user);
-
             InitializeComponent();
-
             NavigationService.Unlock();
-
-            ViewModel.Model.Views++;
-
-            if (!await RestApiService<User>.Update(ViewModel.Model, ViewModel.Model.Uid))
-            {
-                Logger.WriteLine($"Failed to increment view counter for user {ViewModel.Model.Uid}.");
-            }
-
+            await ViewModel.IncrementViewsAsync();
             NavigationService.SetHeaderTitle($"{ViewModel.Model?.Name}'s profile");
         }
     }

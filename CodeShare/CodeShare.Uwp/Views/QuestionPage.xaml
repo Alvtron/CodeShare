@@ -30,7 +30,7 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <controls:QuestionAuthorBlock Grid.Column="0" Question="{x:Bind ViewModel.Model}" Width="75" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <controls:QuestionAuthorBlock Grid.Column="0" Question="{x:Bind ViewModel.Model}" Width="125" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left" />
                 <StackPanel Grid.Column="1" Spacing="24" Height="auto">
                     <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" Style="{StaticResource HeaderTextBlockStyle}" />
                     <xaml:RichTextBox Height="auto" Rtf="{x:Bind ViewModel.Model.Text, Mode=OneWay}"/>

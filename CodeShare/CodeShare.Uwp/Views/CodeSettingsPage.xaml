@@ -31,7 +31,7 @@
                     <StackPanel Spacing="8">
                         <!-- Banner -->
                         <TextBlock Text="Banner" />
-                        <controls:EditableBanner Content="{x:Bind ViewModel.Model}" Width="800" HorizontalAlignment="Left" IsEditable="True" />
+                        <controls:EditableCodeBanner Code="{x:Bind ViewModel.Model}" Width="800" HorizontalAlignment="Left" IsEditable="True" />
                         <!-- Other -->
                         <TextBox Header="Title" Text="{x:Bind ViewModel.Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox Header="Description" Text="{x:Bind ViewModel.Model.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -55,7 +55,7 @@
                 <PivotItem Header="Screenshots" Padding="0,24">
                     <StackPanel Spacing="8">
                         <Button Content="Upload" Command="{x:Bind ViewModel.UploadScreenshotsCommand, Mode=OneWay}" />
-                        <controls:ScreenshotGridView Screenshots="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" />
+                        <controls:CodeScreenshotGridView Screenshots="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" />
                     </StackPanel>
                 </PivotItem>
                 <!-- Videos -->

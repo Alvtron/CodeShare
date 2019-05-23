@@ -7,9 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Report"
-    PrimaryButtonText="Cancel"
-    SecondaryButtonText="Send"
-    IsSecondaryButtonEnabled="False">
+    CloseButtonText="Cancel"
+    PrimaryButtonText="Send">
 
     <Grid>
         <TextBox Name="ReportMessage" PlaceholderText="What do you want to report?" AcceptsReturn="True" TextChanged="ReportMessage_TextChanged" />

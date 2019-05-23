@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.RestApi;
+using CodeShare.Uwp.Views;
 
 namespace CodeShare.Uwp.ViewModels
 {
@@ -21,7 +22,11 @@ namespace CodeShare.Uwp.ViewModels
         public UserViewModel(User user)
             : base(user)
         {
-            IsUserAuthor = user.Equals(AuthService.CurrentUser);
+        }
+
+        public override bool OnSetAuthorPrivileges(User model)
+        {
+            return model.Equals(AuthService.CurrentUser);
         }
 
         public async Task<bool> Befriend()
@@ -38,8 +43,8 @@ namespace CodeShare.Uwp.ViewModels
                 return false;
             }
 
-            AuthService.CurrentUser.AddFriend(Model);
-            Model.AddFriend(Model);
+            AuthService.CurrentUser.SendFriendRequest(Model);
+            Model.SendFriendRequest(Model);
             await RestApiService<User>.Update(Model, Model.Uid);
             await RestApiService<User>.Update(AuthService.CurrentUser, AuthService.CurrentUser.Uid);
             return true;

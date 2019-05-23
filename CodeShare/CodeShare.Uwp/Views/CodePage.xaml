@@ -73,7 +73,7 @@
                         <StackPanel Spacing="24">
                             <GridView Header="Screenshots" ItemsSource="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" IsItemClickEnabled="True">
                                 <GridView.ItemTemplate>
-                                    <DataTemplate x:DataType="model:Screenshot">
+                                    <DataTemplate x:DataType="model:CodeScreenshot">
                                         <HyperlinkButton Background="Transparent" Command="{Binding DataContext.ViewImageCommand, ElementName=ViewModelRoot}" CommandParameter="{Binding}">
                                             <Image Stretch="UniformToFill" Height="108" Width="192" Source="{x:Bind Url, Converter={StaticResource ImageConverter}, Mode=OneWay}" />
                                         </HyperlinkButton>

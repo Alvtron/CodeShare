@@ -18,12 +18,12 @@ namespace CodeShare.Uwp.Dialogs
             InitializeComponent();
         }
 
-        private void Discard_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void Discard_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             File.Data = OriginalFileData;
         }
 
-        private void Save_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void Save_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
 
         }

@@ -37,7 +37,7 @@ namespace CodeShare.Uwp.Dialogs
             set => SetField(ref _color, value);
         }
 
-        public ColorPickerDialog(Model.Color color)
+        public ColorPickerDialog(CodeShare.Model.Color color)
         {
             InitializeComponent();
 

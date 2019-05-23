@@ -18,14 +18,14 @@ namespace CodeShare.Uwp.ViewModels
         private RelayCommand _uploadScreenshotsCommand;
         public ICommand UploadScreenshotsCommand => _uploadScreenshotsCommand = _uploadScreenshotsCommand ?? new RelayCommand(async param => await UploadScreenshotsAsync());
 
-        private RelayCommand<Screenshot> _deleteScreenshotCommand;
-        public ICommand DeleteScreenshotCommand => _deleteScreenshotCommand = _deleteScreenshotCommand ?? new RelayCommand<Screenshot>(screenshot => DeleteScreenshot(screenshot));
+        private RelayCommand<QuestionScreenshot> _deleteScreenshotCommand;
+        public ICommand DeleteScreenshotCommand => _deleteScreenshotCommand = _deleteScreenshotCommand ?? new RelayCommand<QuestionScreenshot>(screenshot => DeleteScreenshot(screenshot));
 
         private RelayCommand _uploadVideoCommand;
         public ICommand UploadVideoCommand => _uploadVideoCommand = _uploadVideoCommand ?? new RelayCommand(async param => await UploadVideoAsync());
 
-        private RelayCommand<Video> _deleteVideoCommand;
-        public ICommand DeleteVideoCommand => _deleteVideoCommand = _deleteVideoCommand ?? new RelayCommand<Video>(param => DeleteVideo(param));
+        private RelayCommand<QuestionVideo> _deleteVideoCommand;
+        public ICommand DeleteVideoCommand => _deleteVideoCommand = _deleteVideoCommand ?? new RelayCommand<QuestionVideo>(param => DeleteVideo(param));
 
         public QuestionSettingsViewModel(Question question)
             : base(question)
@@ -42,7 +42,7 @@ namespace CodeShare.Uwp.ViewModels
 
             foreach (var imageFile in imageFiles)
             {
-                Model?.AddScreenshot(AuthService.CurrentUser, await ImageUtilities.CreateNewImageAsync<Screenshot>(imageFile));
+                Model?.AddScreenshot(AuthService.CurrentUser, await ImageUtilities.CreateNewImageAsync<QuestionScreenshot>(imageFile));
             }
 
             NavigationService.Unlock();
@@ -50,7 +50,7 @@ namespace CodeShare.Uwp.ViewModels
             IsModelChanged = true;
         }
 
-        public void DeleteScreenshot(Screenshot screenshot)
+        public void DeleteScreenshot(QuestionScreenshot screenshot)
         {
             if (screenshot == null)
             {
@@ -72,13 +72,13 @@ namespace CodeShare.Uwp.ViewModels
                 return;
             }
 
-            Model?.AddVideo(AuthService.CurrentUser, dialog.Video);
+            Model?.AddVideo(AuthService.CurrentUser, dialog.Video as QuestionVideo);
             NavigationService.Unlock();
 
             IsModelChanged = true;
         }
 
-        public void DeleteVideo(Video video)
+        public void DeleteVideo(QuestionVideo video)
         {
             if (video == null)
             {

@@ -8,10 +8,9 @@ namespace CodeShare.Model
 {
     public class CodeFile : File
     {
-        public Code Code { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual Code Code { get; set; }
         public Guid? CodeUid { get; set; }
-        public CodeLanguage CodeLanguage { get; set; }
+        public virtual CodeLanguage CodeLanguage { get; set; }
         public Guid? CodeLanguageUid { get; set; }
 
         public CodeFile() { }

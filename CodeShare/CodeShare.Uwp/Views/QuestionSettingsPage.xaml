@@ -36,7 +36,7 @@
                 <PivotItem Header="Screenshots" Padding="0,24">
                     <StackPanel Spacing="8">
                         <Button Content="Upload" Command="{x:Bind ViewModel.UploadScreenshotsCommand, Mode=OneWay}" />
-                        <controls:ScreenshotGridView Screenshots="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" />
+                        <controls:QuestionScreenshotGridView Screenshots="{x:Bind ViewModel.Model.Screenshots, Mode=OneWay}" />
                     </StackPanel>
                 </PivotItem>
                 <!-- Videos -->

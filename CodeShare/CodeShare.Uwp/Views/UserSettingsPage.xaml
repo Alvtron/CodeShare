@@ -37,7 +37,7 @@
                         <controls:EditableProfilePicture User="{x:Bind ViewModel.Model}" Size="100" HorizontalAlignment="Left" IsEditable="True" />
                         <!-- Banner -->
                         <TextBlock Text="Banner" />
-                        <controls:EditableBanner Content="{x:Bind ViewModel.Model}" Width="800" HorizontalAlignment="Left" IsEditable="True" />
+                        <controls:EditableUserBanner User="{x:Bind ViewModel.Model}" Width="800" HorizontalAlignment="Left" IsEditable="True" />
                         <!-- Other -->
                         <TextBox Header="User name" Text="{x:Bind ViewModel.Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox Header="First name" Text="{x:Bind ViewModel.Model.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -90,8 +90,12 @@
                                 <Run Text="{x:Bind ViewModel.Model.SignedIn}" />
                         </TextBlock>
                         <TextBlock Foreground="Gray">
-                                <Run Text="Number of friends:" />
-                                <Run Text="{x:Bind ViewModel.Model.Friends.Count}" />
+                                <Run Text="Number of friend requests sent:" />
+                                <Run Text="{x:Bind ViewModel.Model.SentFriendRequests.Count}" />
+                        </TextBlock>
+                        <TextBlock Foreground="Gray">
+                                <Run Text="Number of friend requests received:" />
+                                <Run Text="{x:Bind ViewModel.Model.ReceievedFriendRequests.Count}" />
                         </TextBlock>
                         <TextBlock Foreground="Gray">
                                 <Run Text="Number of codes:" />

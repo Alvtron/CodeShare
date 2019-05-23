@@ -9,20 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using CodeShare.RestApi;
+using CodeShare.Utilities;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public abstract class ContentViewModel<T> : ObservableObject where T : Content
+    public abstract class ContentViewModel<TContent> : ObservableObject where TContent : IContent
     {
-        private bool _isUserAuthor;
-        public bool IsUserAuthor
-        {
-            get => _isUserAuthor;
-            set => SetField(ref _isUserAuthor, value);
-        }
+        public bool IsUserAuthor { get; }
+        public abstract bool OnSetAuthorPrivileges(TContent model);
 
-        private T _model;
-        public T Model
+        private TContent _model;
+        public TContent Model
         {
             get => _model;
             set => SetField(ref _model, value);
@@ -37,9 +34,10 @@ namespace CodeShare.Uwp.ViewModels
         private RelayCommand<WebFile> _viewImageCommand;
         public ICommand ViewImageCommand => _viewImageCommand = _viewImageCommand ?? new RelayCommand<WebFile>(image => ViewImage(image));
 
-        public ContentViewModel(T model)
+        public ContentViewModel(TContent model)
         {
             Model = model;
+            IsUserAuthor = OnSetAuthorPrivileges(model);
         }
 
         private void ViewVideo(Video video)
@@ -52,6 +50,17 @@ namespace CodeShare.Uwp.ViewModels
             NavigationService.Navigate(typeof(MediaPage), image, image.Path);
         }
 
+        public async Task IncrementViewsAsync()
+        {
+            Model.Views++;
+
+            if (!await RestApiService<TContent>.Update(Model, Model.Uid))
+            {
+                Logger.WriteLine($"Failed to increment view counter for code {Model.Uid}.");
+                Model.Views--;
+            }
+        }
+
         public async Task ReportAsync()
         {
             if (AuthService.CurrentUser == null || Model == null)
@@ -62,8 +71,15 @@ namespace CodeShare.Uwp.ViewModels
 
             var reportDialog = new ReportDialog(Model?.Name);
 
-            if (await reportDialog.ShowAsync() != ContentDialogResult.Secondary || !reportDialog.Valid)
+            var dialogResult = await reportDialog.ShowAsync();
+
+            if (dialogResult != ContentDialogResult.Primary)
             {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(reportDialog.Message))
+            {
+                await NotificationService.DisplayErrorMessage($"Please provide a reason for why you want to report '{Model?.Name}'.");
                 return;
             }
 

@@ -29,7 +29,7 @@
             <AppBarButton Label="Copy" Icon="Copy" Command="{x:Bind CopyCodeCommand}" />
         </CommandBar>
         <Border Padding="0,12,0,0" Grid.Row="1" Grid.Column="0">
-            <TextBlock Name="LineNumbers" Foreground="Gray" FontFamily="Consolas" TextAlignment="Center" TextWrapping="NoWrap" IsTextSelectionEnabled="False" />
+            <TextBlock Name="LineNumbers" Foreground="Gray" FontFamily="Consolas" TextAlignment="Center" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="False" />
         </Border>
         <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalScrollMode="Enabled" Padding="12,12"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
             <TextBox Name="CodeTextBox" Text="{x:Bind Code, Mode=TwoWay}" AutomationProperties.Name="multi-line TextBox" AcceptsReturn="True" IsSpellCheckEnabled="True" TextChanged="CodeTextBox_TextChanged" FontFamily="Consolas" TextAlignment="Left" TextWrapping="NoWrap" />

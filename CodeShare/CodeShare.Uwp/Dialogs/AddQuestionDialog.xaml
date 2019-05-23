@@ -10,9 +10,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Add question"
-    PrimaryButtonText="Cancel"
-    SecondaryButtonText="Upload"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    CloseButtonText="Cancel"
+    PrimaryButtonText="Upload"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <StackPanel Spacing="8">
         <TextBox Header="Title" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>

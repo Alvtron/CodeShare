@@ -5,7 +5,7 @@ namespace CodeShare.Model
 {
     public class ReportImage : WebImage, ICroppableImage
     {
-        public Report Report { get; set; }
+        public virtual Report Report { get; set; }
         public Guid? ReportUid { get; set; }
 
         public ReportImage()

@@ -5,24 +5,21 @@
     xmlns:local="using:CodeShare.Uwp.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="Upload a Profile Picture">
+    mc:Ignorable="d">
 
-    <StackPanel Spacing="12">
-        <Button
-            AllowDrop="True"
-            DragOver="UploadButton_DragOver"
-            Drop="UploadButton_Drop"
-            Click="UploadButton_Click"
-            BorderBrush="Gray"
-            BorderThickness="1"
-            Background="Transparent"
-            HorizontalAlignment="Stretch"
-            Padding="40">
-            <StackPanel Orientation="Vertical" Spacing="5">
-                <SymbolIcon Symbol="Upload" Foreground="Gray" />
-                <TextBlock Text="Upload" Foreground="Gray" />
-            </StackPanel>
-        </Button>
-    </StackPanel>
+    <Button
+        AllowDrop="True"
+        DragOver="UploadButton_DragOver"
+        Drop="UploadButton_Drop"
+        Click="UploadButton_Click"
+        BorderBrush="Gray"
+        BorderThickness="1"
+        Background="Transparent"
+        HorizontalAlignment="Stretch"
+        Padding="40">
+        <StackPanel Orientation="Vertical" Spacing="5">
+            <SymbolIcon Symbol="Upload" Foreground="Gray" />
+            <TextBlock Text="Upload" Foreground="Gray" />
+        </StackPanel>
+    </Button>
 </ContentDialog>

@@ -4,16 +4,15 @@
     {
         public enum Action
         {
-            AddGame = 1000,
-            AddWiki = 200,
-            AddQuest = 200,
-            AddComment = 20,
-            AddProfilePhoto = 100,
-            EditGame = 10,
-            EditWiki = 10,
-            EditQuest = 10,
+            AddCode = 500,
+            AddQuestion = 200,
+            AddReply = 50,
+            UploadFile = 10,
             UploadImage = 10,
-            UploadVideo = 10
+            UploadVideo = 10,
+            Befriend = 50,
+            SignIn = 10,
+            ChangedSettings = 5
         };
 
         public static readonly int LevelUpExp = 5000;

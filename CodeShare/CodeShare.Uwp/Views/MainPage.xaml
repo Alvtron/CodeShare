@@ -55,10 +55,16 @@
                 </AutoSuggestBox>
             </NavigationViewItem>
             <!-- Menu navigation items -->
-            <NavigationViewItem Icon="Home" Content="Home" Tag="home"/>
-            <NavigationViewItem Icon="View" Content="Codes" Tag="codes"/>
-            <NavigationViewItem Icon="View" Content="Questions" Tag="questions"/>
-            <NavigationViewItem Icon="People" Content="Users" Tag="users"/>
+            <NavigationViewItemSeparator />
+            <NavigationViewItemHeader Content="Navigation" />
+            <NavigationViewItem Icon="Home" Content="Home"/>
+            <NavigationViewItem Icon="Library" Content="Codes"/>
+            <NavigationViewItem Icon="Comment" Content="Questions"/>
+            <NavigationViewItem Icon="People" Content="Users"/>
+            <NavigationViewItemSeparator Visibility="{x:Bind ViewModel.CurrentUser, Mode=OneWay, Converter={StaticResource VisibillityConverter}}"/>
+            <NavigationViewItemHeader Content="Contribute" />
+            <NavigationViewItem Icon="Library" Content="Upload code" Visibility="{x:Bind ViewModel.CurrentUser, Mode=OneWay, Converter={StaticResource VisibillityConverter}}"/>
+            <NavigationViewItem Icon="Comment" Content="Ask a question" Visibility="{x:Bind ViewModel.CurrentUser, Mode=OneWay, Converter={StaticResource VisibillityConverter}}"/>
         </NavigationView.MenuItems>
 
         <NavigationView.PaneFooter>
@@ -75,6 +81,13 @@
                         <TextBlock Name="UserTextBlock" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.CurrentUser.Name, Mode=OneWay}" />
                     </StackPanel>
                 </CommandBar.Content>
+                <AppBarButton Icon="Flag">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem/>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
                 <AppBarButton Icon="Setting">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
@@ -112,7 +125,6 @@
         <Grid>
             <ProgressRing Name="_progressRing" IsActive="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" />
             <Frame x:Name="_contentFrame">
-
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition />

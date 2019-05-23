@@ -1,6 +1,8 @@
 ﻿using CodeShare.Utilities;
+using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Views;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -51,19 +53,6 @@ namespace CodeShare.Uwp
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
-
-            UnhandledException += (sender, eo) =>
-            {
-                try
-                {
-                    if (eo.Exception is Exception ex)
-                        Logger.WriteLine(ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Logger.WriteLine(ex.Message);
-                }
-            };
 
             if (e.PrelaunchActivated == false)
             {

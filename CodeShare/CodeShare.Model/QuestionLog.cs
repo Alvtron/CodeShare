@@ -6,7 +6,7 @@ namespace CodeShare.Model
 {
     public class QuestionLog : Log
     {
-        public Question Question { get; set; }
+        public virtual Question Question { get; set; }
         public Guid? QuestionUid { get; set; }
 
         public QuestionLog()

@@ -7,7 +7,7 @@ using CodeShare.Utilities;
 
 namespace CodeShare.Model
 {
-    public class WebFile : Entity, IWebFile
+    public abstract class WebFile : Entity, IWebFile
     {
         public string Extension { get; set; }
         public string Description { get; set; }
@@ -20,20 +20,6 @@ namespace CodeShare.Model
 
         [NotMapped, JsonIgnore]
         public bool Exist => FtpService.Exist(Path);
-
-        public WebFile()
-        {
-        }
-
-        public WebFile(byte[] fileInBytes, string extension)
-        {
-            Extension = extension;
-
-            if (!Exist)
-            {
-                Upload(fileInBytes);
-            }
-        }
 
         public bool Upload(byte[] fileInBytes)
         {

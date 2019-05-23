@@ -37,7 +37,7 @@ namespace CodeShare.Uwp.ViewModels
                 return false;
             }
 
-            AuthService.CurrentUser.AddFriend(Model);
+            AuthService.CurrentUser.SendFriendRequest(Model);
             await RestApiService<User>.Update(Model, Model.Uid);
             await RestApiService<User>.Update(AuthService.CurrentUser, AuthService.CurrentUser.Uid);
             return true;

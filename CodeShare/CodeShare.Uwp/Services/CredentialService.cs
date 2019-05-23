@@ -3,6 +3,7 @@ using System.Linq;
 using Windows.Security.Credentials;
 using System.Collections.ObjectModel;
 using CodeShare.Utilities;
+using System.Runtime.InteropServices;
 
 namespace CodeShare.Uwp.Services
 {
@@ -11,34 +12,13 @@ namespace CodeShare.Uwp.Services
     /// </summary>
     public static class CredentialService
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public enum Response
         {
-            /// <summary>
-            /// The exist
-            /// </summary>
             Exist,
-            /// <summary>
-            /// The not found
-            /// </summary>
             NotFound,
-            /// <summary>
-            /// The added
-            /// </summary>
             Added,
-            /// <summary>
-            /// The removed
-            /// </summary>
             Removed,
-            /// <summary>
-            /// The not logged in
-            /// </summary>
             NotSignedIn,
-            /// <summary>
-            /// The logged in
-            /// </summary>
             SignedIn
         }
 
@@ -68,7 +48,7 @@ namespace CodeShare.Uwp.Services
                 {
                     credentialList = Vault.FindAllByResource(ResourceName);
                 }
-                catch (System.Runtime.InteropServices.COMException)
+                catch (COMException)
                 {
                     // No credentials found with the resource name.
                     return null;
@@ -110,10 +90,10 @@ namespace CodeShare.Uwp.Services
         public static ObservableCollection<PasswordCredential> All => new ObservableCollection<PasswordCredential>(Vault.RetrieveAll());
 
         /// <summary>
-        /// Gets the count.
+        /// The amount of credentials in the vault.
         /// </summary>
         /// <value>
-        /// The count.
+        /// The amount of credentials in the vault.
         /// </value>
         public static int Count => Vault.RetrieveAll().Count;
 
@@ -132,14 +112,19 @@ namespace CodeShare.Uwp.Services
         /// <returns></returns>
         public static bool CheckIfAvailable(PasswordCredential credential) => All.Any(c => c.UserName.Equals(credential.UserName));
 
+        /// <summary>
+        /// Finds a credential that matches the specified user name.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <returns></returns>
         public static PasswordCredential Find(string userName) => All.FirstOrDefault(c => c.UserName.Equals(userName));
 
         /// <summary>
-        /// Determines whether [contains] [the specified credential].
+        /// Determines whether the vault containst the specified credential.
         /// </summary>
         /// <param name="credential">The credential.</param>
         /// <returns>
-        ///   <c>true</c> if [contains] [the specified credential]; otherwise, <c>false</c>.
+        ///   <c>true</c> if the vault contains the specified credential; otherwise, <c>false</c>.
         /// </returns>
         public static bool Contains(PasswordCredential credential)
         {
@@ -160,15 +145,15 @@ namespace CodeShare.Uwp.Services
         /// <summary>
         /// Add a new credential to the vault.
         /// </summary>
-        /// <param name="username">The username.</param>
+        /// <param name="userName">The user name.</param>
         /// <param name="password">The password.</param>
         /// <returns></returns>
-        public static PasswordCredential Create(string username, string password)
+        public static PasswordCredential Create(string userName, string password)
         {
-            Logger.WriteLine($"Creating new credential with username {username} and password {password}.");
-            var credential = new PasswordCredential(ResourceName, username, password);
+            Logger.WriteLine($"Creating new credential with username {userName} and password {password}.");
+            var credential = new PasswordCredential(ResourceName, userName, password);
 
-            if (Find(username) is PasswordCredential existingCredential)
+            if (Find(userName) is PasswordCredential existingCredential)
             {
                 existingCredential.RetrievePassword();
 
@@ -192,14 +177,14 @@ namespace CodeShare.Uwp.Services
         }
 
         /// <summary>
-        /// Deletes the specified username.
+        /// Deletes the a password credential that matches the specified user name and password.
         /// </summary>
-        /// <param name="username">The username.</param>
+        /// <param name="userName">The user name.</param>
         /// <param name="password">The password.</param>
         /// <returns></returns>
-        public static Response Delete(string username, string password)
+        public static Response Delete(string userName, string password)
         {
-            return Delete(new PasswordCredential(ResourceName, username, password));
+            return Delete(new PasswordCredential(ResourceName, userName, password));
         }
 
         /// <summary>
@@ -210,23 +195,29 @@ namespace CodeShare.Uwp.Services
         public static Response Delete(PasswordCredential credential)
         {
             if (!Contains(credential))
+            {
                 return Response.NotFound;
+            }
 
             Vault.Remove(credential);
 
             if (credential.UserName.Equals(AppSettings.DefaultUser))
+            {
                 AppSettings.DefaultUser = "";
+            }
 
             return Response.Removed;
         }
 
         /// <summary>
-        /// Deletes all.
+        /// Deletes all stored credentials in the vault.
         /// </summary>
         public static void DeleteAll()
         {
             foreach (var credential in Vault.RetrieveAll())
+            {
                 Vault.Remove(credential);
+            }
         }
     }
 }

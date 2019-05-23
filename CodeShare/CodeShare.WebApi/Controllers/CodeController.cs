@@ -1,17 +1,14 @@
 ﻿using CodeShare.Model;
-using CodeShare.Utilities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Web.Http;
-using System.Web.Http.Description;
-using System.Web.Http.Results;
 
 namespace CodeShare.WebApi.Controllers
 {
+    [Route("api/codes")]
+    [ApiController]
     public class CodeController : EntityController<Code>
     {
         protected override DbSet<Code> Entities => Context.Codes;
@@ -23,36 +20,35 @@ namespace CodeShare.WebApi.Controllers
             .Include(c => c.User)
             .Include(c => c.User.ProfilePictures)
             .Include(c => c.User.Banners)
-            .Include(c => c.User.Screenshots)
-            .Include(c => c.Files.Select(f => f.CodeLanguage))
+            .Include(c => c.Files)
+                .ThenInclude(f => f.CodeLanguage)
             .Include(e => e.Logs)
             .Include(c => c.Ratings)
-            .Include(c => c.Replies.Select(comment => comment.User.ProfilePictures))
-            .Include(c => c.Replies.Select(comment => comment.User.Banners))
-            .Include(c => c.Replies.Select(comment => comment.Ratings));
+            .Include(c => c.CommentSection)
+                .ThenInclude(cs => cs.Replies);
 
         protected override IQueryable<Code> QueryableEntitiesMinimal => Entities
             .Include(e => e.Banners)
             .Include(e => e.User.ProfilePictures);
 
-        [Route("api/codes")]
-        public new IQueryable<Code> Get() => base.Get();
+        [HttpGet]
+        public new ActionResult<IEnumerable<Code>> Get() => base.Get();
 
-        [ResponseType(typeof(Code)), Route("api/codes/{uid}")]
-        public new IHttpActionResult Get(Guid uid) => base.Get(uid);
+        [HttpGet("{uid}")]
+        public new ActionResult<Code> Get(Guid uid) => base.Get(uid);
 
-        [ResponseType(typeof(void)), Route("api/codes/{uid}")]
-        public new IHttpActionResult Put(Guid uid, [FromBody] Code entity) => base.Put(uid, entity);
+        [HttpPut("{uid}")]
+        public new ActionResult<Code> Put(Guid uid, [FromBody] Code entity) => base.Put(uid, entity);
 
-        [ResponseType(typeof(Code)), Route("api/codes")]
-        public new IHttpActionResult Post(Code entity) =>  base.Post(entity);
+        [HttpPost]
+        public new ActionResult<Code> Post(Code entity) =>  base.Post(entity);
 
-        [ResponseType(typeof(Code)), Route("api/codes/{uid}")]
-        public new IHttpActionResult Delete(Guid uid) => base.Delete(uid);
+        [HttpDelete("{uid}")]
+        public new IActionResult Delete(Guid uid) => base.Delete(uid);
 
         protected override void OnPut(Code entity, Code existingEntity)
         {
-            UpdateEntities(entity.Replies, existingEntity.Replies);
+            //UpdateEntities(entity.Replies, existingEntity.Replies);
             UpdateEntities(entity.Ratings, existingEntity.Ratings);
             UpdateEntities(entity.Logs, existingEntity.Logs);
             UpdateEntities(entity.Files, existingEntity.Files);
