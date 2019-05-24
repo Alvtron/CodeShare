@@ -17,7 +17,9 @@ namespace CodeShare.WebApi.Controllers
 
         protected override IQueryable<User> QueryableEntities => Entities
             .Include(e => e.SentFriendRequests)
+                .ThenInclude(e => e.Confirmer)
             .Include(e => e.ReceievedFriendRequests)
+                .ThenInclude(e => e.Requester)
             .Include(e => e.Codes)
                 .ThenInclude(f => f.Banners)
             .Include(e => e.Logs)

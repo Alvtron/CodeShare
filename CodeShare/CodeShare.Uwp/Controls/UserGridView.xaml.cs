@@ -33,7 +33,9 @@ namespace CodeShare.Uwp.Controls
         public void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is User user)
+            {
                 NavigationService.Navigate(typeof(UserPage), user.Uid, user.Name + "'s profile");
+            }
         }
     }
 }

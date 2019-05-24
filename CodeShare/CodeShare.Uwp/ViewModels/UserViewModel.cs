@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.RestApi;
 using CodeShare.Uwp.Views;
+using System.Diagnostics;
+using System.Linq;
 
 namespace CodeShare.Uwp.ViewModels
 {
@@ -22,6 +24,7 @@ namespace CodeShare.Uwp.ViewModels
         public UserViewModel(User user)
             : base(user)
         {
+            
         }
 
         public override bool OnSetAuthorPrivileges(User model)
