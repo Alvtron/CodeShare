@@ -17,7 +17,7 @@ namespace CodeShare.DataAccess
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
 
-        public DataContext(string connectionString = @"Server=(localdb)\mssqllocaldb;Database=CodeShare;Integrated Security=True")
+        public DataContext(string connectionString = @"Server=donau.hiof.no;Database=thomaang;Persist Security Info=True;User ID=thomaang;Password=St5hdA")
         {
             ConnectionString = connectionString;
         }

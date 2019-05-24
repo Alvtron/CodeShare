@@ -51,10 +51,16 @@ namespace CodeShare.RestApi
                 var json = await Client.GetStringAsync(Controller).ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<T[]>(json);
             }
-            catch (HttpRequestException exception)
+            catch (HttpRequestException httpException)
             {
                 Logger.WriteLine($"Could not retrieve {Type}s from the REST API.");
-                Logger.WriteLine(exception.Message);
+                Logger.WriteLine(httpException.Message);
+                return null;
+            }
+            catch(JsonSerializationException jsonException)
+            {
+                Logger.WriteLine($"Could not retrieve {Type}s from the REST API.");
+                Logger.WriteLine(jsonException.Message);
                 return null;
             }
         }

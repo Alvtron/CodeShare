@@ -4,6 +4,7 @@ using Windows.Security.Credentials;
 using System.Collections.ObjectModel;
 using CodeShare.Utilities;
 using System.Runtime.InteropServices;
+using System;
 
 namespace CodeShare.Uwp.Services
 {
@@ -48,7 +49,7 @@ namespace CodeShare.Uwp.Services
                 {
                     credentialList = Vault.FindAllByResource(ResourceName);
                 }
-                catch (COMException)
+                catch (Exception)
                 {
                     // No credentials found with the resource name.
                     return null;

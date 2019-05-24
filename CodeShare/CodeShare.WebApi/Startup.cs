@@ -29,7 +29,7 @@ namespace CodeShare.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CodeShare;Integrated Security=True", b => b.MigrationsAssembly("CodeShare.WebApi")));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(@"Server=donau.hiof.no;Database=thomaang;Persist Security Info=True;User ID=thomaang;Password=St5hdA", b => b.MigrationsAssembly("CodeShare.WebApi")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -46,6 +46,7 @@ namespace CodeShare.WebApi
                 try
                 {
                     //DataInitializer.Delete(context);
+                    DataInitializer.Create(context);
                     Logger.WriteLine("Seeding database...");
                     DataInitializer.Seed(context);
                 }
