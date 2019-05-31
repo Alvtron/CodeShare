@@ -59,12 +59,12 @@ namespace CodeShare.DataAccess
         /// <exception cref="InvalidOperationException"></exception>
         public static void Seed(DataContext context)
         {
-            Logger.WriteLine($"Seeding database...");
+            Logger.WriteLine("Seeding database...");
 
-            Logger.WriteLine($"Adding seed-data to database.");
+            Logger.WriteLine("Adding seed-data to database.");
             var random = new Random();
 
-            var kim = new User("kimdrello", "kim@hiof.no", "#Kimdrello23")
+            var kim = new User("Kimdrello", "kim@hiof.no", "#Kimdrello23")
             {
                 Uid = new Guid("7d7a1b66-1e43-420d-9ebe-9e4402ef94c1"),
                 FirstName = "Kim-Andre",
@@ -73,7 +73,7 @@ namespace CodeShare.DataAccess
                 Experience = random.Next(0, 40000),
             };
 
-            var vegard = new User("vegster", "vegard@hiof.no", "#Vegard22")
+            var vegard = new User("Vegster", "vegard@hiof.no", "#Vegard22")
             {
                 Uid = new Guid("b5cb8d43-cd8d-4ec0-a235-fc29b5702b49"),
                 FirstName = "Vegard",
@@ -82,7 +82,7 @@ namespace CodeShare.DataAccess
                 Experience = random.Next(0, 40000)
             };
 
-            var christoffer = new User("rexzore", "christoffer@hiof.no", "#Christoffer89")
+            var christoffer = new User("Rexzore", "christoffer@hiof.no", "#Christoffer89")
             {
                 Uid = new Guid("1e7a2e47-befe-44b8-b70a-23feec139174"),
                 FirstName = "Christoffer",
@@ -91,7 +91,7 @@ namespace CodeShare.DataAccess
                 Experience = random.Next(0, 40000)
             };
 
-            var thomas = new User("alvtron", "thomas@hiof.no", "#Alvtron1")
+            var thomas = new User("Alvtron", "thomas@hiof.no", "#Alvtron1")
             {
                 Uid = new Guid("84b7d030-5101-449e-840c-83d1c3abf2c3"),
                 FirstName = "Thomas",
