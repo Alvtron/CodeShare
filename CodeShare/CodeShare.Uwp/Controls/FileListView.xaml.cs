@@ -44,11 +44,7 @@ namespace CodeShare.Uwp.Controls
         public SortedObservableCollection<CodeFile> CodeFiles
         {
             get => GetValue(FilesProperty) as SortedObservableCollection<CodeFile>;
-            set
-            {
-                SetValue(FilesProperty, value);
-                SelectFirstFile();
-            }
+            set => SetValue(FilesProperty, value);
         }
 
         /// <summary>
@@ -57,6 +53,7 @@ namespace CodeShare.Uwp.Controls
         public CodeFileListView()
         {
             InitializeComponent();
+            CodeFiles.CollectionChanged += (s, e) => SelectFirstFile();
         }
 
         /// <summary>

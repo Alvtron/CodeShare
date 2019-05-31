@@ -50,7 +50,9 @@ namespace CodeShare.WebApi.Controllers
         {
             return set
                 .Include(c => c.Avatar)
-                .Include(a => a.Banner);
+                .Include(a => a.Banner)
+                .Include(a => a.Codes)
+                .Include(a => a.Questions);
         }
 
         /// <summary>
@@ -76,6 +78,10 @@ namespace CodeShare.WebApi.Controllers
                 .ThenInclude(f => f.Banner)
                 .Include(e => e.Codes)
                 .ThenInclude(f => f.User)
+                .Include(e => e.Questions)
+                .ThenInclude(f => f.User)
+                .Include(e => e.Questions)
+                .ThenInclude(f => f.CodeLanguage)
                 .Include(e => e.Logs)
                 .Include(e => e.Avatar)
                 .Include(e => e.Avatars)

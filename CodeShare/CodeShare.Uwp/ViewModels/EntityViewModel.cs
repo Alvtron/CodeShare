@@ -18,6 +18,7 @@ using System.Windows.Input;
 using Windows.UI.Xaml;
 using CodeShare.Model;
 using CodeShare.RestApi;
+using CodeShare.Utilities;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
@@ -97,7 +98,7 @@ namespace CodeShare.Uwp.ViewModels
         /// <param name="model">The model.</param>
         protected EntityViewModel(TEntity model)
         {
-            Model = model;
+            Model = model ?? throw new ArgumentNullException(nameof(model));
             OnCurrentUserChanged(null, EventArgs.Empty);
             AuthService.CurrentUserChanged += OnCurrentUserChanged;
             Model.PropertyChanged += OnModelChanged;

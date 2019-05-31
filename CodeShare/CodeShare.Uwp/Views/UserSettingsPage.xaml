@@ -31,7 +31,7 @@
                         <controls:EditableProfilePicture User="{x:Bind ViewModel.Model}" Size="100" HorizontalAlignment="Left" IsEditable="True" />
                         <!-- Banner -->
                         <TextBlock Text="Banner" />
-                        <controls:EditableUserBanner User="{x:Bind ViewModel.Model}" Width="800" HorizontalAlignment="Left" IsEditable="True" />
+                        <controls:EditableUserBanner User="{x:Bind ViewModel.Model}" Width="800" Height="320" HorizontalAlignment="Left" IsEditable="True" />
                         <!-- Other -->
                         <TextBox Header="User name" Text="{x:Bind ViewModel.Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox Header="First name" Text="{x:Bind ViewModel.Model.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -103,19 +103,13 @@
                 </PivotItem>
             </Pivot>
         </ScrollViewer>
-        <RelativePanel Grid.Column="1" Background="DimGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,16" MinWidth="400" Padding="8" Visibility="{x:Bind ViewModel.IsModelChanged, Mode=OneWay}">
-            <TextBlock Text="You have unsaved changes!" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
-            <HyperlinkButton Command="{x:Bind ViewModel.ResetCommand}" RelativePanel.LeftOf="SaveButton" Margin="0,0,24,0" RelativePanel.AlignVerticalCenterWithPanel="True">
-                <TextBlock Text="Reset" Foreground="White" />
-            </HyperlinkButton>
-            <Button
-                Name="SaveButton"
-                Background="{StaticResource SaveButtonColor}"
-                Foreground="White"
-                Content="Save Changes"
-                Command="{x:Bind ViewModel.SaveCommand}"
-                RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True" />
-        </RelativePanel>
+        <controls:SaveResetPanel
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"
+            Margin="0,16"
+            SaveCommand="{x:Bind ViewModel.SaveCommand}"
+            ResetCommand="{x:Bind ViewModel.ResetCommand}"
+            Visibility="{x:Bind ViewModel.IsModelChanged, Mode=OneWay}" />
     </Grid>
 </Page>

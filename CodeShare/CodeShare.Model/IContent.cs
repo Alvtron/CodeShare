@@ -30,5 +30,8 @@ namespace CodeShare.Model
         /// </summary>
         /// <value>The views.</value>
         int Views { get; set; }
+        /// <summary>Gets the type.</summary>
+        /// <value>The type.</value>
+        string Type { get; }
     }
 }

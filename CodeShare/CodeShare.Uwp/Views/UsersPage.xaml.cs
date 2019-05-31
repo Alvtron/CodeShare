@@ -50,6 +50,7 @@ namespace CodeShare.Uwp.Views
             {
                 await NotificationService.DisplayErrorMessage("Could not retrieve users from database.");
                 NavigationService.GoBack();
+                return;
             }
 
             ViewModel = new UsersViewModel(users);

@@ -358,6 +358,9 @@ namespace CodeShare.Model
         /// </summary>
         /// <value><c>true</c> if this instance has banner; otherwise, <c>false</c>.</value>
         [NotMapped, JsonIgnore] public bool HasBanner => Banner != null;
+        /// <summary>Gets the type.</summary>
+        /// <value>The type.</value>
+        [NotMapped, JsonIgnore] public string Type => GetType().Name;
 
         #endregion
         #region Constructors

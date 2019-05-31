@@ -14,9 +14,8 @@
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
         <converters:ImageConverter x:Key="ImageConverter" />
         <converters:VisibilityConverter x:Key="VisibilityConverter" />
-        <converters:InverseVisibilityConverter x:Key="BooleanInverter" />
+        <converters:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
         <converters:ExperienceConverter x:Key="ExperienceConverter" />
-        <converters:ColorConverter x:Key="ColorConverter" />
     </Page.Resources>
 
     <ScrollViewer>
@@ -27,9 +26,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="200" />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <!-- Banner -->
                 <Image
@@ -38,34 +37,42 @@
                     Height="200"
                     Source="{x:Bind ViewModel.Model.Banner, Converter={StaticResource ImageConverter}, Mode=OneWay}"
                     Stretch="UniformToFill"
-                    Visibility="{x:Bind ViewModel.Model.HasBanner, Converter={StaticResource VisibilityConverter}, Mode=OneWay}"
-                    RelativePanel.AlignTopWithPanel="True"
-                    RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                    Visibility="{x:Bind ViewModel.Model.HasBanner, Converter={StaticResource VisibilityConverter}, Mode=OneWay}" />
+                <Rectangle
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Height="150"
+                    Width="auto"
+                    Fill="{StaticResource SystemControlBackgroundChromeMediumBrush}" />
                 <PersonPicture
                     Margin="24,-24"
-                    Grid.RowSpan="3"
-                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Row="1"
                     Grid.Column="0"
-                    VerticalAlignment="Bottom"
+                    VerticalAlignment="Center"
                     Width="200"
                     Height="200"
                     ProfilePicture="{x:Bind ViewModel.Model.Avatar, Mode=OneWay, Converter={StaticResource ImageConverter}}"
                     Initials="{x:Bind ViewModel.Model.Initials, Mode=OneWay}" />
                 <StackPanel
-                    Grid.Row="0"
+                    Grid.Row="1"
                     Grid.Column="1"
                     Margin="24"
-                    VerticalAlignment="Bottom">
+                    VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="12">
                         <!-- Username -->
-                        <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" Foreground="White" Style="{StaticResource HeaderTextBlockStyle}"/>
+                        <TextBlock
+                            Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
                         <!-- level -->
                         <TextBlock VerticalAlignment="Center" Foreground="{StaticResource SystemControlBackgroundAccentBrush}">
                             <Run Text="level" />
                             <Run Text="{x:Bind ViewModel.Model.CurrentLevel, Mode=OneWay}"/>
                         </TextBlock>
                         <!-- Add friend -->
-                        <Grid Visibility="{x:Bind ViewModel.IsUserAdmin, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
+                        <Grid Visibility="{x:Bind ViewModel.IsUserAdmin, Mode=OneWay, Converter={StaticResource InverseVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
@@ -82,7 +89,7 @@
                                 <SymbolIcon Symbol="People" />
                             </Button>
                             <Grid Grid.Row="1" Grid.Column="1">
-                                <Viewbox Width="10" Height="10" Visibility="{x:Bind ViewModel.IsFriendOrPendingFriend, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
+                                <Viewbox Width="10" Height="10" Visibility="{x:Bind ViewModel.IsFriendOrPendingFriend, Mode=OneWay, Converter={StaticResource InverseVisibilityConverter}}">
                                     <SymbolIcon Symbol="Add" />
                                 </Viewbox>
                                 <Viewbox Width="10" Height="10" Visibility="{x:Bind ViewModel.IsFriendOrPendingFriend, Mode=OneWay}">
@@ -94,7 +101,7 @@
                         <Button
                             Command="{x:Bind ViewModel.ReportCommand}"
                             Background="Transparent"
-                            Visibility="{x:Bind ViewModel.IsUserAdmin, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
+                            Visibility="{x:Bind ViewModel.IsUserAdmin, Mode=OneWay, Converter={StaticResource InverseVisibilityConverter}}">
                             <SymbolIcon Symbol="Flag" />
                         </Button>
                     </StackPanel>
@@ -171,6 +178,10 @@
                 <!-- Codes -->
                 <PivotItem Header="Codes" Padding="0,24">
                     <controls:CodeGridView Codes="{x:Bind ViewModel.Model.Codes, Mode=OneWay}" />
+                </PivotItem>
+                <!-- Codes -->
+                <PivotItem Header="Questions" Padding="0,24">
+                    <controls:QuestionGridView Questions="{x:Bind ViewModel.Model.Questions, Mode=OneWay}" />
                 </PivotItem>
                 <!-- Activity -->
                 <PivotItem Header="Activity" Padding="0,24">

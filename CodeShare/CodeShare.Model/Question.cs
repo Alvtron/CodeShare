@@ -13,6 +13,8 @@
 // ***********************************************************************
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace CodeShare.Model
 {
@@ -135,6 +137,9 @@ namespace CodeShare.Model
         /// </summary>
         /// <value>The videos.</value>
         public ObservableCollection<QuestionVideo> Videos { get; set; } = new ObservableCollection<QuestionVideo>();
+        /// <summary>Gets the type.</summary>
+        /// <value>The type.</value>
+        [NotMapped, JsonIgnore] public string Type => GetType().Name;
 
         #endregion
         #region Constructors

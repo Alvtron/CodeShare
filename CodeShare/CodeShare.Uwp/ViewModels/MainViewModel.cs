@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,23 +33,24 @@ namespace CodeShare.Uwp.ViewModels
     /// <seealso cref="CodeShare.Uwp.ViewModels.ViewModel" />
     public class MainViewModel : ViewModel
     {
+        private DateTime? LastSearch { get; set; }
         /// <summary>
         /// All results
         /// </summary>
-        private List<Code> _allResults;
+        private IEnumerable<IContent> AllContent { get; set; }
 
         /// <summary>
         /// The search results
         /// </summary>
-        private List<Code> _searchResults;
+        private IEnumerable<IContent> _filteredContent;
         /// <summary>
         /// Gets or sets the search results.
         /// </summary>
         /// <value>The search results.</value>
-        public List<Code> SearchResults
+        public IEnumerable<IContent> FilteredContent
         {
-            get => _searchResults;
-            set => SetField(ref _searchResults, value);
+            get => _filteredContent;
+            set => SetField(ref _filteredContent, value);
         }
 
         /// <summary>
@@ -57,15 +60,33 @@ namespace CodeShare.Uwp.ViewModels
         /// <returns>Task.</returns>
         public async Task Search(string query)
         {
-            if (string.IsNullOrWhiteSpace(query)) return;
-
-            if (_allResults == null)
+            if (string.IsNullOrWhiteSpace(query))
             {
-                _allResults = (await RestApiService<Code>.Get()).ToList();
+                return;
+            }
+
+            if (!LastSearch.HasValue || DateTime.Now.Subtract(LastSearch.Value).Seconds > 10)
+            {
+                // Refresh search list if there was 10 seconds since last search.
+                await RefreshSearchListAsync();
             }
 
             //Check each item in search list if it contains the query
-            SearchResults = _allResults?.Where(x => x.Name != null && x.Name.ToLower().Contains(query.ToLower())).ToList();
+            FilteredContent = AllContent?.Where(x => x.Name != null && x.Name.ToLower().Contains(query.ToLower())).ToList();
+            LastSearch = DateTime.Now;
+        }
+
+        /// <summary>refresh search list as an asynchronous operation.</summary>
+        /// <returns>Task.</returns>
+        private async Task RefreshSearchListAsync()
+        {
+            var users = await RestApiService<User>.Get();
+            var codes = await RestApiService<Code>.Get();
+            var questions = await RestApiService<Question>.Get();
+            AllContent = users;
+            AllContent = AllContent.Concat(codes);
+            AllContent = AllContent.Concat(questions);
+            AllContent = AllContent.OrderBy(e => e.Type);
         }
 
         /// <summary>
@@ -74,21 +95,22 @@ namespace CodeShare.Uwp.ViewModels
         /// <param name="args">The <see cref="AutoSuggestBoxQuerySubmittedEventArgs"/> instance containing the event data.</param>
         public void SubmitSearch(AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if (args.ChosenSuggestion != null)
+            if (args.ChosenSuggestion == null)
             {
-                var item = (Code)args.ChosenSuggestion;
-
-                switch (item)
-                {
-                    case Code _:
-                        NavigationService.Navigate(typeof(CodePage), item.Uid, item.Name);
-                        break;
-                }
+                return;
             }
-            else
+
+            switch (args.ChosenSuggestion)
             {
-                // No match. Navigate to search page and list appropriate results for the search-query
-                // NavigationService.Navigate(typeof(SearchPage), args.QueryText);
+                case User user:
+                    NavigationService.Navigate(typeof(UserPage), user.Uid, user.Name);
+                    break;
+                case Code code:
+                    NavigationService.Navigate(typeof(CodePage), code.Uid, code.Name);
+                    break;
+                case Question question:
+                    NavigationService.Navigate(typeof(QuestionPage), question.Uid, question.Name);
+                    break;
             }
         }
 

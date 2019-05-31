@@ -38,17 +38,23 @@
                     Source="{x:Bind ViewModel.Model.Banner, Converter={StaticResource ImageConverter}, Mode=OneWay}"
                     Stretch="UniformToFill"/>
                 </ParallaxView>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="48" Spacing="24">
-                    <TextBlock
-                        Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}"
-                        FontSize="48"
-                        VerticalAlignment="Center" />
-                    <HyperlinkButton
-                        Content="Report"
-                        VerticalAlignment="Center"
-                        Command="{x:Bind ViewModel.ReportCommand}"
-                        Visibility="{x:Bind ViewModel.IsUserAdmin, Converter={StaticResource InverseVisibilityConverter}, Mode=OneWay}"/>
-                </StackPanel>
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                    <Rectangle Fill="{StaticResource SystemControlBackgroundChromeMediumBrush}" Width="auto" Height="auto" />
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="48" Spacing="24">
+                        <TextBlock
+                            Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                            FontSize="48"
+                            VerticalAlignment="Center" />
+                        <Button
+                            Command="{x:Bind ViewModel.ReportCommand}"
+                            Background="Transparent"
+                            Visibility="{x:Bind ViewModel.IsUserAdmin, Mode=OneWay, Converter={StaticResource InverseVisibilityConverter}}">
+                            <SymbolIcon Symbol="Flag" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
 
             <RelativePanel Margin="48">

@@ -9,11 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <UserControl.Resources>
-        <converters:ColorConverter x:Key="ColorConverter" />
-    </UserControl.Resources>
-
-    <Grid Width="auto" Height="auto" Background="{x:Bind Question.User.Color, Converter={StaticResource ColorConverter}}" Padding="12">
+    <Grid Width="auto" Height="auto" Background="{StaticResource SystemControlBackgroundChromeMediumBrush}" Padding="12">
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
             <TextBlock Text="{x:Bind Question.Name, Mode=OneWay}" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" />
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">

@@ -7,17 +7,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="100"
-    d:DesignWidth="500">
+    d:DesignWidth="500"
+    Width="{x:Bind Width, Mode=OneWay}"
+    Height="{x:Bind Height, Mode=OneWay}">
 
     <UserControl.Resources>
         <converters:ImageConverter x:Key="ImageConverter" />
     </UserControl.Resources>
 
-    <Grid Width="{x:Bind Width, Mode=OneWay}" Height="{x:Bind Height, Mode=OneWay}">
+    <Grid>
         <Rectangle
             RadiusX="12"
             RadiusY="12"
-            Fill="{StaticResource SystemControlBackgroundAltMediumLowBrush}"
+            Fill="{StaticResource SystemControlBackgroundChromeMediumBrush}"
             Height="{x:Bind Height, Mode=OneWay}"
             Width="{x:Bind Width, Mode=OneWay}" />
         <TextBlock Text="Banner" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" Foreground="{StaticResource SystemControlPageTextBaseMediumBrush}" />

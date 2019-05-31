@@ -6,8 +6,7 @@
     xmlns:controls="using:CodeShare.Uwp.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -22,7 +21,7 @@
                     <StackPanel Spacing="8">
                         <!-- Banner -->
                         <TextBlock Text="Banner" />
-                        <controls:EditableCodeBanner Code="{x:Bind ViewModel.Model}" Width="800" HorizontalAlignment="Left" IsEditable="True" />
+                        <controls:EditableCodeBanner Code="{x:Bind ViewModel.Model, Mode=OneWay}" Width="800" Height="320" HorizontalAlignment="Left" IsEditable="True" />
                         <!-- Other -->
                         <TextBox Header="Title" Text="{x:Bind ViewModel.Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox Header="Description" Text="{x:Bind ViewModel.Model.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

@@ -121,17 +121,17 @@ namespace CodeShare.Uwp.ViewModels
         /// <returns>Task.</returns>
         public async Task UploadVideoAsync()
         {
-            var dialog = new AddVideoDialog();
+            var dialog = new AddQuestionVideoDialog();
             NavigationService.Lock();
 
-            if (await dialog.ShowAsync() != ContentDialogResult.Secondary || dialog.Video == null)
+            if (await dialog.ShowAsync() != ContentDialogResult.Primary || dialog.Video == null)
             {
                 await NotificationService.DisplayErrorMessage("Video was invalid");
                 NavigationService.Unlock();
                 return;
             }
 
-            Model?.AddVideo(CurrentUser, dialog.Video as QuestionVideo);
+            Model?.AddVideo(CurrentUser, dialog.Video);
             NavigationService.Unlock();
 
             IsModelChanged = true;

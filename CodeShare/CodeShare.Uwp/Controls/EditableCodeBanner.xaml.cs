@@ -40,21 +40,9 @@ namespace CodeShare.Uwp.Controls
         /// </summary>
         public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Code", typeof(Code), typeof(EditableCodeBanner), new PropertyMetadata(default(Code)));
         /// <summary>
-        /// The size property
-        /// </summary>
-        public static readonly DependencyProperty SizeProperty = DependencyProperty.Register("Size", typeof(int), typeof(EditableCodeBanner), new PropertyMetadata(100));
-        /// <summary>
         /// The is editable property
         /// </summary>
         public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableCodeBanner), new PropertyMetadata(false));
-        /// <summary>
-        /// The width property
-        /// </summary>
-        private new static readonly DependencyProperty WidthProperty = DependencyProperty.Register("Width", typeof(int), typeof(EditableCodeBanner), new PropertyMetadata(800));
-        /// <summary>
-        /// The height property
-        /// </summary>
-        private new static readonly DependencyProperty HeightProperty = DependencyProperty.Register("Height", typeof(int), typeof(EditableCodeBanner), new PropertyMetadata(320));
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is editable.
@@ -64,36 +52,6 @@ namespace CodeShare.Uwp.Controls
         {
             get => (bool)GetValue(IsEditableProperty);
             set => SetValue(IsEditableProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the width of a FrameworkElement.
-        /// </summary>
-        /// <value>The width.</value>
-        public new int Width
-        {
-            get => (int)GetValue(WidthProperty);
-            set => SetValue(WidthProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the suggested height of a FrameworkElement.
-        /// </summary>
-        /// <value>The height.</value>
-        public new int Height
-        {
-            get => (int)GetValue(HeightProperty);
-            set => SetValue(HeightProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the size.
-        /// </summary>
-        /// <value>The size.</value>
-        public int Size
-        {
-            get => (int)GetValue(SizeProperty);
-            set => SetValue(SizeProperty, value);
         }
 
         /// <summary>

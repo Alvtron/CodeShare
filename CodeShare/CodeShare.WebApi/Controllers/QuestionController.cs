@@ -50,7 +50,8 @@ namespace CodeShare.WebApi.Controllers
             return set
                 .Include(q => q.User.Avatar)
                 .Include(q => q.User.Banner)
-                .Include(q => q.CodeLanguage);
+                .Include(q => q.CodeLanguage)
+                .Include(q => q.CommentSection.Replies);
         }
 
         /// <summary>

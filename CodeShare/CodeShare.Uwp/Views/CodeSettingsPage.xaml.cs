@@ -68,6 +68,7 @@ namespace CodeShare.Uwp.Views
             {
                 await NotificationService.DisplayErrorMessage("This code does not exist.");
                 NavigationService.GoBack();
+                return;
             }
 
             ViewModel = new CodeSettingsViewModel(code);

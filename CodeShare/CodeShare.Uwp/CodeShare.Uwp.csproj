@@ -174,6 +174,12 @@
     <Compile Include="Controls\UserItem.xaml.cs">
       <DependentUpon>UserItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\QuestionListViewItem.xaml.cs">
+      <DependentUpon>QuestionListViewItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UserListViewItem.xaml.cs">
+      <DependentUpon>UserListViewItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Converters\DateTimeToDurationString.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
@@ -184,14 +190,17 @@
     <Compile Include="Converters\InverseVisibilityConverter.cs" />
     <Compile Include="Converters\IsAuthorVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
+    <Compile Include="Dialogs\AddQuestionVideoDialog.xaml.cs">
+      <DependentUpon>AddQuestionVideoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddQuestionDialog.xaml.cs">
       <DependentUpon>AddQuestionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\AddCodeDialog.xaml.cs">
       <DependentUpon>AddCodeDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\AddVideoDialog.xaml.cs">
-      <DependentUpon>AddVideoDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\AddCodeVideoDialog.xaml.cs">
+      <DependentUpon>AddCodeVideoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\AvatarCropperDialog.xaml.cs">
       <DependentUpon>AvatarCropperDialog.xaml</DependentUpon>
@@ -474,6 +483,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\QuestionListViewItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\UserListViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\AddQuestionVideoDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\AddQuestionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -482,7 +503,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\AddVideoDialog.xaml">
+    <Page Include="Dialogs\AddCodeVideoDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

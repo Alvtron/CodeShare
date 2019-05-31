@@ -65,6 +65,7 @@ namespace CodeShare.Uwp.Views
             {
                 await NotificationService.DisplayErrorMessage("This question does not exist.");
                 NavigationService.GoBack();
+                return;
             }
 
             ViewModel = new QuestionViewModel(question);

@@ -8,10 +8,10 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <RelativePanel Background="Gray" MinWidth="400" Padding="8">
-        <TextBlock Text="You have unsaved changes!" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
+    <RelativePanel Background="{StaticResource SystemControlBackgroundChromeMediumBrush}" MinWidth="400" Padding="8">
+        <TextBlock Text="You have unsaved changes!" Foreground="{StaticResource SystemControlPageTextBaseHighBrush}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" />
         <HyperlinkButton Command="{x:Bind ResetCommand}" RelativePanel.LeftOf="SaveButton" Margin="0,0,24,0" RelativePanel.AlignVerticalCenterWithPanel="True">
-            <TextBlock Text="Reset" Foreground="White" />
+            <TextBlock Text="Reset" Foreground="{StaticResource SystemControlBackgroundAccentBrush}" />
         </HyperlinkButton>
         <Button
                 Name="SaveButton"

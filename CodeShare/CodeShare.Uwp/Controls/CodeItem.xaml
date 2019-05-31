@@ -11,12 +11,18 @@
 
     <UserControl.Resources>
         <converters:ImageConverter x:Key="ImageConverter" />
+        <converters:VisibilityConverter x:Key="VisibilityConverter" />
     </UserControl.Resources>
 
-    <Grid Width="200" Height="130">
-        <Image Source="{x:Bind Code.Banner, Mode=OneWay, Converter={StaticResource ImageConverter}}" Stretch="UniformToFill" />
+    <Grid Width="auto" Height="auto">
+        <Image
+            Source="{x:Bind Code.Banner, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+            Visibility="{x:Bind Code.HasBanner, Mode=OneWay, Converter={StaticResource VisibilityConverter}}"
+            Width="200"
+            Height="130"
+            Stretch="UniformToFill" />
         <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-            <Rectangle Fill="Black" Opacity="0.8" Width="auto" Height="auto" />
+            <Rectangle Fill="{StaticResource SystemControlBackgroundChromeMediumBrush}" Width="200" Height="auto" />
             <StackPanel HorizontalAlignment="Left" Margin="8">
                 <TextBlock Text="{x:Bind Code.Name, Mode=OneWay}" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">

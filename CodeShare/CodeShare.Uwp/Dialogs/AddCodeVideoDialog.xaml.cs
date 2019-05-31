@@ -6,7 +6,7 @@
 // Last Modified By : Thomas Angeland
 // Last Modified On : 05-24-2019
 // ***********************************************************************
-// <copyright file="AddVideoDialog.xaml.cs" company="CodeShare">
+// <copyright file="AddCodeVideoDialog.xaml.cs" company="CodeShare">
 //     Copyright Thomas Angeland ©  2018
 // </copyright>
 // <summary></summary>
@@ -18,7 +18,7 @@ using Windows.UI.Xaml;
 namespace CodeShare.Uwp.Dialogs
 {
     /// <summary>
-    /// Class AddVideoDialog. This class cannot be inherited.
+    /// Class AddCodeVideoDialog. This class cannot be inherited.
     /// Implements the <see cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
@@ -26,18 +26,18 @@ namespace CodeShare.Uwp.Dialogs
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class AddVideoDialog
+    public sealed partial class AddCodeVideoDialog
     {
         /// <summary>
         /// Gets the video.
         /// </summary>
         /// <value>The video.</value>
-        public Video Video { get; private set; } = new Video();
+        public CodeVideo Video { get; private set; } = new CodeVideo();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AddVideoDialog"/> class.
+        /// Initializes a new instance of the <see cref="AddCodeVideoDialog"/> class.
         /// </summary>
-        public AddVideoDialog()
+        public AddCodeVideoDialog()
         {
             if (AuthService.CurrentUser == null)
             {

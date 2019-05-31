@@ -5,6 +5,7 @@
     xmlns:model="using:CodeShare.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CodeShare.Uwp.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -15,10 +16,7 @@
         <ListView ItemsSource="{x:Bind ViewModel.FilteredQuestions, Mode=OneWay}" Header="Result" HorizontalAlignment="Left" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Question">
-                    <StackPanel Orientation="Vertical" Spacing="10">
-                        <TextBlock Text="{x:Bind Name}" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
-                        <TextBlock Text="{x:Bind User.Name}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
-                    </StackPanel>
+                    <controls:QuestionListViewItem Question="{x:Bind Mode=OneWay}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

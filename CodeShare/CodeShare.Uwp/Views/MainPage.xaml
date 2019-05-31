@@ -38,17 +38,16 @@
                     QueryIcon="Find"
                     Width="290"
                     PlaceholderText="Search"
-                    ItemsSource="{x:Bind ViewModel.SearchResults, Mode=OneWay}"
+                    ItemsSource="{x:Bind ViewModel.FilteredContent, Mode=OneWay}"
                     TextChanged="ASB_TextChanged"
                     QuerySubmitted="ASB_QuerySubmitted">
                     <AutoSuggestBox.ItemTemplate>
-                        <DataTemplate x:DataType="model:Code">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Margin="0,0,10,0" Width="40" Height="40" Stretch="UniformToFill"/>
-                                <StackPanel>
-                                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
-                                </StackPanel>
-                            </StackPanel>
+                        <DataTemplate x:DataType="model:IContent">
+                            <TextBlock>
+                                <Run Text="{x:Bind Type, Mode=OneWay}"/>
+                                <Run Text=":"/>
+                                <Run Text="{x:Bind Name, Mode=OneWay}"/>
+                            </TextBlock>
                         </DataTemplate>
                     </AutoSuggestBox.ItemTemplate>
                 </AutoSuggestBox>

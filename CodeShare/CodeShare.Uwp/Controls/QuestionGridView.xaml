@@ -18,7 +18,7 @@
             IsItemClickEnabled="True">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:Question">
-                    <controls:QuestionItem Question="{Binding}" />
+                    <controls:QuestionItem Question="{x:Bind Mode=OneWay}" />
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
