@@ -2,7 +2,6 @@
     x:Class="CodeShare.Uwp.Controls.ActivityListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CodeShare.Uwp.Controls"
     xmlns:model="using:CodeShare.Model"
     xmlns:converters="using:CodeShare.Uwp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -19,13 +18,12 @@
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="model:Log">
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <HyperlinkButton Tag="{x:Bind}" Content="{x:Bind ActorType, Mode=OneWay}" VerticalAlignment="Center" Loaded="Actor_Loaded" Click="Actor_Click" Foreground="White" />
-                    <TextBlock Text="{x:Bind Action, Mode=OneWay}" VerticalAlignment="Center">
-                    </TextBlock>
-                    <HyperlinkButton Tag="{x:Bind}" Content="{x:Bind SubjectType, Mode=OneWay}" VerticalAlignment="Center" Loaded="Subject_Loaded" Click="Subject_Click" Foreground="White" />
+                    <HyperlinkButton Tag="{x:Bind}" Content="{x:Bind ActorType, Mode=OneWay}" VerticalAlignment="Center" Loaded="Actor_Loaded" Click="Actor_Click" Foreground="{StaticResource SystemControlBackgroundAccentBrush}" />
+                    <TextBlock Text="{x:Bind Action, Mode=OneWay}" VerticalAlignment="Center" />
+                    <HyperlinkButton Tag="{x:Bind}" Content="{x:Bind SubjectType, Mode=OneWay}" VerticalAlignment="Center" Loaded="Subject_Loaded" Click="Subject_Click" Foreground="{StaticResource SystemControlBackgroundAccentBrush}" />
                     <TextBlock VerticalAlignment="Center">
-                        <Run Text="•" Foreground="Gray" />
-                        <Run Text="{x:Bind Created, Mode=OneWay, Converter={StaticResource DateTimeToDurationString}}" Foreground="Gray" />
+                        <Run Text="•" Foreground="{StaticResource SystemControlPageTextBaseMediumBrush}" />
+                        <Run Text="{x:Bind Created, Mode=OneWay, Converter={StaticResource DateTimeToDurationString}}" Foreground="{StaticResource SystemControlPageTextBaseMediumBrush}" />
                     </TextBlock>
                 </StackPanel>
             </DataTemplate>

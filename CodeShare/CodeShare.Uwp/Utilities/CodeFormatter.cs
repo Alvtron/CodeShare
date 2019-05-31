@@ -1,4 +1,16 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-25-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-24-2019
+// ***********************************************************************
+// <copyright file="CodeFormatter.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
@@ -7,15 +19,24 @@ using Windows.UI.Xaml.Media;
 
 namespace CodeShare.Uwp.Utilities
 {
+    /// <summary>
+    /// Class CodeEditor.
+    /// </summary>
     public static class CodeEditor
     {
+        /// <summary>
+        /// Syntaxes the highlight.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="color">The color.</param>
+        /// <returns>IEnumerable&lt;Inline&gt;.</returns>
         public static IEnumerable<Inline> SyntaxHighlight(string text, Color color)
         {
-            var lines = text.Split("\r\n", StringSplitOptions.None);
+            var lines = text.Split("\r\n");
 
             foreach (var line in lines)
             {
-                var words = line.Split(' ', StringSplitOptions.None);
+                var words = line.Split(' ');
                 foreach (var word in words)
                 {
                     if (KeyWords.Any(keyWord => keyWord.Equals(word.Replace("\r", "").Replace("\t", "").Replace(";", ""))))
@@ -32,6 +53,10 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
+        /// <summary>
+        /// Gets the key words.
+        /// </summary>
+        /// <value>The key words.</value>
         public static string[] KeyWords { get; } = new string[]
         {
             "abstract",

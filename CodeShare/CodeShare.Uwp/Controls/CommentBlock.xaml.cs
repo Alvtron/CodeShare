@@ -1,57 +1,62 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-29-2019
+// ***********************************************************************
+// <copyright file="CommentBlock.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.RestApi;
-using CodeShare.Utilities;
-using CodeShare.Uwp.Dialogs;
-using CodeShare.Uwp.Services;
-using CodeShare.Uwp.Utilities;
 using CodeShare.Uwp.ViewModels;
-using CodeShare.Uwp.Views;
-using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class CommentBlock : UserControl
+    /// <summary>
+    /// Class CommentBlock. This class cannot be inherited.
+    /// Implements the <see cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    public sealed partial class CommentBlock
     {
-        public bool Initialized { get; private set; }
-
+        /// <summary>
+        /// The reply property
+        /// </summary>
         public static readonly DependencyProperty ReplyProperty = DependencyProperty.Register("Comment", typeof(Comment), typeof(CommentBlock), new PropertyMetadata(default(Comment)));
 
+        /// <summary>
+        /// Gets or sets the view model.
+        /// </summary>
+        /// <value>The view model.</value>
         public CommentViewModel ViewModel { get; set; }
 
+        /// <summary>
+        /// Gets or sets the comment.
+        /// </summary>
+        /// <value>The comment.</value>
         public Comment Comment
         {
-            get => ViewModel.Comment;
+            get => ViewModel.Model;
             set
             {
                 if (value == null)
                 {
                     return;
                 }
-                else if (value.Replies == null || value.Replies.Count == 0)
-                {
-                    ViewModel.Comment = RestApiService<Comment>.Get(value.Uid).Result;
-                }
-                else
-                {
-                    ViewModel.Comment = value;
-                }
-                if (!Initialized)
-                {
-                    InitializeComponent();
-                    Initialized = true;
-                }
-            }
-        }
 
-        public CommentBlock()
-        {
-            ViewModel = new CommentViewModel();
+                ViewModel = new CommentViewModel(RestApiService<Comment>.Get(value.Uid).Result);
+                InitializeComponent();
+            }
         }
     }
 }

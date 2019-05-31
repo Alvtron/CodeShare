@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
+
     <RelativePanel Padding="48">
         <TextBox
             Name="SearchBox"
@@ -28,5 +28,4 @@
             RelativePanel.AlignRightWithPanel="True"
             HorizontalContentAlignment="Stretch" />
     </RelativePanel>
-    
 </UserControl>

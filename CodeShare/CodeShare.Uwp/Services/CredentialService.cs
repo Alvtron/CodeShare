@@ -1,25 +1,58 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-29-2019
+// ***********************************************************************
+// <copyright file="CredentialService.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Collections.Generic;
 using System.Linq;
 using Windows.Security.Credentials;
 using System.Collections.ObjectModel;
 using CodeShare.Utilities;
-using System.Runtime.InteropServices;
 using System;
 
 namespace CodeShare.Uwp.Services
 {
     /// <summary>
-    /// 
+    /// Class CredentialService.
     /// </summary>
     public static class CredentialService
     {
+        /// <summary>
+        /// Enum Response
+        /// </summary>
         public enum Response
         {
+            /// <summary>
+            /// The exist
+            /// </summary>
             Exist,
+            /// <summary>
+            /// The not found
+            /// </summary>
             NotFound,
+            /// <summary>
+            /// The added
+            /// </summary>
             Added,
+            /// <summary>
+            /// The removed
+            /// </summary>
             Removed,
+            /// <summary>
+            /// The not signed in
+            /// </summary>
             NotSignedIn,
+            /// <summary>
+            /// The signed in
+            /// </summary>
             SignedIn
         }
 
@@ -36,9 +69,7 @@ namespace CodeShare.Uwp.Services
         /// <summary>
         /// Gets the current credential.
         /// </summary>
-        /// <value>
-        /// The current.
-        /// </value>
+        /// <value>The current.</value>
         public static PasswordCredential Current
         {
             get
@@ -80,53 +111,48 @@ namespace CodeShare.Uwp.Services
             }
         }
 
+        /// <summary>
+        /// The application settings
+        /// </summary>
         private static readonly AppSettings AppSettings = new AppSettings();
 
         /// <summary>
         /// Gets all credentials.
         /// </summary>
-        /// <value>
-        /// All.
-        /// </value>
+        /// <value>Images.</value>
         public static ObservableCollection<PasswordCredential> All => new ObservableCollection<PasswordCredential>(Vault.RetrieveAll());
 
         /// <summary>
         /// The amount of credentials in the vault.
         /// </summary>
-        /// <value>
-        /// The amount of credentials in the vault.
-        /// </value>
+        /// <value>The amount of credentials in the vault.</value>
         public static int Count => Vault.RetrieveAll().Count;
 
         /// <summary>
         /// Gets a value indicating whether the password vault is empty.
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if empty; otherwise, <c>false</c>.
-        /// </value>
+        /// <value><c>true</c> if empty; otherwise, <c>false</c>.</value>
         public static bool Empty => Count == 0;
 
         /// <summary>
         /// Checks if the specified credential is available.
         /// </summary>
         /// <param name="credential">The credential.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool CheckIfAvailable(PasswordCredential credential) => All.Any(c => c.UserName.Equals(credential.UserName));
 
         /// <summary>
         /// Finds a credential that matches the specified user name.
         /// </summary>
         /// <param name="userName">The user name.</param>
-        /// <returns></returns>
+        /// <returns>PasswordCredential.</returns>
         public static PasswordCredential Find(string userName) => All.FirstOrDefault(c => c.UserName.Equals(userName));
 
         /// <summary>
         /// Determines whether the vault containst the specified credential.
         /// </summary>
         /// <param name="credential">The credential.</param>
-        /// <returns>
-        ///   <c>true</c> if the vault contains the specified credential; otherwise, <c>false</c>.
-        /// </returns>
+        /// <returns><c>true</c> if the vault contains the specified credential; otherwise, <c>false</c>.</returns>
         public static bool Contains(PasswordCredential credential)
         {
             if (Empty) return false;
@@ -148,7 +174,7 @@ namespace CodeShare.Uwp.Services
         /// </summary>
         /// <param name="userName">The user name.</param>
         /// <param name="password">The password.</param>
-        /// <returns></returns>
+        /// <returns>PasswordCredential.</returns>
         public static PasswordCredential Create(string userName, string password)
         {
             Logger.WriteLine($"Creating new credential with username {userName} and password {password}.");
@@ -182,7 +208,7 @@ namespace CodeShare.Uwp.Services
         /// </summary>
         /// <param name="userName">The user name.</param>
         /// <param name="password">The password.</param>
-        /// <returns></returns>
+        /// <returns>Response.</returns>
         public static Response Delete(string userName, string password)
         {
             return Delete(new PasswordCredential(ResourceName, userName, password));
@@ -192,7 +218,7 @@ namespace CodeShare.Uwp.Services
         /// Deletes the specified credential.
         /// </summary>
         /// <param name="credential">The credential.</param>
-        /// <returns></returns>
+        /// <returns>Response.</returns>
         public static Response Delete(PasswordCredential credential)
         {
             if (!Contains(credential))

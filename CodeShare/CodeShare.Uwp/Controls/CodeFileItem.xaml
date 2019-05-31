@@ -2,7 +2,6 @@
     x:Class="CodeShare.Uwp.Controls.CodeFileItem"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CodeShare.Uwp.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -13,14 +12,17 @@
     <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0">
-            <Run Text="{x:Bind CodeFile.FullName, Mode=OneWay}" />
-            <Run Text="•" Foreground="Gray" />
-            <Run Text="{x:Bind CodeFile.Lines, Mode=OneWay}" Foreground="Gray" />
-            <Run Text="lines" Foreground="Gray" />
-        </TextBlock>
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="{x:Bind CodeFile.FullName, Mode=OneWay}" Style="{StaticResource BaseTextBlockStyle}" Foreground="{StaticResource SystemControlPageTextBaseHighBrush}"/>
+            <TextBlock Style="{StaticResource CaptionTextBlockStyle}" Foreground="{StaticResource SystemControlPageTextBaseMediumBrush}">
+                <Run Text="{x:Bind CodeFile.Lines, Mode=OneWay}" />
+                <Run Text="lines"/>
+                <Run Text="•" />
+                <Run Text="{x:Bind CodeFile.Updated, Mode=OneWay}" />
+            </TextBlock>
+        </StackPanel>
         <Button
             Grid.Column="1"
             Visibility="{x:Bind IsEditable, Mode=OneWay}"

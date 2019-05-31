@@ -1,9 +1,21 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="ModelSettingsViewModel.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.Extensions;
 using CodeShare.RestApi;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
-using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,53 +24,75 @@ using CodeShare.Utilities;
 
 namespace CodeShare.Uwp.ViewModels
 {
-    public abstract class ModelSettingsViewModel<T> : ObservableObject where T : IEntity, INotifyPropertyChanged, new()
+    /// <summary>
+    /// Class ModelSettingsViewModel.
+    /// Implements the <see cref="CodeShare.Uwp.ViewModels.EntityViewModel{TEntity}" />
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+    /// <seealso cref="CodeShare.Uwp.ViewModels.EntityViewModel{TEntity}" />
+    public abstract class ModelSettingsViewModel<TEntity> : EntityViewModel<TEntity> where TEntity : class, IEntity, INotifyPropertyChanged, new()
     {
-        private T _modelOriginal;
+        /// <summary>
+        /// The model original
+        /// </summary>
+        private readonly TEntity _modelOriginal;
 
-        private T _modelChanged;
-        public T Model
-        {
-            get => _modelChanged;
-            set
-            {
-                _modelOriginal = value.Clone();
-                SetField(ref _modelChanged, value);
-            }
-        }
-
-        private bool _isModelChanged;
-        public bool IsModelChanged
-        {
-            get => _isModelChanged;
-            set => SetField(ref _isModelChanged, value);
-        }
-
+        /// <summary>
+        /// The delete command
+        /// </summary>
         private RelayCommand _deleteCommand;
+        /// <summary>
+        /// Gets the delete command.
+        /// </summary>
+        /// <value>The delete command.</value>
         public ICommand DeleteCommand => _deleteCommand = _deleteCommand ?? new RelayCommand(async param => await Delete());
 
+        /// <summary>
+        /// The save command
+        /// </summary>
         private RelayCommand _saveCommand;
+        /// <summary>
+        /// Gets the save command.
+        /// </summary>
+        /// <value>The save command.</value>
         public ICommand SaveCommand => _saveCommand = _saveCommand ?? new RelayCommand(async param => await SaveChangesAsync());
 
+        /// <summary>
+        /// The reset command
+        /// </summary>
         private RelayCommand _resetCommand;
+        /// <summary>
+        /// Gets the reset command.
+        /// </summary>
+        /// <value>The reset command.</value>
         public ICommand ResetCommand => _resetCommand = _resetCommand ?? new RelayCommand(async param => await Reset());
 
-        public ModelSettingsViewModel(T model)
+        /// <summary>
+        /// Called when [saving model asynchronous].
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Task.</returns>
+        protected abstract Task OnSavingModelAsync(TEntity model);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelSettingsViewModel{TEntity}"/> class.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        protected ModelSettingsViewModel(TEntity model)
+            : base(model)
         {
-            Model = model;
-            Model.PropertyChanged += (s, e) => ViewModel_ModelChanged(s, e);
+            _modelOriginal = model.Clone();
         }
 
-        public void ViewModel_ModelChanged(object sender, EventArgs e)
-        {
-            IsModelChanged = true;
-        }
-
+        /// <summary>
+        /// Deletes this instance.
+        /// </summary>
+        /// <returns>Task.</returns>
         private async Task Delete()
         {
             Logger.WriteLine($"User requests deletion of {Model}.");
 
-            if (AuthService.CurrentUser == null)
+            if (CurrentUser == null)
             {
                 Logger.WriteLine($"Could not delete {Model}. User was not signed in.");
                 await NotificationService.DisplayErrorMessage("You are not signed in.");
@@ -72,7 +106,7 @@ namespace CodeShare.Uwp.ViewModels
                 return;
             }
 
-            if (!await RestApiService<T>.Delete(Model.Uid))
+            if (!await RestApiService<TEntity>.Delete(Model.Uid))
             {
                 Logger.WriteLine($"Could not delete {Model}. An error occurred during the deletion. No changes where made.");
                 await NotificationService.DisplayErrorMessage("Deletion failed. Please try again later.");
@@ -82,11 +116,15 @@ namespace CodeShare.Uwp.ViewModels
             await NavigationService.Navigate("Home");
         }
 
+        /// <summary>
+        /// save changes as an asynchronous operation.
+        /// </summary>
+        /// <returns>Task.</returns>
         public async Task SaveChangesAsync()
         {
             Logger.WriteLine($"User requests updating of {Model}.");
 
-            if (AuthService.CurrentUser == null)
+            if (CurrentUser == null)
             {
                 Logger.WriteLine($"Could not update {Model}. User was not signed in.");
                 await NotificationService.DisplayErrorMessage("You are not signed in.");
@@ -95,9 +133,11 @@ namespace CodeShare.Uwp.ViewModels
 
             NavigationService.Lock();
 
-            if (await UpdateModel())
+            await OnSavingModelAsync(Model);
+
+            if (await UpdateModelAsync())
             {
-                Reflection.CopyProperties(_modelChanged, _modelOriginal);
+                Model.CopyProperties(_modelOriginal);
                 IsModelChanged = false;
             }
 
@@ -105,23 +145,31 @@ namespace CodeShare.Uwp.ViewModels
             NavigationService.GoBack();
         }
 
+        /// <summary>
+        /// Resets this instance.
+        /// </summary>
+        /// <returns>Task.</returns>
         public async Task Reset()
         {
             Logger.WriteLine($"User requests reset of {Model}.");
 
-            if (AuthService.CurrentUser == null)
+            if (CurrentUser == null)
             {
                 Logger.WriteLine($"Could not reset {Model}. User was not signed in.");
                 await NotificationService.DisplayErrorMessage("You are not signed in.");
                 NavigationService.GoBack();
             }
 
-            Reflection.CopyProperties(_modelOriginal, Model);
+            _modelOriginal.CopyProperties(Model);
             IsModelChanged = false;
             NavigationService.GoBack();
         }
 
-        private async Task<bool> UpdateModel()
+        /// <summary>
+        /// update model as an asynchronous operation.
+        /// </summary>
+        /// <returns>Task&lt;System.Boolean&gt;.</returns>
+        private async Task<bool> UpdateModelAsync()
         {
             if (Model == null)
             {
@@ -130,7 +178,7 @@ namespace CodeShare.Uwp.ViewModels
                 return false;
             }
 
-            if (await RestApiService<T>.Update(Model, Model.Uid) == false)
+            if (await RestApiService<TEntity>.Update(Model, Model.Uid) == false)
             {
                 Logger.WriteLine($"Could not update {Model}. An error occurred during the upload. No changes where made.");
                 await NotificationService.DisplayErrorMessage("An error occurred during the upload. No changes where made.");

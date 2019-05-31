@@ -2,7 +2,6 @@
     x:Class="CodeShare.Uwp.Controls.QuestionItem"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CodeShare.Uwp.Controls"
     xmlns:converters="using:CodeShare.Uwp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,17 +10,16 @@
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <converters:ImageConverter x:Key="ImageConverter" />
         <converters:ColorConverter x:Key="ColorConverter" />
     </UserControl.Resources>
 
     <Grid Width="auto" Height="auto" Background="{x:Bind Question.User.Color, Converter={StaticResource ColorConverter}}" Padding="12">
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBlock Text="{x:Bind Question.Name, Mode=OneWay}" />
-            <TextBlock Foreground="DimGray">
+            <TextBlock Text="{x:Bind Question.Name, Mode=OneWay}" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" />
+            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}">
                 <Run Text="{x:Bind Question.CodeLanguage.Name, Mode=OneWay}" />
                 <Run Text="•" />
-                <Run Text="{x:Bind Question.User.Name, Mode=OneWay}" />
+                <Run Text="{x:Bind Question.User.Name, Mode=OneWay}" Foreground="{StaticResource SystemControlBackgroundAccentBrush}" />
                 <Run Text="•" />
                 <Run Text="{x:Bind Question.Views, Mode=OneWay}" />
                 <Run Text="views" />

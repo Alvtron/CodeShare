@@ -1,24 +1,64 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-24-2019
+// ***********************************************************************
+// <copyright file="NavigationService.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.RestApi;
 using CodeShare.Utilities;
 using CodeShare.Uwp.Dialogs;
 using CodeShare.Uwp.Views;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace CodeShare.Uwp.Services
 {
+    /// <summary>
+    /// Class NavigationService.
+    /// </summary>
     public static class NavigationService
     {
+        /// <summary>
+        /// Gets or sets the frame.
+        /// </summary>
+        /// <value>The frame.</value>
         private static Frame Frame { get; set; }
+        /// <summary>
+        /// Gets or sets the navigation view.
+        /// </summary>
+        /// <value>The navigation view.</value>
         private static NavigationView NavigationView { get; set; }
+        /// <summary>
+        /// Gets or sets the progress ring.
+        /// </summary>
+        /// <value>The progress ring.</value>
         private static ProgressRing ProgressRing { get; set; }
+        /// <summary>
+        /// Gets the headers.
+        /// </summary>
+        /// <value>The headers.</value>
         private static ObservableStack<string> Headers { get; } = new ObservableStack<string>();
-        private static Dictionary<Type, Action<Type, object, string>> Navigations { get; set; }
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="NavigationService"/> is initialized.
+        /// </summary>
+        /// <value><c>true</c> if initialized; otherwise, <c>false</c>.</value>
         public static bool Initialized => Frame != null && NavigationView != null && ProgressRing != null && Headers != null;
 
+        /// <summary>
+        /// Initializes the specified frame.
+        /// </summary>
+        /// <param name="frame">The frame.</param>
+        /// <param name="navigationView">The navigation view.</param>
+        /// <param name="progressRing">The progress ring.</param>
         public static void Initialize(Frame frame, NavigationView navigationView, ProgressRing progressRing)
         {
             Logger.WriteLine("Initializing NavigationService...");
@@ -48,12 +88,27 @@ namespace CodeShare.Uwp.Services
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance can go back.
+        /// </summary>
+        /// <value><c>true</c> if this instance can go back; otherwise, <c>false</c>.</value>
         public static bool CanGoBack => Frame?.CanGoBack ?? false;
 
+        /// <summary>
+        /// Gets a value indicating whether this instance can go forward.
+        /// </summary>
+        /// <value><c>true</c> if this instance can go forward; otherwise, <c>false</c>.</value>
         public static bool CanGoForward => Frame?.CanGoForward ?? false;
 
+        /// <summary>
+        /// Sets the header title.
+        /// </summary>
+        /// <param name="title">The title.</param>
         public static void SetHeaderTitle(string title) => NavigationView.Header = title;
 
+        /// <summary>
+        /// Updates the back button visibillity.
+        /// </summary>
         public static void UpdateBackButtonVisibillity()
         {
             if (!Initialized)
@@ -67,6 +122,9 @@ namespace CodeShare.Uwp.Services
                 : NavigationViewBackButtonVisible.Collapsed;
         }
 
+        /// <summary>
+        /// Clears this instance.
+        /// </summary>
         public static void Clear()
         {
             Frame.BackStack.Clear();
@@ -74,6 +132,12 @@ namespace CodeShare.Uwp.Services
             UpdateBackButtonVisibillity();
         }
 
+        /// <summary>
+        /// Navigates the specified view type.
+        /// </summary>
+        /// <param name="viewType">Type of the view.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <param name="newHeader">The new header.</param>
         public static void Navigate(Type viewType, object parameter, string newHeader = "")
         {
             if (!Initialized)
@@ -92,6 +156,12 @@ namespace CodeShare.Uwp.Services
             }
         }
 
+        /// <summary>
+        /// Navigates the specified page name.
+        /// </summary>
+        /// <param name="pageName">Name of the page.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns>Task.</returns>
         public static async Task Navigate(string pageName, object parameter = null)
         {
             if (!Initialized)
@@ -130,6 +200,10 @@ namespace CodeShare.Uwp.Services
                     Navigate(typeof(UsersPage), parameter, pageName);
                     return;
                 case "Comment":
+                    if (parameter == null)
+                    {
+                        return;
+                    }
                     var codeComment = await RestApiService<Comment>.Get((Guid)parameter);
                     await new CommentDialog(codeComment).ShowAsync();
                     return;
@@ -139,11 +213,12 @@ namespace CodeShare.Uwp.Services
                 case "Ask a question":
                     await new AddQuestionDialog().ShowAsync();
                     return;
-                default:
-                    break;
             }
         }
 
+        /// <summary>
+        /// Goes the back.
+        /// </summary>
         public static void GoBack()
         {
             if (!Initialized)
@@ -162,7 +237,10 @@ namespace CodeShare.Uwp.Services
             Frame.GoBack();
         }
 
-        private static void GoForward()
+        /// <summary>
+        /// Goes the forward.
+        /// </summary>
+        public static void GoForward()
         {
             if (!Initialized)
             {
@@ -179,6 +257,9 @@ namespace CodeShare.Uwp.Services
             Frame.GoForward();
         }
 
+        /// <summary>
+        /// Locks this instance.
+        /// </summary>
         public static void Lock()
         {
             if (!Initialized)
@@ -191,6 +272,9 @@ namespace CodeShare.Uwp.Services
             ProgressRing.IsActive = true;
         }
 
+        /// <summary>
+        /// Unlocks this instance.
+        /// </summary>
         public static void Unlock()
         {
             if (!Initialized)
@@ -203,6 +287,9 @@ namespace CodeShare.Uwp.Services
             ProgressRing.IsActive = false;
         }
 
+        /// <summary>
+        /// Locks the frame.
+        /// </summary>
         public static void LockFrame()
         {
             if (!Initialized)
@@ -215,6 +302,9 @@ namespace CodeShare.Uwp.Services
             ProgressRing.IsActive = true;
         }
 
+        /// <summary>
+        /// Unlocks the frame.
+        /// </summary>
         public static void UnlockFrame()
         {
             if (!Initialized)

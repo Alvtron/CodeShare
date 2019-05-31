@@ -1,14 +1,42 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-24-2019
+// ***********************************************************************
+// <copyright file="AddVideoDialog.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.Uwp.Services;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace CodeShare.Uwp.Dialogs
 {
-    public sealed partial class AddVideoDialog : ContentDialog
+    /// <summary>
+    /// Class AddVideoDialog. This class cannot be inherited.
+    /// Implements the <see cref="Windows.UI.Xaml.Controls.ContentDialog" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    public sealed partial class AddVideoDialog
     {
+        /// <summary>
+        /// Gets the video.
+        /// </summary>
+        /// <value>The video.</value>
         public Video Video { get; private set; } = new Video();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddVideoDialog"/> class.
+        /// </summary>
         public AddVideoDialog()
         {
             if (AuthService.CurrentUser == null)
@@ -20,6 +48,11 @@ namespace CodeShare.Uwp.Dialogs
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the Click event of the ViewVideoButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ViewVideoButton_Click(object sender, RoutedEventArgs e)
         {
             VideoPlayer.Visibility = Visibility.Visible;

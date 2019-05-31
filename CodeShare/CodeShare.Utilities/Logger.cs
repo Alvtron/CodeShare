@@ -9,7 +9,7 @@ namespace CodeShare.Utilities
 {
     public static class Logger
     {
-        private static List<string> FailedEntries { get; } = new List<string>();
+        public static List<string> FailedEntries { get; } = new List<string>();
 
         public static readonly string FilePath;
 
@@ -21,14 +21,13 @@ namespace CodeShare.Utilities
                 {
                     return null;
                 }
-
                 try
                 {
                     return File.ReadAllText(FilePath);
                 }
                 catch (Exception)
                 {
-                    throw;
+                    return default;
                 }
             }
         }
@@ -52,7 +51,7 @@ namespace CodeShare.Utilities
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void WriteLine(string message, [CallerMemberName] string callerName = "NO_NAME", [CallerFilePath] string callerFilePath = "NO_PATH", [CallerLineNumber] int callerLineNumberAttribute = 0)
         {
-            var callerAssembly = Assembly.GetCallingAssembly()?.GetName()?.Name;
+            var callerAssembly = Assembly.GetCallingAssembly().GetName().Name;
             var callerFile = Path.GetFileNameWithoutExtension(callerFilePath);
             var text = CreateCallerString(message, callerAssembly, callerName, callerFile, callerLineNumberAttribute);
 
@@ -122,7 +121,6 @@ namespace CodeShare.Utilities
             catch (Exception)
             {
                 FailedEntries.Add(text);
-                return;
             }
         }
     }

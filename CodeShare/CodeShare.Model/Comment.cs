@@ -1,136 +1,141 @@
-﻿using CodeShare.Extensions;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Model
+// Author           : Thomas Angeland
+// Created          : 05-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-28-2019
+// ***********************************************************************
+// <copyright file="Comment.cs" company="CodeShare.Model">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using CodeShare.Utilities;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Runtime.Serialization;
 
 namespace CodeShare.Model
 {
-    public class Comment : Entity, IComment, IComment<Comment>, ILikeable<CommentRating>
+    /// <summary>
+    /// Class Comment. This class cannot be inherited.
+    /// Implements the <see cref="CodeShare.Model.Entity" />
+    /// Implements the <see cref="CodeShare.Model.IComment" />
+    /// Implements the <see cref="CodeShare.Model.IComment{CodeShare.Model.Comment}" />
+    /// </summary>
+    /// <seealso cref="CodeShare.Model.Entity" />
+    /// <seealso cref="CodeShare.Model.IComment" />
+    /// <seealso cref="CodeShare.Model.IComment{CodeShare.Model.Comment}" />
+    public sealed class Comment : Entity, IComment, IComment<Comment>
     {
+        /// <summary>
+        /// The text
+        /// </summary>
         private string _text;
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <value>The text.</value>
         public string Text
         {
             get => _text;
             set => SetField(ref _text, value);
         }
-        public virtual User User { get; set; }
+        /// <summary>
+        /// Gets or sets the user.
+        /// </summary>
+        /// <value>The user.</value>
+        public User User { get; set; }
+        /// <summary>
+        /// Gets or sets the user uid.
+        /// </summary>
+        /// <value>The user uid.</value>
         public Guid? UserUid { get; set; }
+        /// <summary>
+        /// Gets or sets the comment section uid.
+        /// </summary>
+        /// <value>The comment section uid.</value>
         public Guid? CommentSectionUid { get; set; }
-        public virtual Comment Parent { get; set; }
+        /// <summary>
+        /// Gets or sets the parent.
+        /// </summary>
+        /// <value>The parent.</value>
+        public Comment Parent { get; set; }
+        /// <summary>
+        /// Gets or sets the parent uid.
+        /// </summary>
+        /// <value>The parent uid.</value>
         public Guid? ParentUid { get; set; }
-        public virtual SortedObservableCollection<Comment> Replies { get; set; } = new SortedObservableCollection<Comment>(c => c.Created, true);
-        public virtual ObservableCollection<CommentLog> Logs { get; set; } = new ObservableCollection<CommentLog>();
-        public virtual ObservableCollection<CommentRating> Ratings { get; set; } = new ObservableCollection<CommentRating>();
-        [NotMapped, JsonIgnore] public bool HasRatings => Ratings?.Count > 0;
-        [NotMapped, JsonIgnore] public int NumberOfLikes => Ratings?.Count(x => x.Value) ?? 0;
-        [NotMapped, JsonIgnore] public int NumberOfDislikes => Ratings?.Count(x => !x.Value) ?? 0;
+        /// <summary>
+        /// Gets or sets the replies.
+        /// </summary>
+        /// <value>The replies.</value>
+        public SortedObservableCollection<Comment> Replies { get; set; } = new SortedObservableCollection<Comment>(c => c.Created, true);
+        /// <summary>
+        /// Gets or sets the logs.
+        /// </summary>
+        /// <value>The logs.</value>
+        public ObservableCollection<CommentLog> Logs { get; set; } = new ObservableCollection<CommentLog>();
+        /// <summary>
+        /// Gets or sets the rating collection.
+        /// </summary>
+        /// <value>The rating collection.</value>
+        public CommentRatingCollection RatingCollection { get; set; }
+        /// <summary>
+        /// Gets or sets the ratings uid.
+        /// </summary>
+        /// <value>The ratings uid.</value>
+        public Guid? RatingsUid { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Comment"/> class.
+        /// </summary>
         public Comment()
         {
+            RatingCollection = new CommentRatingCollection(Uid);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Comment"/> class.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="text">The text.</param>
         public Comment(User user, string text)
+            : this()
         {
             UserUid = user.Uid;
             Text = text;
 
             Logs.Add(new CommentLog(this, user, "created this"));
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Comment"/> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
+        /// <param name="user">The user.</param>
+        /// <param name="text">The text.</param>
         public Comment(CommentSection parent, User user, string text)
             : this(user, text)
         {
             CommentSectionUid = parent.Uid;
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Comment"/> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
+        /// <param name="user">The user.</param>
+        /// <param name="text">The text.</param>
         public Comment(Comment parent, User user, string text)
             : this(user, text)
         {
             ParentUid = parent.Uid;
         }
 
-        public bool HasLiked(User user) => Ratings.Any(x => x.Value == true && x.User.Equals(user));
-        public bool HasDisliked(User user) => Ratings.Any(x => x.Value == false && x.User.Equals(user));
-        public bool HasRated(User user) => Ratings.Any(x => x.User.Equals(user));
-
-        public void ToggleLike(User user)
-        {
-            if (HasRated(user))
-            {
-                Like(user);
-            }
-            else if (HasLiked(user))
-            {
-                Dislike(user);
-            }
-            else
-            {
-                Like(user);
-            }
-        }
-
-        public void Like(User user)
-        {
-            if (user == null)
-            {
-                Logger.WriteLine($"Failed to like comment {Uid}. User is null.");
-                return;
-            }
-            if (HasLiked(user))
-            {
-                Logger.WriteLine($"Failed to like comment {Uid}. User {user.Uid} has already liked this comment.");
-                return;
-            }
-            if (Ratings == null)
-            {
-                Ratings = new ObservableCollection<CommentRating>();
-            }
-
-            var rating = Ratings.FirstOrDefault(i => i.User.Equals(user));
-
-            if (rating != null)
-            {
-                rating.Value = true;
-            }
-            else
-            {
-                Ratings.Add(new CommentRating(user, true));
-            }
-        }
-
-        public void Dislike(User user)
-        {
-            if (user == null)
-            {
-                Logger.WriteLine($"Failed to dislike comment {Uid}. User is null.");
-                return;
-            }
-            if (HasDisliked(user))
-            {
-                Logger.WriteLine($"Failed to dislike comment {Uid}. User {user.Uid} has already disliked this comment.");
-                return;
-            }
-            if (Ratings == null)
-            {
-                Ratings = new ObservableCollection<CommentRating>();
-            }
-
-            var rating = Ratings.FirstOrDefault(i => i.User.Equals(user));
-
-            if (rating != null)
-            {
-                rating.Value = false;
-            }
-            else
-            {
-                Ratings.Add(new CommentRating(user, false));
-            }
-        }
-
+        /// <summary>
+        /// Adds the reply.
+        /// </summary>
+        /// <param name="reply">The reply.</param>
         public void AddReply(Comment reply)
         {
             if (reply == null)

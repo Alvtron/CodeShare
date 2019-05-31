@@ -1,36 +1,143 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.DataAccess
+// Author           : Thomas Angeland
+// Created          : 05-15-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-31-2019
+// ***********************************************************************
+// <copyright file="DataContext.cs" company="CodeShare.DataAccess">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.Utilities;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeShare.DataAccess
 {
+    /// <summary>
+    /// Class DataContext.
+    /// Implements the <see cref="Microsoft.EntityFrameworkCore.DbContext" />
+    /// </summary>
+    /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
     public class DataContext : DbContext
     {
+        /// <summary>
+        /// Gets the connection string.
+        /// </summary>
+        /// <value>The connection string.</value>
         public string ConnectionString { get; private set; }
+        /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
+        /// <value>The users.</value>
         public virtual DbSet<User> Users { get; set; }
+        /// <summary>
+        /// Gets or sets the friendships.
+        /// </summary>
+        /// <value>The friendships.</value>
+        public virtual DbSet<Friendship> Friendships { get; set; }
+        /// <summary>
+        /// Gets or sets the codes.
+        /// </summary>
+        /// <value>The codes.</value>
         public virtual DbSet<Code> Codes { get; set; }
+        /// <summary>
+        /// Gets or sets the code languages.
+        /// </summary>
+        /// <value>The code languages.</value>
         public virtual DbSet<CodeLanguage> CodeLanguages { get; set; }
+        /// <summary>
+        /// Gets or sets the questions.
+        /// </summary>
+        /// <value>The questions.</value>
         public virtual DbSet<Question> Questions { get; set; }
+        /// <summary>
+        /// Gets or sets the code files.
+        /// </summary>
+        /// <value>The code files.</value>
         public virtual DbSet<CodeFile> CodeFiles { get; set; }
+        /// <summary>
+        /// Gets or sets the comments.
+        /// </summary>
+        /// <value>The comments.</value>
         public virtual DbSet<Comment> Comments { get; set; }
+        /// <summary>
+        /// Gets or sets the code comment sections.
+        /// </summary>
+        /// <value>The code comment sections.</value>
+        public virtual DbSet<CodeCommentSection> CodeCommentSections { get; set; }
+        /// <summary>
+        /// Gets or sets the question comment sections.
+        /// </summary>
+        /// <value>The question comment sections.</value>
+        public virtual DbSet<QuestionCommentSection> QuestionCommentSections { get; set; }
+        /// <summary>
+        /// Gets or sets the code ratings.
+        /// </summary>
+        /// <value>The code ratings.</value>
+        public virtual DbSet<CodeRatingCollection> CodeRatings { get; set; }
+        /// <summary>
+        /// Gets or sets the question ratings.
+        /// </summary>
+        /// <value>The question ratings.</value>
+        public virtual DbSet<QuestionRatingCollection> QuestionRatings { get; set; }
+        /// <summary>
+        /// Gets or sets the ratings.
+        /// </summary>
+        /// <value>The ratings.</value>
+        public virtual DbSet<Rating> Ratings { get; set; }
+        /// <summary>
+        /// Gets or sets the reports.
+        /// </summary>
+        /// <value>The reports.</value>
         public virtual DbSet<Report> Reports { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataContext"/> class.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
         public DataContext(string connectionString = @"Server=donau.hiof.no;Database=thomaang;Persist Security Info=True;User ID=thomaang;Password=St5hdA")
         {
             ConnectionString = connectionString;
         }
 
+        /// <summary>
+        /// <para>
+        /// Override this method to configure the database (and other options) to be used for this context.
+        /// This method is called for each instance of the context that is created.
+        /// The base implementation does nothing.
+        /// </para>
+        /// <para>
+        /// In situations where an instance of <see cref="T:Microsoft.EntityFrameworkCore.DbContextOptions" /> may or may not have been passed
+        /// to the constructor, you can use <see cref="P:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.IsConfigured" /> to determine if
+        /// the options have already been set, and skip some or all of the logic in
+        /// <see cref="M:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)" />.
+        /// </para>
+        /// </summary>
+        /// <param name="optionsBuilder">A builder used to create or modify options for this context. Databases (and other extensions)
+        /// typically define extension methods on this object that allow you to configure the context.</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging();
         }
 
+        /// <summary>
+        /// Override this method to further configure the model that was discovered by convention from the entity types
+        /// exposed in <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1" /> properties on your derived context. The resulting model may be cached
+        /// and re-used for subsequent instances of your derived context.
+        /// </summary>
+        /// <param name="modelBuilder">The builder being used to construct the model for this context. Databases (and other extensions) typically
+        /// define extension methods on this object that allow you to configure aspects of the model that are specific
+        /// to a given database.</param>
+        /// <remarks>If a model is explicitly set on the options for this context (via <see cref="M:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel(Microsoft.EntityFrameworkCore.Metadata.IModel)" />)
+        /// then this method will not be run.</remarks>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Logger.WriteLine($"Creating model for Context...");
+            Logger.WriteLine("Creating model for data context...");
 
             #region Logs
             Logger.WriteLine($"Creating model for {typeof(Log).Name} class.");
@@ -98,7 +205,6 @@ namespace CodeShare.DataAccess
             #region Images
 
             Logger.WriteLine($"Creating model for {typeof(WebFile).Name} class.");
-            modelBuilder.Entity<WebFile>().ToTable($"{typeof(WebFile).Name}s");
             modelBuilder.Entity<WebFile>().HasKey(e => e.Uid);
 
             Logger.WriteLine($"Creating model for {typeof(WebImage).Name} class.");
@@ -114,12 +220,12 @@ namespace CodeShare.DataAccess
                     crop.Property(c => c.Y).HasColumnName("Crop_Y");
                 });
 
-            Logger.WriteLine($"Creating model for {typeof(ProfilePicture).Name} class.");
-            modelBuilder.Entity<ProfilePicture>().ToTable($"{typeof(ProfilePicture).Name}s");
-            modelBuilder.Entity<ProfilePicture>().HasBaseType<WebImage>();
-            modelBuilder.Entity<ProfilePicture>()
+            Logger.WriteLine($"Creating model for {typeof(UserAvatar).Name} class.");
+            modelBuilder.Entity<UserAvatar>().ToTable($"{typeof(UserAvatar).Name}s");
+            modelBuilder.Entity<UserAvatar>().HasBaseType<WebImage>();
+            modelBuilder.Entity<UserAvatar>()
                 .HasOne(e => e.User)
-                .WithMany(e => e.ProfilePictures)
+                .WithMany(e => e.Avatars)
                 .HasForeignKey(e => e.UserUid);
 
             Logger.WriteLine($"Creating model for {typeof(UserBanner).Name} class.");
@@ -204,13 +310,21 @@ namespace CodeShare.DataAccess
                 .WithOne(c => c.User)
                 .HasForeignKey(c => c.UserUid);
             modelBuilder.Entity<User>()
-                .HasMany(c => c.ProfilePictures)
-                .WithOne(c => c.User)
-                .HasForeignKey(c => c.UserUid);
+                .HasMany(p => p.Avatars)
+                .WithOne(d => d.User)
+                .HasForeignKey(d => d.UserUid);
             modelBuilder.Entity<User>()
-                .HasMany(c => c.Banners)
-                .WithOne(c => c.User)
-                .HasForeignKey(c => c.UserUid);
+                .HasOne(e => e.Avatar)
+                .WithOne()
+                .HasForeignKey<User>(e => e.AvatarUid);
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Banners)
+                .WithOne(d => d.User)
+                .HasForeignKey(d => d.UserUid);
+            modelBuilder.Entity<User>()
+                .HasOne(e => e.Banner)
+                .WithOne()
+                .HasForeignKey<User>(e => e.BannerUid);
             modelBuilder.Entity<User>().OwnsOne(x => x.Email,
                 email =>
                 {
@@ -242,7 +356,7 @@ namespace CodeShare.DataAccess
 
             modelBuilder.Entity<Friendship>()
                 .HasOne(a => a.Confirmer)
-                .WithMany(b => b.ReceievedFriendRequests)
+                .WithMany(b => b.ReceivedFriendRequests)
                 .HasForeignKey(c => c.ConfirmerUid)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -266,29 +380,29 @@ namespace CodeShare.DataAccess
                 .WithOne(c => c.Code)
                 .HasForeignKey(l => l.CodeUid);
             modelBuilder.Entity<Code>()
-                .HasMany(c => c.Banners)
-                .WithOne(c => c.Code)
-                .HasForeignKey(c => c.CodeUid);
+                .HasMany(p => p.Banners)
+                .WithOne(d => d.Code)
+                .HasForeignKey(d => d.CodeUid);
             modelBuilder.Entity<Code>()
-                .HasMany(c => c.Screenshots)
-                .WithOne(c => c.Code)
-                .HasForeignKey(c => c.CodeUid);
+                .HasOne(e => e.Banner)
+                .WithOne()
+                .HasForeignKey<Code>(e => e.BannerUid);
+            modelBuilder.Entity<Code>()
+                .HasMany(p => p.Screenshots)
+                .WithOne(d => d.Code)
+                .HasForeignKey(d => d.CodeUid);
             modelBuilder.Entity<Code>()
                 .HasOne(c => c.CommentSection)
                 .WithOne(l => l.Code)
                 .HasForeignKey<CodeCommentSection>(c => c.CodeUid);
-            //modelBuilder.Entity<Code>()
-            //    .HasMany(c => c.Replies)
-            //    .WithOne(c => c.Code)
-            //    .HasForeignKey(c => c.CodeUid);
             modelBuilder.Entity<Code>()
                 .HasMany(c => c.Videos)
                 .WithOne(c => c.Code)
                 .HasForeignKey(c => c.CodeUid);
             modelBuilder.Entity<Code>()
-                .HasMany(c => c.Ratings)
-                .WithOne(c => c.Code)
-                .HasForeignKey(c => c.CodeUid);
+                .HasOne(e => e.RatingCollection)
+                .WithOne(e => e.Code)
+                .HasForeignKey<CodeRatingCollection>(e => e.CodeUid);
 
             Logger.WriteLine($"Creating model for {typeof(CodeFile).Name} class.");
             modelBuilder.Entity<CodeFile>().ToTable($"{typeof(CodeFile).Name}s");
@@ -301,6 +415,46 @@ namespace CodeShare.DataAccess
                 .HasOne(c => c.CodeLanguage)
                 .WithMany()
                 .HasForeignKey(c => c.CodeLanguageUid);
+
+            #endregion
+
+            #region Question
+
+            Logger.WriteLine($"Creating model for {typeof(Question).Name} class.");
+            modelBuilder.Entity<Question>().ToTable($"{typeof(Question).Name}s");
+            modelBuilder.Entity<Question>().HasKey(e => e.Uid);
+            modelBuilder.Entity<Question>()
+                .HasMany(c => c.Logs)
+                .WithOne(l => l.Question)
+                .HasForeignKey(c => c.QuestionUid);
+            modelBuilder.Entity<Question>()
+                .HasOne(q => q.Solution)
+                .WithMany()
+                .HasForeignKey(q => q.SolutionUid);
+            modelBuilder.Entity<Question>()
+                .HasOne(q => q.User)
+                .WithMany(u => u.Questions)
+                .HasForeignKey(q => q.UserUid);
+            modelBuilder.Entity<Question>()
+                .HasOne(q => q.CodeLanguage)
+                .WithMany()
+                .HasForeignKey(q => q.CodeLanguageUid);
+            modelBuilder.Entity<Question>()
+                .HasMany(p => p.Screenshots)
+                .WithOne(d => d.Question)
+                .HasForeignKey(d => d.QuestionUid);
+            modelBuilder.Entity<Question>()
+                .HasOne(c => c.CommentSection)
+                .WithOne(l => l.Question)
+                .HasForeignKey<QuestionCommentSection>(c => c.QuestionUid);
+            modelBuilder.Entity<Question>()
+                .HasMany(c => c.Videos)
+                .WithOne(c => c.Question)
+                .HasForeignKey(c => c.QuestionUid);
+            modelBuilder.Entity<Question>()
+                .HasOne(e => e.RatingCollection)
+                .WithOne(e => e.Question)
+                .HasForeignKey<QuestionRatingCollection>(e => e.QuestionUid);
 
             #endregion
 
@@ -350,49 +504,9 @@ namespace CodeShare.DataAccess
                 .WithOne(e => e.Comment)
                 .HasForeignKey(e => e.CommentUid);
             modelBuilder.Entity<Comment>()
-                .HasMany(e => e.Ratings)
+                .HasOne(e => e.RatingCollection)
                 .WithOne(e => e.Comment)
-                .HasForeignKey(e => e.CommentUid);
-
-            #endregion
-
-            #region Question
-
-            Logger.WriteLine($"Creating model for {typeof(Question).Name} class.");
-            modelBuilder.Entity<Question>().ToTable($"{typeof(Question).Name}s");
-            modelBuilder.Entity<Question>().HasKey(e => e.Uid);
-            modelBuilder.Entity<Question>()
-                .HasMany(c => c.Logs)
-                .WithOne(l => l.Question)
-                .HasForeignKey(c => c.QuestionUid);
-            modelBuilder.Entity<Question>()
-                .HasOne(q => q.Solution)
-                .WithMany()
-                .HasForeignKey(q => q.SolutionUid);
-            modelBuilder.Entity<Question>()
-                .HasOne(q => q.User)
-                .WithMany(u => u.Questions)
-                .HasForeignKey(q => q.UserUid);
-            modelBuilder.Entity<Question>()
-                .HasOne(q => q.CodeLanguage)
-                .WithMany()
-                .HasForeignKey(q => q.CodeLanguageUid);
-            modelBuilder.Entity<Question>()
-                .HasMany(c => c.Screenshots)
-                .WithOne(c => c.Question)
-                .HasForeignKey(c => c.QuestionUid);
-            modelBuilder.Entity<Question>()
-                .HasOne(c => c.CommentSection)
-                .WithOne(l => l.Question)
-                .HasForeignKey<QuestionCommentSection>(c => c.QuestionUid);
-            modelBuilder.Entity<Question>()
-                .HasMany(c => c.Videos)
-                .WithOne(c => c.Question)
-                .HasForeignKey(c => c.QuestionUid);
-            modelBuilder.Entity<Question>()
-                .HasMany(c => c.Ratings)
-                .WithOne(c => c.Question)
-                .HasForeignKey(c => c.QuestionUid);
+                .HasForeignKey<CommentRatingCollection>(e => e.CommentUid);
 
             #endregion
 
@@ -403,32 +517,42 @@ namespace CodeShare.DataAccess
             modelBuilder.Entity<Rating>().HasKey(e => e.Uid);
             modelBuilder.Entity<Rating>()
                 .HasOne(c => c.User)
-                .WithMany()
+                .WithMany(u => u.Ratings)
                 .HasForeignKey(c => c.UserUid);
+            modelBuilder.Entity<Rating>()
+                .Property(e => e.Value)
+                .HasConversion<int>();
 
-            Logger.WriteLine($"Creating model for {typeof(CodeRating).Name} class.");
-            modelBuilder.Entity<CodeRating>().ToTable($"{typeof(CodeRating).Name}s");
-            modelBuilder.Entity<CodeRating>().HasBaseType<Rating>();
-            modelBuilder.Entity<CodeRating>()
+            modelBuilder.Entity<RatingCollection>().ToTable($"{typeof(RatingCollection).Name}s");
+            modelBuilder.Entity<RatingCollection>().HasKey(e => e.Uid);
+            modelBuilder.Entity<RatingCollection>()
+                .HasMany(c => c.Ratings)
+                .WithOne()
+                .HasForeignKey(c => c.RatingsUid);
+
+            Logger.WriteLine($"Creating model for {typeof(CodeRatingCollection).Name} class.");
+            modelBuilder.Entity<CodeRatingCollection>().ToTable($"{typeof(CodeRatingCollection).Name}s");
+            modelBuilder.Entity<CodeRatingCollection>().HasBaseType<RatingCollection>();
+            modelBuilder.Entity<CodeRatingCollection>()
                 .HasOne(c => c.Code)
-                .WithMany(c => c.Ratings)
-                .HasForeignKey(c => c.CodeUid);
+                .WithOne(l => l.RatingCollection)
+                .HasForeignKey<Code>(c => c.RatingCollectionUid);
 
-            Logger.WriteLine($"Creating model for {typeof(QuestionRating).Name} class.");
-            modelBuilder.Entity<QuestionRating>().ToTable($"{typeof(QuestionRating).Name}s");
-            modelBuilder.Entity<QuestionRating>().HasBaseType<Rating>();
-            modelBuilder.Entity<QuestionRating>()
+            Logger.WriteLine($"Creating model for {typeof(QuestionRatingCollection).Name} class.");
+            modelBuilder.Entity<QuestionRatingCollection>().ToTable($"{typeof(QuestionRatingCollection).Name}s");
+            modelBuilder.Entity<QuestionRatingCollection>().HasBaseType<RatingCollection>();
+            modelBuilder.Entity<QuestionRatingCollection>()
                 .HasOne(c => c.Question)
-                .WithMany(c => c.Ratings)
-                .HasForeignKey(c => c.QuestionUid);
+                .WithOne(l => l.RatingCollection)
+                .HasForeignKey<Question>(c => c.RatingCollectionUid);
 
-            Logger.WriteLine($"Creating model for {typeof(CommentRating).Name} class.");
-            modelBuilder.Entity<CommentRating>().ToTable($"{typeof(CommentRating).Name}s");
-            modelBuilder.Entity<CommentRating>().HasBaseType<Rating>();
-            modelBuilder.Entity<CommentRating>()
+            Logger.WriteLine($"Creating model for {typeof(CommentRatingCollection).Name} class.");
+            modelBuilder.Entity<CommentRatingCollection>().ToTable($"{typeof(QuestionRatingCollection).Name}s");
+            modelBuilder.Entity<CommentRatingCollection>().HasBaseType<RatingCollection>();
+            modelBuilder.Entity<CommentRatingCollection>()
                 .HasOne(c => c.Comment)
-                .WithMany(c => c.Ratings)
-                .HasForeignKey(c => c.CommentUid);
+                .WithOne(l => l.RatingCollection)
+                .HasForeignKey<Comment>(c => c.RatingsUid);
 
             #endregion
 

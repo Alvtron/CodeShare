@@ -1,8 +1,19 @@
-﻿using CodeShare.Utilities;
-using CodeShare.Uwp.Services;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-24-2019
+// ***********************************************************************
+// <copyright file="App.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Utilities;
 using CodeShare.Uwp.Views;
 using System;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -14,8 +25,12 @@ namespace CodeShare.Uwp
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
+    /// Implements the <see cref="Windows.UI.Xaml.Application" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IXamlMetadataProvider" />
     /// </summary>
-    sealed partial class App : Application
+    /// <seealso cref="Windows.UI.Xaml.Application" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IXamlMetadataProvider" />
+    sealed partial class App
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -73,6 +88,7 @@ namespace CodeShare.Uwp
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
+        /// <exception cref="Exception">Failed to load Page " + e.SourcePageType.FullName</exception>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);

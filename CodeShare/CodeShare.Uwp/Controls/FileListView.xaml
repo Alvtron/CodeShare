@@ -5,21 +5,16 @@
     xmlns:local="using:CodeShare.Uwp.Controls"
     xmlns:model="using:CodeShare.Model"
     xmlns:controls="using:CodeShare.Uwp.Controls"
-    xmlns:converters="using:CodeShare.Uwp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <UserControl.Resources>
-        <converters:VisibilityConverter x:Key="VisibillityConverter" />
-    </UserControl.Resources>
-
     <SplitView DisplayMode="Inline" IsPaneOpen="True" PaneBackground="Transparent">
         <SplitView.Pane>
             <StackPanel VerticalAlignment="Stretch" Spacing="10">
-                <TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource SystemControlPageTextBaseMediumBrush}">
                     <Run Text="{x:Bind CodeFiles.Count, Mode=OneWay}" />
                     <Run Text="file(s)" />
                 </TextBlock>

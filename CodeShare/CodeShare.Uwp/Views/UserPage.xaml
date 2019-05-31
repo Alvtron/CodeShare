@@ -2,25 +2,21 @@
     x:Class="CodeShare.Uwp.Views.UserPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CodeShare.Uwp"
-    xmlns:Model="using:CodeShare.Model"
     xmlns:xaml="using:CodeShare.Uwp.Xaml"
     xmlns:controls="using:CodeShare.Uwp.Controls"
-    xmlns:Converters="using:CodeShare.Uwp.Converters"
+    xmlns:converters="using:CodeShare.Uwp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    x:Name="ViewModelRoot">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <Converters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeConverter" />
-        <Converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <Converters:ImageConverter x:Key="ImageConverter" />
-        <Converters:VisibilityConverter x:Key="VisibillityConverter" />
-        <Converters:InverseVisibilityConverter x:Key="BooleanInverter" />
-        <Converters:ExperienceConverter x:Key="ExperienceConverter" />
-        <Converters:ColorConverter x:Key="ColorConverter" />
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:ImageConverter x:Key="ImageConverter" />
+        <converters:VisibilityConverter x:Key="VisibilityConverter" />
+        <converters:InverseVisibilityConverter x:Key="BooleanInverter" />
+        <converters:ExperienceConverter x:Key="ExperienceConverter" />
+        <converters:ColorConverter x:Key="ColorConverter" />
     </Page.Resources>
 
     <ScrollViewer>
@@ -32,15 +28,17 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200" />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <!-- Banner -->
                 <Image
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     Height="200"
-                    Source="{x:Bind ViewModel.Model.Banner.Url, Converter={StaticResource ImageConverter}, Mode=OneWay}"
+                    Source="{x:Bind ViewModel.Model.Banner, Converter={StaticResource ImageConverter}, Mode=OneWay}"
                     Stretch="UniformToFill"
-                    Visibility="{x:Bind ViewModel.Model.HasBanners, Converter={StaticResource VisibillityConverter}, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.Model.HasBanner, Converter={StaticResource VisibilityConverter}, Mode=OneWay}"
                     RelativePanel.AlignTopWithPanel="True"
                     RelativePanel.AlignHorizontalCenterWithPanel="True" />
                 <PersonPicture
@@ -51,7 +49,7 @@
                     VerticalAlignment="Bottom"
                     Width="200"
                     Height="200"
-                    ProfilePicture="{x:Bind ViewModel.Model.ProfilePicture.Url, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+                    ProfilePicture="{x:Bind ViewModel.Model.Avatar, Mode=OneWay, Converter={StaticResource ImageConverter}}"
                     Initials="{x:Bind ViewModel.Model.Initials, Mode=OneWay}" />
                 <StackPanel
                     Grid.Row="0"
@@ -60,20 +58,43 @@
                     VerticalAlignment="Bottom">
                     <StackPanel Orientation="Horizontal" Spacing="12">
                         <!-- Username -->
-                        <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" FontSize="48"/>
-                        <!-- Add friend, report -->
-                        <Button
-                            Command="{x:Bind ViewModel.BefriendCommand}"
-                            Background="Transparent"
-                            Margin="0,0,0,-10"
-                            Visibility="{x:Bind ViewModel.IsUserAuthor, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
-                            <SymbolIcon Symbol="AddFriend" />
-                        </Button>
+                        <TextBlock Text="{x:Bind ViewModel.Model.Name, Mode=OneWay}" Foreground="White" Style="{StaticResource HeaderTextBlockStyle}"/>
+                        <!-- level -->
+                        <TextBlock VerticalAlignment="Center" Foreground="{StaticResource SystemControlBackgroundAccentBrush}">
+                            <Run Text="level" />
+                            <Run Text="{x:Bind ViewModel.Model.CurrentLevel, Mode=OneWay}"/>
+                        </TextBlock>
+                        <!-- Add friend -->
+                        <Grid Visibility="{x:Bind ViewModel.IsUserAdmin, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <Button
+                                Grid.RowSpan="2"
+                                Grid.ColumnSpan="2"
+                                Command="{x:Bind ViewModel.BefriendCommand}"
+                                Background="Transparent">
+                                <SymbolIcon Symbol="People" />
+                            </Button>
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <Viewbox Width="10" Height="10" Visibility="{x:Bind ViewModel.IsFriendOrPendingFriend, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
+                                    <SymbolIcon Symbol="Add" />
+                                </Viewbox>
+                                <Viewbox Width="10" Height="10" Visibility="{x:Bind ViewModel.IsFriendOrPendingFriend, Mode=OneWay}">
+                                    <SymbolIcon Symbol="Remove" />
+                                </Viewbox>
+                            </Grid>
+                        </Grid>
+                        <!-- Report -->
                         <Button
                             Command="{x:Bind ViewModel.ReportCommand}"
                             Background="Transparent"
-                            Margin="0,0,0,-10"
-                            Visibility="{x:Bind ViewModel.IsUserAuthor, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
+                            Visibility="{x:Bind ViewModel.IsUserAdmin, Mode=OneWay, Converter={StaticResource BooleanInverter}}">
                             <SymbolIcon Symbol="Flag" />
                         </Button>
                     </StackPanel>
@@ -83,10 +104,10 @@
                             <ProgressBar
                                 Height="20"
                                 Value="{x:Bind ViewModel.Model.Experience, Mode=OneWay, Converter={StaticResource ExperienceConverter}}"
+                                Minimum="0"
                                 Maximum="100"
                                 VerticalAlignment="Top"
-                                Background="Gray"
-                                Foreground="{x:Bind ViewModel.Model.Color, Mode=OneWay, Converter={StaticResource ColorConverter}}"/>
+                                Foreground="{StaticResource SystemControlForegroundAccentBrush}"/>
                         </Border>
                         <TextBlock
                             HorizontalAlignment="Center"
@@ -126,7 +147,7 @@
                             <!-- Country -->
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Country" />
                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Model.Country, Mode=OneWay}" />
-                            <!-- Birtday -->
+                            <!-- Birthday -->
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="Birthday" />
                             <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Model.Birthday, Mode=OneWay, ConverterParameter='MMMMM dd yyyy', Converter={StaticResource DateTimeToStringConverter}}" />
                             <!-- Website -->
@@ -137,7 +158,7 @@
                                 </Hyperlink>
                             </TextBlock>
                             <!-- Bio -->
-                            <StackPanel Grid.Row="5" Grid.ColumnSpan="2">
+                            <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                                 <xaml:RichTextBox Header="Bio" Rtf="{x:Bind ViewModel.Model.Bio, Mode=OneWay}" />
                             </StackPanel>
                         </Grid>

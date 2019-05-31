@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="StorageUtilities.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,19 +24,25 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace CodeShare.Uwp.Utilities
 {
     /// <summary>
-    /// 
+    /// Class StorageUtilities.
     /// </summary>
     public static class StorageUtilities
     {
+        /// <summary>
+        /// Gets the application folder.
+        /// </summary>
+        /// <value>The application folder.</value>
         public static StorageFolder AppFolder => ApplicationData.Current.LocalFolder;
+        /// <summary>
+        /// Gets the installation folder.
+        /// </summary>
+        /// <value>The installation folder.</value>
         public static StorageFolder InstallationFolder => Windows.ApplicationModel.Package.Current.InstalledLocation;
 
         /// <summary>
         /// Gets the image picker.
         /// </summary>
-        /// <value>
-        /// The image picker.
-        /// </value>
+        /// <value>The image picker.</value>
         public static Windows.Storage.Pickers.FileOpenPicker ImagePicker => new Windows.Storage.Pickers.FileOpenPicker
         {
             ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
@@ -31,6 +50,10 @@ namespace CodeShare.Uwp.Utilities
             FileTypeFilter = { ".jpg", ".jpeg", ".png", ".gif" }
         };
 
+        /// <summary>
+        /// Gets the file picker.
+        /// </summary>
+        /// <value>The file picker.</value>
         public static Windows.Storage.Pickers.FileOpenPicker FilePicker => new Windows.Storage.Pickers.FileOpenPicker
         {
             ViewMode = Windows.Storage.Pickers.PickerViewMode.List,
@@ -38,6 +61,10 @@ namespace CodeShare.Uwp.Utilities
             FileTypeFilter = {"*"}
         };
 
+        /// <summary>
+        /// Gets the save picker.
+        /// </summary>
+        /// <value>The save picker.</value>
         public static Windows.Storage.Pickers.FileSavePicker SavePicker
         {
             get
@@ -53,6 +80,10 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
+        /// <summary>
+        /// Gets the folder picker.
+        /// </summary>
+        /// <value>The folder picker.</value>
         public static Windows.Storage.Pickers.FolderPicker FolderPicker
         {
             get
@@ -67,24 +98,60 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
-        internal static async Task SaveWebFileToStorageFolder(WebFile webFile, StorageFolder storageFolder)
+        /// <summary>
+        /// Saves the web file to storage folder.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="webFile">The web file.</param>
+        /// <param name="storageFolder">The storage folder.</param>
+        /// <returns>Task.</returns>
+        internal static async Task SaveWebFileToStorageFolder<T>(T webFile, StorageFolder storageFolder) where T : class, IWebFile, new()
         {
-            StorageFile sampleFile = await storageFolder.CreateFileAsync(webFile.Path, CreationCollisionOption.GenerateUniqueName);
+            var sampleFile = await storageFolder.CreateFileAsync(webFile.Path, CreationCollisionOption.GenerateUniqueName);
             await FileIO.WriteBytesAsync(sampleFile, await webFile.DownloadAsync());
         }
 
+        /// <summary>
+        /// Picks the multiple images.
+        /// </summary>
+        /// <returns>Task&lt;IReadOnlyList&lt;StorageFile&gt;&gt;.</returns>
         public static async Task<IReadOnlyList<StorageFile>> PickMultipleImages() => await ImagePicker.PickMultipleFilesAsync();
 
+        /// <summary>
+        /// Picks the single image.
+        /// </summary>
+        /// <returns>Task&lt;StorageFile&gt;.</returns>
         public static async Task<StorageFile> PickSingleImage() => await ImagePicker.PickSingleFileAsync();
 
+        /// <summary>
+        /// Picks the single file.
+        /// </summary>
+        /// <returns>Task&lt;StorageFile&gt;.</returns>
         public static async Task<StorageFile> PickSingleFile() => await FilePicker.PickSingleFileAsync();
 
+        /// <summary>
+        /// Picks the multiple files.
+        /// </summary>
+        /// <returns>Task&lt;IReadOnlyList&lt;StorageFile&gt;&gt;.</returns>
         public static async Task<IReadOnlyList<StorageFile>> PickMultipleFiles() => await FilePicker.PickMultipleFilesAsync();
 
+        /// <summary>
+        /// Picks the file destination.
+        /// </summary>
+        /// <returns>Task&lt;StorageFile&gt;.</returns>
         public static async Task<StorageFile> PickFileDestination() => await SavePicker.PickSaveFileAsync();
 
+        /// <summary>
+        /// Picks the folder destination.
+        /// </summary>
+        /// <returns>Task&lt;StorageFolder&gt;.</returns>
         public static async Task<StorageFolder> PickFolderDestination() => await FolderPicker.PickSingleFolderAsync();
 
+        /// <summary>
+        /// Gets the storage file.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns>Task&lt;StorageFile&gt;.</returns>
         public static async Task<StorageFile> GetStorageFile(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
@@ -103,6 +170,11 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
+        /// <summary>
+        /// Gets the storage folder.
+        /// </summary>
+        /// <param name="folderPath">The folder path.</param>
+        /// <returns>Task&lt;StorageFolder&gt;.</returns>
         public static async Task<StorageFolder> GetStorageFolder(string folderPath)
         {
             if (string.IsNullOrWhiteSpace(folderPath))
@@ -121,6 +193,11 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
+        /// <summary>
+        /// Converts the file to bitmap image.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns>BitmapImage.</returns>
         public static BitmapImage ConvertFileToBitmapImage(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
@@ -138,7 +215,7 @@ namespace CodeShare.Uwp.Utilities
         /// Files to byte array.
         /// </summary>
         /// <param name="filePath">The filepath.</param>
-        /// <returns></returns>
+        /// <returns>System.Byte[].</returns>
         public static byte[] ConvertFileToByteArray(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
@@ -156,6 +233,11 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
+        /// <summary>
+        /// Converts the file to string.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns>System.String.</returns>
         public static string ConvertFileToString(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
@@ -175,6 +257,11 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
+        /// <summary>
+        /// Converts the storage file to bitmap image.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>Task&lt;BitmapImage&gt;.</returns>
         public static async Task<BitmapImage> ConvertStorageFileToBitmapImage(StorageFile file)
         {
             if (file == null)
@@ -196,7 +283,7 @@ namespace CodeShare.Uwp.Utilities
         /// Convert from storage file to byte array.
         /// </summary>
         /// <param name="savedStorageFile">The saved storage file.</param>
-        /// <returns></returns>
+        /// <returns>Task&lt;System.Byte[]&gt;.</returns>
         public static async Task<byte[]> ConvertStorageFileToByteArrayAsync(StorageFile savedStorageFile)
         {
             using (var stream = await savedStorageFile.OpenStreamForReadAsync())
@@ -211,7 +298,7 @@ namespace CodeShare.Uwp.Utilities
         /// Bitmaps the image to byte array.
         /// </summary>
         /// <param name="bitmapImage">The bitmap image.</param>
-        /// <returns></returns>
+        /// <returns>Task&lt;System.Byte[]&gt;.</returns>
         public static async Task<byte[]> ConvertBitmapImageToByteArrayAsync(BitmapImage bitmapImage)
         {
             var file = await StorageFile.GetFileFromApplicationUriAsync(bitmapImage.UriSource);
@@ -229,7 +316,7 @@ namespace CodeShare.Uwp.Utilities
         /// Bytes the array to bitmap image.
         /// </summary>
         /// <param name="bytes">The bytes.</param>
-        /// <returns></returns>
+        /// <returns>BitmapImage.</returns>
         public static BitmapImage ConvertByteArrayToBitmapImage(byte[] bytes)
         {
             using (var ms = new InMemoryRandomAccessStream())

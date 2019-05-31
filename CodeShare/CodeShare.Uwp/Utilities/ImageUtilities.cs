@@ -1,4 +1,17 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="ImageUtilities.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using System;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -11,9 +24,18 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace CodeShare.Uwp.Utilities
 {
+    /// <summary>
+    /// Class ImageUtilities.
+    /// </summary>
     public class ImageUtilities
     {
-        public static async Task<T> CreateNewImageAsync<T>(StorageFile storageFile, string description = "") where T : class, IWebImage, ICroppableImage, new()
+        /// <summary>
+        /// create new image as an asynchronous operation.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="storageFile">The storage file.</param>
+        /// <returns>Task&lt;T&gt;.</returns>
+        public static async Task<T> CreateNewImageAsync<T>(StorageFile storageFile) where T : WebImage
         {
             var imageInBytes = await StorageUtilities.ConvertStorageFileToByteArrayAsync(storageFile);
 
@@ -31,6 +53,12 @@ namespace CodeShare.Uwp.Utilities
             }
         }
 
+        /// <summary>
+        /// Webs the image to cropped image.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="webImage">The web image.</param>
+        /// <returns>Task&lt;ImageSource&gt;.</returns>
         public static async Task<ImageSource> WebImageToCroppedImage<T>(T webImage) where T : WebImage, ICroppableImage
         {
             // Convert start point and size to unsigned integer. 
@@ -40,7 +68,7 @@ namespace CodeShare.Uwp.Utilities
             uint width = (uint)webImage.Crop.Width;
 
             var bitmap = new BitmapImage(webImage.Url);
-            var randomAccessStreamReference = RandomAccessStreamReference.CreateFromUri(bitmap.UriSour‌​ce);
+            var randomAccessStreamReference = RandomAccessStreamReference.CreateFromUri(bitmap.UriSource);
 
             using (var stream = await randomAccessStreamReference.OpenReadAsync())
             {

@@ -1,49 +1,58 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 02-03-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="QuestionAuthorBlock.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
 using CodeShare.Uwp.Views;
 using System.Windows.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using CodeShare.Uwp.ViewModels;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class QuestionAuthorBlock : UserControl
+    /// <summary>
+    /// Class QuestionAuthorBlock. This class cannot be inherited.
+    /// Implements the <see cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    public sealed partial class QuestionAuthorBlock
     {
-        public static readonly DependencyProperty QuestionProperty = DependencyProperty.Register("Question", typeof(Question), typeof(QuestionAuthorBlock), new PropertyMetadata(default(Question)));
+        /// <summary>
+        /// The view model property
+        /// </summary>
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(QuestionViewModel), typeof(QuestionAuthorBlock), new PropertyMetadata(default(QuestionViewModel)));
 
-        public Question Question
+        /// <summary>
+        /// Gets or sets the view model.
+        /// </summary>
+        /// <value>The view model.</value>
+        public QuestionViewModel ViewModel
         {
-            get => GetValue(QuestionProperty) as Question;
-            set
-            {
-                SetValue(QuestionProperty, value);
-
-                IsUserAuthor = AuthService.CurrentUser == null
-                    ? IsUserAuthor = false
-                    : value.UserUid.Equals(AuthService.CurrentUser.Uid);
-            }
+            get => GetValue(ViewModelProperty) as QuestionViewModel;
+            set => SetValue(ViewModelProperty, value);
         }
 
-        private bool IsUserAuthor
-        {
-            get => EditButton.Visibility == Visibility.Visible; 
-            set => EditButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private RelayCommand _editCommand;
-        public ICommand EditCommand => _editCommand = _editCommand ?? new RelayCommand(param => Edit());
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QuestionAuthorBlock"/> class.
+        /// </summary>
         public QuestionAuthorBlock()
         {
-            this.InitializeComponent();
-        }
-
-        public void Edit()
-        {
-             NavigationService.Navigate(typeof(QuestionSettingsPage), Question, $"{Question.Name} Settings");
+            InitializeComponent();
         }
     }
 }

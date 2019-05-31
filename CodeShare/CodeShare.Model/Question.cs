@@ -1,66 +1,160 @@
-﻿using CodeShare.Extensions;
-using CodeShare.Utilities;
-using Newtonsoft.Json;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Model
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="Question.cs" company="CodeShare.Model">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace CodeShare.Model
 {
-    public class Question : Entity, IContent, ILikeable<QuestionRating>
+    /// <summary>
+    /// Class Question. This class cannot be inherited.
+    /// Implements the <see cref="CodeShare.Model.Entity" />
+    /// Implements the <see cref="CodeShare.Model.IContent" />
+    /// </summary>
+    /// <seealso cref="CodeShare.Model.Entity" />
+    /// <seealso cref="CodeShare.Model.IContent" />
+    public sealed class Question : Entity, IContent
     {
         #region Properties
+        /// <summary>
+        /// The name
+        /// </summary>
         private string _name;
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>The name.</value>
         public string Name
         {
             get => _name;
             set => SetField(ref _name, value);
         }
+        /// <summary>
+        /// The views
+        /// </summary>
         private int _views;
+        /// <summary>
+        /// Gets or sets the views.
+        /// </summary>
+        /// <value>The views.</value>
         public int Views
         {
             get => _views;
             set => SetField(ref _views, value);
         }
+        /// <summary>
+        /// The text
+        /// </summary>
         private string _text;
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <value>The text.</value>
         public string Text
         {
             get => _text;
             set => SetField(ref _text, value);
         }
-        public virtual CodeLanguage CodeLanguage { get; set; }
+        /// <summary>
+        /// Gets or sets the code language.
+        /// </summary>
+        /// <value>The code language.</value>
+        public CodeLanguage CodeLanguage { get; set; }
+        /// <summary>
+        /// Gets or sets the code language uid.
+        /// </summary>
+        /// <value>The code language uid.</value>
         public Guid? CodeLanguageUid { get; set; }
-        public virtual User User { get; set; }
+        /// <summary>
+        /// Gets or sets the user.
+        /// </summary>
+        /// <value>The user.</value>
+        public User User { get; set; }
+        /// <summary>
+        /// Gets or sets the user uid.
+        /// </summary>
+        /// <value>The user uid.</value>
         public Guid? UserUid { get; set; }
-        public virtual Comment Solution { get; set; }
+        /// <summary>
+        /// Gets or sets the solution.
+        /// </summary>
+        /// <value>The solution.</value>
+        public Comment Solution { get; set; }
+        /// <summary>
+        /// Gets or sets the solution uid.
+        /// </summary>
+        /// <value>The solution uid.</value>
         public Guid? SolutionUid { get; set; }
+        /// <summary>
+        /// Gets or sets the date time solved.
+        /// </summary>
+        /// <value>The date time solved.</value>
         public DateTime? DateTimeSolved { get; set; }
-        public virtual QuestionCommentSection CommentSection { get; set; }
+        /// <summary>
+        /// Gets or sets the comment section.
+        /// </summary>
+        /// <value>The comment section.</value>
+        public QuestionCommentSection CommentSection { get; set; }
+        /// <summary>
+        /// Gets or sets the comment section uid.
+        /// </summary>
+        /// <value>The comment section uid.</value>
         public Guid? CommentSectionUid { get; set; }
-        public virtual ObservableCollection<QuestionLog> Logs { get; set; } = new ObservableCollection<QuestionLog>();
-        public virtual ObservableCollection<QuestionScreenshot> Screenshots { get; set; } = new ObservableCollection<QuestionScreenshot>();
-        public virtual ObservableCollection<QuestionVideo> Videos { get; set; } = new ObservableCollection<QuestionVideo>();
-        public virtual ObservableCollection<QuestionRating> Ratings { get; set; } = new ObservableCollection<QuestionRating>();
-        [NotMapped, JsonIgnore] public bool Valid => Uid != Guid.Empty && !string.IsNullOrWhiteSpace(Name);
-        [NotMapped, JsonIgnore] public bool HasVideos => Videos != null && Videos.Any();
-        [NotMapped, JsonIgnore] public bool HasImages => Screenshots != null && Screenshots.Any();
-        [NotMapped, JsonIgnore] public bool HasRatings => Ratings?.Count > 0;
-        [NotMapped, JsonIgnore] public int NumberOfLikes => Ratings?.Count(x => x.Value) ?? 0;
-        [NotMapped, JsonIgnore] public int NumberOfDislikes => Ratings?.Count(x => !x.Value) ?? 0;
-        [NotMapped, JsonIgnore] public bool IsValid => UserUid != Guid.Empty && !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Text) && CodeLanguageUid != null && CodeLanguageUid != Guid.Empty;
-        [NotMapped, JsonIgnore] public bool IsSolved => Solution != null;
+        /// <summary>
+        /// Gets or sets the rating collection.
+        /// </summary>
+        /// <value>The rating collection.</value>
+        public QuestionRatingCollection RatingCollection { get; set; }
+        /// <summary>
+        /// Gets or sets the rating collection uid.
+        /// </summary>
+        /// <value>The rating collection uid.</value>
+        public Guid? RatingCollectionUid { get; set; }
+        /// <summary>
+        /// Gets or sets the screenshots.
+        /// </summary>
+        /// <value>The screenshots.</value>
+        public SortedObservableCollection<QuestionScreenshot> Screenshots { get; set; } = new SortedObservableCollection<QuestionScreenshot>(f => f.Created, true);
+        /// <summary>
+        /// Gets or sets the logs.
+        /// </summary>
+        /// <value>The logs.</value>
+        public ObservableCollection<QuestionLog> Logs { get; set; } = new ObservableCollection<QuestionLog>();
+        /// <summary>
+        /// Gets or sets the videos.
+        /// </summary>
+        /// <value>The videos.</value>
+        public ObservableCollection<QuestionVideo> Videos { get; set; } = new ObservableCollection<QuestionVideo>();
 
         #endregion
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Question"/> class.
+        /// </summary>
         public Question()
         {
             CommentSection = new QuestionCommentSection(Uid);
+            RatingCollection = new QuestionRatingCollection(Uid);
         }
-
-        public Question(User user, string title, string text, CodeLanguage codeLanguage)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Question"/> class.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="text">The text.</param>
+        /// <param name="codeLanguage">The code language.</param>
+        public Question(IEntity user, string title, string text, IEntity codeLanguage)
             : this()
         {
             UserUid = user.Uid;
@@ -71,104 +165,33 @@ namespace CodeShare.Model
         }
         #endregion
         #region Methods
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString() => Name;
 
-        public bool HasLiked(User user) => Ratings.Any(x => x.Value == true && x.User.Equals(user));
-        public bool HasDisliked(User user) => Ratings.Any(x => x.Value == false && x.User.Equals(user));
-        public bool HasRated(User user) => Ratings.Any(x => x.User.Equals(user));
-
-        public void ToggleLike(User user)
-        {
-            if (HasRated(user))
-            {
-                Like(user);
-            }
-            else if (HasLiked(user))
-            {
-                Dislike(user);
-            }
-            else
-            {
-                Like(user);
-            }
-        }
-
-        public void Like(User user)
-        {
-            if (user == null)
-            {
-                Logger.WriteLine($"Failed to like comment {Uid}. User is null.");
-                return;
-            }
-            if (HasLiked(user))
-            {
-                Logger.WriteLine($"Failed to like comment {Uid}. User {user.Uid} has already liked this comment.");
-                return;
-            }
-            if (Ratings == null)
-            {
-                Ratings = new ObservableCollection<QuestionRating>();
-            }
-
-            var rating = Ratings.FirstOrDefault(i => i.User.Equals(user));
-
-            if (rating != null)
-            {
-                rating.Value = true;
-            }
-            else
-            {
-                Ratings.Add(new QuestionRating(user, true));
-            }
-        }
-
-        public void Dislike(User user)
-        {
-            if (user == null)
-            {
-                Logger.WriteLine($"Failed to dislike comment {Uid}. User is null.");
-                return;
-            }
-            if (HasDisliked(user))
-            {
-                Logger.WriteLine($"Failed to dislike comment {Uid}. User {user.Uid} has already disliked this comment.");
-                return;
-            }
-            if (Ratings == null)
-            {
-                Ratings = new ObservableCollection<QuestionRating>();
-            }
-
-            var rating = Ratings.FirstOrDefault(i => i.User.Equals(user));
-
-            if (rating != null)
-            {
-                rating.Value = false;
-            }
-            else
-            {
-                Ratings.Add(new QuestionRating(user, false));
-            }
-        }
-
+        /// <summary>
+        /// Adds the screenshot.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="screenshot">The screenshot.</param>
+        /// <exception cref="ArgumentNullException">screenshot</exception>
         public void AddScreenshot(User user, QuestionScreenshot screenshot)
         {
-            if (screenshot == null)
-            {
-                throw new NullReferenceException("Screenshot was null.");
-            }
-            if (Screenshots == null)
-            {
-                Screenshots = new ObservableCollection<QuestionScreenshot>();
-            }
-
-            Screenshots.Add(screenshot);
+            Screenshots.Add(screenshot ?? throw new ArgumentNullException(nameof(screenshot)));
 
             user.IncreaseExperience(Experience.Action.UploadImage);
             Logs.Add(new QuestionLog(this, user, "added", screenshot));
             RefreshBindings();
         }
 
+        /// <summary>
+        /// Adds the video.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="video">The video.</param>
+        /// <exception cref="NullReferenceException">Video was null.</exception>
         public void AddVideo(User user, QuestionVideo video)
         {
             if (video == null || video.Empty)
@@ -186,6 +209,12 @@ namespace CodeShare.Model
             Logs.Add(new QuestionLog(this, user, "added", video));
         }
 
+        /// <summary>
+        /// Replies the specified user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="comment">The comment.</param>
+        /// <exception cref="NullReferenceException">Comment was null.</exception>
         public void Reply(User user, Comment comment)
         {
             if (comment == null)

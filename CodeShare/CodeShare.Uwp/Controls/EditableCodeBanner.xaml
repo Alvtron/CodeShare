@@ -11,17 +11,16 @@
 
     <UserControl.Resources>
         <converters:ImageConverter x:Key="ImageConverter" />
-        <converters:VisibilityConverter x:Key="VisibillityConverter" />
     </UserControl.Resources>
 
     <Grid Width="{x:Bind Width, Mode=OneWay}" Height="{x:Bind Height, Mode=OneWay}">
         <Rectangle
             RadiusX="12"
             RadiusY="12"
-            Fill="DimGray"
+            Fill="{StaticResource SystemControlBackgroundAltMediumLowBrush}"
             Height="{x:Bind Height, Mode=OneWay}"
             Width="{x:Bind Width, Mode=OneWay}" />
-        <TextBlock Text="Banner" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" />
+        <TextBlock Text="Banner" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" Foreground="{StaticResource SystemControlPageTextBaseMediumBrush}" />
         <Rectangle
             RadiusX="12"
             RadiusY="12"
@@ -49,7 +48,7 @@
                 </MenuFlyout>
             </Button.Flyout>
             <Grid Width="45" Height="45">
-                <Ellipse Fill="Gray" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <Ellipse Fill="{StaticResource SystemControlBackgroundAccentBrush}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
                 <SymbolIcon Symbol="Edit" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Grid>
         </Button>

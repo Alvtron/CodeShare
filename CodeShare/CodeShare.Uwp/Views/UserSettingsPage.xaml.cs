@@ -1,29 +1,56 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-29-2019
+// ***********************************************************************
+// <copyright file="UserSettingsPage.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.RestApi;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.ViewModels;
 using System;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CodeShare.Uwp.Views
 {
-    public sealed partial class UserSettingsPage : Page
+    /// <summary>
+    /// Class UserSettingsPage. This class cannot be inherited.
+    /// Implements the <see cref="Windows.UI.Xaml.Controls.Page" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.Page" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    public sealed partial class UserSettingsPage
     {
+        /// <summary>
+        /// Gets or sets the view model.
+        /// </summary>
+        /// <value>The view model.</value>
         private UserSettingsViewModel ViewModel { get; set; }
 
+        /// <summary>
+        /// Invoked when the Page is loaded and becomes the current source of a parent Frame.
+        /// </summary>
+        /// <param name="e">Event data that can be examined by overriding code. The event data is representative of the pending navigation that will load the current Page. Usually the most relevant property to examine is Parameter.</param>
+        /// <exception cref="InvalidOperationException"></exception>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationService.Lock();
-
             User user;
 
             switch (e.Parameter)
             {
-                case User _user:
-                    user = _user;
+                case User u:
+                    user = u;
                     break;
                 case Guid guid:
                     user = await RestApiService<User>.Get(guid);
@@ -40,15 +67,13 @@ namespace CodeShare.Uwp.Views
             {
                 await NotificationService.DisplayErrorMessage("This user does not exist.");
                 NavigationService.GoBack();
+                return;
             }
 
             ViewModel = new UserSettingsViewModel(user);
-
-            InitializeComponent();
-
-            NavigationService.Unlock();
-
             NavigationService.SetHeaderTitle($"{ViewModel.Model?.Name} - Settings");
+            NavigationService.Unlock();
+            InitializeComponent();
         }
     }
 }

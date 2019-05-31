@@ -1,70 +1,60 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-29-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-29-2019
+// ***********************************************************************
+// <copyright file="CodeCommentsPanel.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Windows.UI.Xaml;
 using CodeShare.Model;
 using CodeShare.Uwp.Utilities;
 using System.Windows.Input;
 using System.Threading.Tasks;
-using CodeShare.Uwp.Services;
+using Windows.UI.Xaml.Documents;
 using CodeShare.RestApi;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using CodeShare.Uwp.Services;
+using CodeShare.Uwp.ViewModels;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class CodeCommentsPanel : UserControl
+    /// <summary>
+    /// Class CodeCommentsPanel. This class cannot be inherited.
+    /// Implements the <see cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    public sealed partial class CodeCommentsPanel
     {
-        public static readonly DependencyProperty CodeProperty = DependencyProperty.Register("Code", typeof(Code), typeof(CodeCommentsPanel), new PropertyMetadata(default(Code)));
+        /// <summary>
+        /// The view model property
+        /// </summary>
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(CodeViewModel), typeof(CodeCommentsPanel), new PropertyMetadata(default(CodeViewModel)));
 
-        private RelayCommand<Editor> _uploadCommand;
-        public ICommand UploadCommand => _uploadCommand = _uploadCommand ?? new RelayCommand<Editor>(async editor => await UploadCommentAsync(editor));
-
-        public Code Code
+        /// <summary>
+        /// Gets or sets the view model.
+        /// </summary>
+        /// <value>The view model.</value>
+        public CodeViewModel ViewModel
         {
-            get => GetValue(CodeProperty) as Code;
-            set => SetValue(CodeProperty, value);
+            get => GetValue(ViewModelProperty) as CodeViewModel;
+            set => SetValue(ViewModelProperty, value);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CodeCommentsPanel"/> class.
+        /// </summary>
         public CodeCommentsPanel()
         {
             InitializeComponent();
-        }
-
-        public async Task UploadCommentAsync(Editor editor)
-        {
-            if (AuthService.CurrentUser == null)
-            {
-                await NotificationService.DisplayErrorMessage("You are not logged in!");
-                return;
-            }
-
-            if (editor == null || string.IsNullOrWhiteSpace(editor.Rtf))
-            {
-                await NotificationService.DisplayErrorMessage("Can't post empty comment!");
-                return;
-            }
-
-            NavigationService.Lock();
-
-            var comment = new Comment(Code.CommentSection, AuthService.CurrentUser, editor.Rtf);
-
-            if (!await RestApiService<Comment>.Update(comment, comment.Uid))
-            {
-                await NotificationService.DisplayErrorMessage("Something went wrong when posting your comment.");
-                NavigationService.Unlock();
-                return;
-            }
-
-            Code.Reply(AuthService.CurrentUser, comment);
-
-            if (!await RestApiService<Code>.Update(Code, Code.Uid))
-            {
-                await NotificationService.DisplayErrorMessage("Something went wrong when posting your comment.");
-                NavigationService.Unlock();
-                return;
-            }
-
-            editor.Clear();
-            NavigationService.Unlock();
         }
     }
 }

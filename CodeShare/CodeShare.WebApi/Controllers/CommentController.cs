@@ -1,61 +1,106 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.WebApi
+// Author           : Thomas Angeland
+// Created          : 05-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="CommentController.cs" company="CodeShare.WebApi">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeShare.DataAccess;
 
 namespace CodeShare.WebApi.Controllers
 {
+    /// <summary>
+    /// Class CommentController.
+    /// Implements the <see cref="CodeShare.WebApi.Controllers.EntityController{CodeShare.Model.Comment}" />
+    /// </summary>
+    /// <seealso cref="CodeShare.WebApi.Controllers.EntityController{CodeShare.Model.Comment}" />
     [Route("api/comments")]
     [ApiController]
     public class CommentController : EntityController<Comment>
     {
-        protected override DbSet<Comment> Entities => Context.Comments;
-
-        protected override IQueryable<Comment> QueryableEntities => Entities
-            .Include(c => c.User)
-            .Include(c => c.User.ProfilePictures)
-            .Include(c => c.User.Banners)
-            .Include(e => e.Logs)
-            .Include(c => c.Ratings)
-            .Include(c => c.Replies)
-                .ThenInclude(comment => comment.User.ProfilePictures)
-            .Include(c => c.Replies)
-                .ThenInclude(comment => comment.User.Banners)
-            .Include(c => c.Replies)
-                .ThenInclude(comment => comment.Ratings);
-
-        protected override IQueryable<Comment> QueryableEntitiesMinimal => Entities;
-
-        [HttpGet]
-        public new ActionResult<IEnumerable<Comment>> Get() => base.Get();
-
-        [HttpGet("{uid}")]
-        public new ActionResult<Comment> Get(Guid uid) => base.Get(uid);
-
-        [HttpPut("{uid}")]
-        public new ActionResult<Comment> Put(Guid uid, [FromBody] Comment entity) => base.Put(uid, entity);
-
-        [HttpPost]
-        public new ActionResult<Comment> Post(Comment entity) => base.Post(entity);
-
-        [HttpDelete("{uid}")]
-        public new IActionResult Delete(Guid uid) => base.Delete(uid);
-
-        protected override void OnPut(Comment entity, Comment existingEntity)
+        /// <summary>
+        /// Gets the database set.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns>DbSet&lt;Comment&gt;.</returns>
+        protected override DbSet<Comment> GetDatabaseSet(DataContext context)
         {
-            UpdateEntities(entity.Replies, existingEntity.Replies);
-            UpdateEntities(entity.Ratings, existingEntity.Ratings);
-            UpdateEntities(entity.Logs, existingEntity.Logs);
+            return context.Comments;
         }
 
-        protected override void OnPost(Comment entity)
+        /// <summary>
+        /// Gets the entities.
+        /// </summary>
+        /// <param name="set">The set.</param>
+        /// <returns>IQueryable&lt;Comment&gt;.</returns>
+        protected override IQueryable<Comment> GetEntities(DbSet<Comment> set)
+        {
+            return set;
+        }
+
+        /// <summary>
+        /// Gets the navigational entities.
+        /// </summary>
+        /// <param name="set">The set.</param>
+        /// <returns>IQueryable&lt;Comment&gt;.</returns>
+        protected override IQueryable<Comment> GetNavigationalEntities(DbSet<Comment> set)
+        {
+            return set
+                .Include(c => c.User)
+                .Include(c => c.User.Avatar)
+                .Include(c => c.User.Banner)
+                .Include(e => e.Logs)
+                .Include(c => c.RatingCollection)
+                .ThenInclude(c => c.Ratings)
+                .Include(c => c.Replies)
+                .ThenInclude(comment => comment.User.Avatar)
+                .Include(c => c.Replies)
+                .ThenInclude(comment => comment.User.Banner)
+                .Include(c => c.Replies)
+                .ThenInclude(comment => comment.RatingCollection);
+        }
+
+        /// <summary>
+        /// Called when [put].
+        /// </summary>
+        /// <param name="newEntity">The new entity.</param>
+        /// <param name="existingEntity">The existing entity.</param>
+        /// <param name="context">The context.</param>
+        protected override void OnPut(Comment newEntity, Comment existingEntity, DataContext context)
+        {
+            UpdateEntities(newEntity.RatingCollection.Ratings, existingEntity.RatingCollection.Ratings, context);
+            UpdateEntities(newEntity.Replies, existingEntity.Replies, context);
+            UpdateEntities(newEntity.Logs, existingEntity.Logs, context);
+        }
+
+        /// <summary>
+        /// Called when [post].
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="context">The context.</param>
+        protected override void OnPost(Comment entity, DataContext context)
         {
 
         }
 
-        protected override void OnDelete(Comment entity)
+        /// <summary>
+        /// Called when [delete].
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="context">The context.</param>
+        protected override void OnDelete(Comment entity, DataContext context)
         {
 
         }

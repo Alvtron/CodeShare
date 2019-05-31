@@ -1,4 +1,17 @@
-﻿using CodeShare.Utilities;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Services
+// Author           : Thomas Angeland
+// Created          : 01-30-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-24-2019
+// ***********************************************************************
+// <copyright file="FTPClient.cs" company="CodeShare.Services">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,20 +21,46 @@ using System.Threading.Tasks;
 namespace CodeShare.Services
 {
 
+    /// <summary>
+    /// Class FtpClient.
+    /// </summary>
     internal class FtpClient
     {
+        /// <summary>
+        /// The root directory
+        /// </summary>
         public readonly string RootDirectory;
+        /// <summary>
+        /// The credential
+        /// </summary>
         private readonly NetworkCredential _credential;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FtpClient"/> class.
+        /// </summary>
+        /// <param name="rootDirectory">The root directory.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <exception cref="ArgumentNullException">rootDirectory</exception>
         public FtpClient(string rootDirectory, string userName, string password)
         {
-            RootDirectory = rootDirectory ?? throw new ArgumentNullException("Root directory cannot be null.");
+            RootDirectory = rootDirectory ?? throw new ArgumentNullException(nameof(rootDirectory));
 
             _credential = new NetworkCredential(userName, password);
         }
 
+        /// <summary>
+        /// Requests the specified path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>FtpWebRequest.</returns>
         private FtpWebRequest Request(string path) => WebRequest.Create(new Uri($"{RootDirectory}/{path}")) as FtpWebRequest;
 
+        /// <summary>
+        /// download as an asynchronous operation.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>Task&lt;System.Byte[]&gt;.</returns>
         public async Task<byte[]> DownloadAsync(string path)
         {
             var request = Request(path);
@@ -53,6 +92,11 @@ namespace CodeShare.Services
             }
         }
 
+        /// <summary>
+        /// Downloads the specified path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>System.Byte[].</returns>
         public byte[] Download(string path)
         {
             var request = Request(path);
@@ -84,6 +128,12 @@ namespace CodeShare.Services
             }
         }
 
+        /// <summary>
+        /// upload as an asynchronous operation.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="path">The path.</param>
+        /// <returns>Task&lt;System.Boolean&gt;.</returns>
         public async Task<bool> UploadAsync(byte[] file, string path)
         {
             var request = Request(path);
@@ -111,6 +161,12 @@ namespace CodeShare.Services
             }
 }
 
+        /// <summary>
+        /// Uploads the specified file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="path">The path.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool Upload(byte[] file, string path)
         {
             var request = Request(path);
@@ -138,6 +194,11 @@ namespace CodeShare.Services
             }
         }
 
+        /// <summary>
+        /// Deletes the specified path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool Delete(string path)
         {
             var request = Request(path);
@@ -159,6 +220,11 @@ namespace CodeShare.Services
             }
         }
 
+        /// <summary>
+        /// delete as an asynchronous operation.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>Task&lt;System.Boolean&gt;.</returns>
         public async Task<bool> DeleteAsync(string path)
         {
             var request = Request(path);
@@ -180,6 +246,10 @@ namespace CodeShare.Services
             }
         }
 
+        /// <summary>
+        /// Deletes all.
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool DeleteAll()
         {
             var files = ListFiles();
@@ -195,6 +265,10 @@ namespace CodeShare.Services
             return success;
         }
 
+        /// <summary>
+        /// delete all as an asynchronous operation.
+        /// </summary>
+        /// <returns>Task&lt;System.Boolean&gt;.</returns>
         public async Task<bool> DeleteAllAsync()
         {
             var files = await ListFilesAsync();
@@ -281,22 +355,33 @@ namespace CodeShare.Services
             using (var response = request.GetResponse() as FtpWebResponse)
             {
                 if (response == null)
-                    return null;
-
-                using (var reader = new StreamReader(response.GetResponseStream()))
                 {
-                    var files = new List<string>();
-                    var line = reader.ReadLine();
-                    while (!string.IsNullOrEmpty(line))
+                    return null;
+                }
+
+                using (var stream = response.GetResponseStream())
+                {
+                    if (stream == null)
                     {
-                        files.Add(line);
-                        line = reader.ReadLine();
+                        return null;
                     }
 
-                    Logger.WriteLine($"Directory List Complete, status {response.StatusDescription}");
+                    using (var reader = new StreamReader(stream ))
+                    {
+                        var files = new List<string>();
+                        var line = reader.ReadLine();
+                        while (!string.IsNullOrEmpty(line))
+                        {
+                            files.Add(line);
+                            line = reader.ReadLine();
+                        }
 
-                    return files;
+                        Logger.WriteLine($"Directory List Complete, status {response.StatusDescription}");
+
+                        return files;
+                    }
                 }
+                
             }
         }
 
@@ -309,21 +394,31 @@ namespace CodeShare.Services
             using (var response = await request.GetResponseAsync() as FtpWebResponse)
             {
                 if (response == null)
-                    return null;
-
-                using (var reader = new StreamReader(response.GetResponseStream()))
                 {
-                    var files = new List<string>();
-                    var line = await reader.ReadLineAsync();
-                    while (!string.IsNullOrEmpty(line))
+                    return null;
+                }
+
+                using (var stream = response.GetResponseStream())
+                {
+                    if (stream == null)
                     {
-                        files.Add(line);
-                        line = await reader.ReadLineAsync();
+                        return null;
                     }
 
-                    Logger.WriteLine($"Directory List Complete, status {response.StatusDescription}");
+                    using (var reader = new StreamReader(stream))
+                    {
+                        var files = new List<string>();
+                        var line = await reader.ReadLineAsync();
+                        while (!string.IsNullOrEmpty(line))
+                        {
+                            files.Add(line);
+                            line = await reader.ReadLineAsync();
+                        }
 
-                    return files;
+                        Logger.WriteLine($"Directory List Complete, status {response.StatusDescription}");
+
+                        return files;
+                    }
                 }
             }
         }

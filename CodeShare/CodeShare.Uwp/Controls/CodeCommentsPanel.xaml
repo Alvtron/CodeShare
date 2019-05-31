@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CodeShare.Uwp.Controls" 
-    xmlns:model="using:CodeShare.Model"
     xmlns:controls="using:CodeShare.Uwp.Controls"
     xmlns:converters="using:CodeShare.Uwp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,17 +12,22 @@
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <converters:ImageConverter x:Key="ImageConverter" />
-        <converters:VisibilityConverter x:Key="VisibillityConverter" />
+        <converters:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
     </UserControl.Resources>
 
     <StackPanel Spacing="48">
+        <!-- If not logged in, display log-in text message -->
+        <StackPanel Spacing="4" Orientation="Horizontal" Visibility="{x:Bind ViewModel.IsUserLoggedIn, Mode=OneWay, Converter={StaticResource InverseVisibilityConverter}}">
+            <TextBlock Text="Please" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
+            <HyperlinkButton Content="sign in" Command="{x:Bind ViewModel.SignInCommand, Mode=OneWay}" Foreground="{StaticResource SystemControlBackgroundAccentBrush}" />
+            <TextBlock Text="if you want to leave a reply!" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" />
+        </StackPanel>
         <!-- New comment edit panel -->
-        <StackPanel>
+        <StackPanel Visibility="{x:Bind ViewModel.IsUserLoggedIn, Mode=OneWay}">
             <local:Editor x:Name="NewCommentBox" Height="200" />
-            <Button Margin="0,10,0,0" Content="Post comment" Command="{x:Bind UploadCommand}" CommandParameter="{x:Bind NewCommentBox, Mode=OneWay}"/>
+            <Button Margin="0,10,0,0" Content="Post comment" Command="{x:Bind ViewModel.UploadCommand, Mode=OneWay}" CommandParameter="{x:Bind NewCommentBox, Mode=OneWay}" Background="{StaticResource SystemControlBackgroundAccentBrush}" Foreground="White"/>
         </StackPanel>
         <!-- Comment list -->
-        <controls:CommentListView Replies="{x:Bind Code.CommentSection.Replies, Mode=OneWay}" />
+        <controls:CommentListView Replies="{x:Bind ViewModel.Model.CommentSection.Replies, Mode=OneWay}" />
     </StackPanel>
 </UserControl>

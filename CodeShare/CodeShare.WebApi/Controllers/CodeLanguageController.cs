@@ -1,49 +1,92 @@
-﻿using CodeShare.Model;
-using CodeShare.Utilities;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.WebApi
+// Author           : Thomas Angeland
+// Created          : 05-15-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="CodeLanguageController.cs" company="CodeShare.WebApi">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeShare.DataAccess;
 
 namespace CodeShare.WebApi.Controllers
 {
+    /// <summary>
+    /// Class CodeLanguageController.
+    /// Implements the <see cref="CodeShare.WebApi.Controllers.EntityController{CodeShare.Model.CodeLanguage}" />
+    /// </summary>
+    /// <seealso cref="CodeShare.WebApi.Controllers.EntityController{CodeShare.Model.CodeLanguage}" />
     [Route("api/codelanguages")]
     [ApiController]
     public class CodeLanguageController : EntityController<CodeLanguage>
     {
-        protected override DbSet<CodeLanguage> Entities => Context.CodeLanguages;
+        /// <summary>
+        /// Gets the database set.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns>DbSet&lt;CodeLanguage&gt;.</returns>
+        protected override DbSet<CodeLanguage> GetDatabaseSet(DataContext context)
+        {
+            return context.CodeLanguages;
+        }
 
-        protected override IQueryable<CodeLanguage> QueryableEntities => Entities;
+        /// <summary>
+        /// Gets the entities.
+        /// </summary>
+        /// <param name="set">The set.</param>
+        /// <returns>IQueryable&lt;CodeLanguage&gt;.</returns>
+        protected override IQueryable<CodeLanguage> GetEntities(DbSet<CodeLanguage> set)
+        {
+            return set;
+        }
 
-        protected override IQueryable<CodeLanguage> QueryableEntitiesMinimal => Entities;
+        /// <summary>
+        /// Gets the navigational entities.
+        /// </summary>
+        /// <param name="set">The set.</param>
+        /// <returns>IQueryable&lt;CodeLanguage&gt;.</returns>
+        protected override IQueryable<CodeLanguage> GetNavigationalEntities(DbSet<CodeLanguage> set)
+        {
+            return set;
+        }
 
-        [HttpGet]
-        public new ActionResult<IEnumerable<CodeLanguage>> Get() => base.Get();
-
-        [HttpGet("{uid}")]
-        public new ActionResult<CodeLanguage> Get(Guid uid) => base.Get(uid);
-
-        [HttpPut("{uid}")]
-        public new ActionResult<CodeLanguage> Put(Guid uid, [FromBody] CodeLanguage entity) => base.Put(uid, entity);
-
-        [HttpPost]
-        public new ActionResult<CodeLanguage> Post(CodeLanguage entity) => base.Post(entity);
-
-        [HttpDelete("{uid}")]
-        public new IActionResult Delete(Guid uid) => base.Delete(uid);
-
-        protected override void OnPost(CodeLanguage entity)
+        /// <summary>
+        /// Called when [post].
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="context">The context.</param>
+        protected override void OnPost(CodeLanguage entity, DataContext context)
         {
             
         }
 
-        protected override void OnPut(CodeLanguage entity, CodeLanguage existingEntity)
+        /// <summary>
+        /// Called when [put].
+        /// </summary>
+        /// <param name="newEntity">The new entity.</param>
+        /// <param name="existingEntity">The existing entity.</param>
+        /// <param name="context">The context.</param>
+        protected override void OnPut(CodeLanguage newEntity, CodeLanguage existingEntity, DataContext context)
         {
             
         }
 
-        protected override void OnDelete(CodeLanguage entity)
+        /// <summary>
+        /// Called when [delete].
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="context">The context.</param>
+        protected override void OnDelete(CodeLanguage entity, DataContext context)
         {
             
         }

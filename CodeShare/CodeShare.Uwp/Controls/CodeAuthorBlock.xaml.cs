@@ -1,49 +1,58 @@
-﻿using CodeShare.Model;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-29-2019
+// ***********************************************************************
+// <copyright file="CodeAuthorBlock.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using CodeShare.Model;
 using CodeShare.Uwp.Services;
 using CodeShare.Uwp.Utilities;
 using CodeShare.Uwp.Views;
 using System.Windows.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using CodeShare.Uwp.ViewModels;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class CodeAuthorBlock : UserControl
+    /// <summary>
+    /// Class CodeAuthorBlock. This class cannot be inherited.
+    /// Implements the <see cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    public sealed partial class CodeAuthorBlock
     {
-        public static readonly DependencyProperty CodeProperty = DependencyProperty.Register("Code", typeof(Code), typeof(CodeAuthorBlock), new PropertyMetadata(default(Code)));
+        /// <summary>
+        /// The view model property
+        /// </summary>
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(CodeViewModel), typeof(CodeAuthorBlock), new PropertyMetadata(default(CodeViewModel)));
 
-        public Code Code
+        /// <summary>
+        /// Gets or sets the view model.
+        /// </summary>
+        /// <value>The view model.</value>
+        public CodeViewModel ViewModel
         {
-            get => GetValue(CodeProperty) as Code;
-            set
-            {
-                SetValue(CodeProperty, value);
-
-                IsUserAuthor = AuthService.CurrentUser == null
-                    ? IsUserAuthor = false
-                    : value.UserUid.Equals(AuthService.CurrentUser.Uid);
-            }
+            get => GetValue(ViewModelProperty) as CodeViewModel;
+            set => SetValue(ViewModelProperty, value);
         }
 
-        private bool IsUserAuthor
-        {
-            get => EditButton.Visibility == Visibility.Visible; 
-            set => EditButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private RelayCommand _editCommand;
-        public ICommand EditCommand => _editCommand = _editCommand ?? new RelayCommand(param => Edit());
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CodeAuthorBlock"/> class.
+        /// </summary>
         public CodeAuthorBlock()
         {
-            this.InitializeComponent();
-        }
-
-        public void Edit()
-        {
-             NavigationService.Navigate(typeof(CodeSettingsPage), Code, $"{Code.Name} Settings");
+            InitializeComponent();
         }
     }
 }

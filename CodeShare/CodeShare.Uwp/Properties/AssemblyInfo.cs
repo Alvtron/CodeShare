@@ -1,4 +1,17 @@
-﻿using System.Resources;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 01-31-2019
+// ***********************************************************************
+// <copyright file="AssemblyInfo.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Resources;
 using System.Reflection;
 using System.Runtime.InteropServices;
 

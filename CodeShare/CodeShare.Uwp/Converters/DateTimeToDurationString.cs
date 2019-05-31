@@ -1,20 +1,47 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-23-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="DateTimeToDurationString.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Text;
 using Windows.UI.Xaml.Data;
 
 namespace CodeShare.Uwp.Converters
 {
+    /// <summary>
+    /// Class DateTimeToDurationString.
+    /// Implements the <see cref="Windows.UI.Xaml.Data.IValueConverter" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Data.IValueConverter" />
     public class DateTimeToDurationString : IValueConverter
     {
+        /// <summary>
+        /// Converts the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>System.Object.</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if (value == null)
+            {
+                return "";
+
+            }
             if (!(value is DateTime dateTime))
             {
-#if DEBUG
-                return $"DateTimeToDurationString: Invalid object type supplied.";
-#else
-                return "";
-#endif
+                return "DateToStringConverter: Invalid object type supplied.";
             }
 
             var dYears = DateTime.Now.Year - dateTime.Year;
@@ -116,6 +143,15 @@ namespace CodeShare.Uwp.Converters
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Converts the back.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>System.Object.</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

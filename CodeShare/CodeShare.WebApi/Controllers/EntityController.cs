@@ -1,193 +1,244 @@
-﻿using System.Linq;
-using System.Web.Http;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.WebApi
+// Author           : Thomas Angeland
+// Created          : 05-15-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="EntityController.cs" company="CodeShare.WebApi">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Linq;
 using CodeShare.DataAccess;
 using CodeShare.Model;
 using System.Collections.Generic;
 using System;
+using System.Data.SqlClient;
 using CodeShare.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CodeShare.WebApi.Controllers
 {
     /// <summary>
-    /// 
+    /// Class EntityController.
+    /// Implements the <see cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// Implements the <see cref="CodeShare.WebApi.Controllers.IController{TEntity}" />
     /// </summary>
-    /// <seealso cref="System.Web.Http.ApiController" />
-    public abstract class EntityController<T> : ControllerBase, IController<T> where T : class, IEntity
+    /// <typeparam name="TEntity">The type of the t entity.</typeparam>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="CodeShare.WebApi.Controllers.IController{TEntity}" />
+    public abstract class EntityController<TEntity> : ControllerBase, IController<TEntity> where TEntity : class, IEntity
     {
         /// <summary>
-        /// Gets or sets the context.
+        /// Gets the database set.
         /// </summary>
-        /// <value>
-        /// The context.
-        /// </value>
-        protected DataContext Context { get; }
-        protected abstract DbSet<T> Entities { get; }
-        protected abstract IQueryable<T> QueryableEntities { get; }
-        protected abstract IQueryable<T> QueryableEntitiesMinimal { get; }
+        /// <param name="context">The context.</param>
+        /// <returns>DbSet&lt;TEntity&gt;.</returns>
+        protected abstract DbSet<TEntity> GetDatabaseSet(DataContext context);
         /// <summary>
-        /// Gets a value indicating whether the database is online.
+        /// Gets the entities.
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if database is online; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsDatabaseOnline
+        /// <param name="set">The set.</param>
+        /// <returns>IQueryable&lt;TEntity&gt;.</returns>
+        protected abstract IQueryable<TEntity> GetEntities(DbSet<TEntity> set);
+        /// <summary>
+        /// Gets the navigational entities.
+        /// </summary>
+        /// <param name="set">The set.</param>
+        /// <returns>IQueryable&lt;TEntity&gt;.</returns>
+        protected abstract IQueryable<TEntity> GetNavigationalEntities(DbSet<TEntity> set);
+        /// <summary>
+        /// Called when [post].
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="context">The context.</param>
+        protected abstract void OnPost(TEntity entity, DataContext context);
+        /// <summary>
+        /// Called when [put].
+        /// </summary>
+        /// <param name="newEntity">The new entity.</param>
+        /// <param name="existingEntity">The existing entity.</param>
+        /// <param name="context">The context.</param>
+        protected abstract void OnPut(TEntity newEntity, TEntity existingEntity, DataContext context);
+        /// <summary>
+        /// Called when [delete].
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="context">The context.</param>
+        protected abstract void OnDelete(TEntity entity, DataContext context);
+
+        /// <summary>
+        /// Gets all entities from database.
+        /// </summary>
+        /// <returns>ActionResult&lt;IEnumerable&lt;TEntity&gt;&gt;.</returns>
+        [HttpGet]
+        public ActionResult<IEnumerable<TEntity>> Get()
         {
-            get
+            using (var context = new DataContext())
             {
-                // Not working
-                //if (!Context.Database.GetService<IRelationalDatabaseCreator>().Exists())
-                //{
-                //    Logger.WriteLine($"The database from context {Context.GetType().Name} does not exist.");
-                //    return false;
-                //}
-
-                return true;
+                try
+                {
+                    var entities = GetEntities(GetDatabaseSet(context)).ToList();
+                    return Ok(entities);
+                }
+                catch (SqlException sqlException)
+                {
+                    return StatusCode(500, sqlException.Message);
+                }
             }
-        }
-
-        protected EntityController()
-        {
-            Context = new DataContext();
-        }
-
-        protected abstract void OnPost(T entity);
-
-        protected abstract void OnPut(T entity, T existingEntity);
-
-        protected abstract void OnDelete(T entity);
-
-        public ActionResult<IEnumerable<T>> Get()
-        {
-            if (!IsDatabaseOnline)
-            {
-                return null;
-            }
-
-            return Ok(QueryableEntitiesMinimal);
-        }
-
-        public ActionResult<T> Get(Guid uid)
-        {
-            if (!IsDatabaseOnline)
-            {
-                return BadRequest("The server is not available.");
-            }
-
-            var entity = QueryableEntities.FirstOrDefault(u => u.Uid == uid);
-
-            if (entity == null)
-            {
-                Logger.WriteLine($"The provided {uid.GetType().Name} parameter did not match any items in the database.");
-                return NotFound();
-            }
-
-            return Ok(entity);
         }
 
         /// <summary>
-        /// Updates the entity to equal entity bound to the specified uid.
+        /// Gets the entity bound to the specified uid from the database.
         /// </summary>
         /// <param name="uid">The uid.</param>
-        /// <param name="entity">The entity.</param>
-        /// <returns></returns>
-        public ActionResult<T> Put(Guid uid, T entity)
+        /// <returns>ActionResult&lt;TEntity&gt;.</returns>
+        [HttpGet("{uid}")]
+        public ActionResult<TEntity> Get(Guid uid)
         {
-            if (!IsDatabaseOnline)
+            using (var context = new DataContext())
             {
-                return BadRequest("The server is not available.");
+                try
+                {
+                    var set = GetDatabaseSet(context);
+                    var entities = GetNavigationalEntities(set);
+                    var entity = entities.FirstOrDefault(u => u.Uid == uid);
+
+                    if (entity == null)
+                    {
+                        var message =
+                            $"The provided {uid.GetType().Name} parameter did not match any items in the database.";
+                        Logger.WriteLine(message);
+                        return NotFound(message);
+                    }
+
+                    return Ok(entity);
+                }
+                catch (SqlException sqlException)
+                {
+                    return StatusCode(500, sqlException.Message);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Updates the newEntity to equal newEntity bound to the specified uid.
+        /// </summary>
+        /// <param name="uid">The uid.</param>
+        /// <param name="entity">The newEntity.</param>
+        /// <returns>ActionResult&lt;TEntity&gt;.</returns>
+        [HttpPut("{uid}")]
+        public ActionResult<TEntity> Put(Guid uid, [FromBody] TEntity entity)
+        {
+            if (uid == Guid.Empty)
+            {
+                var message = $"The provided {uid.GetType().Name} parameter is empty! Put denied.";
+                Logger.WriteLine(message);
+                return BadRequest(message);
             }
 
-            if (CheckUpdateParameters(uid, entity) is BadRequestResult badRequest)
+            if (entity == null)
             {
-                return badRequest;
+                var message = $"The provided {typeof(TEntity).Name} object is empty! Put denied.";
+                Logger.WriteLine(message);
+                return BadRequest(message);
             }
 
-            var existingEntity = QueryableEntities.FirstOrDefault(e => e.Uid.Equals(uid));
-
-            if (existingEntity == null)
+            if (uid != entity.Uid)
             {
-                Logger.WriteLine($"The provided {entity.GetType().Name} object with UID {uid} does not exist in the database. Attempting to add it...");
-                return Post(entity);
+                var message = $"The provided {typeof(TEntity).Name} object does not match the provided key {uid}. Put denied!";
+                Logger.WriteLine(message);
+                return BadRequest(message);
             }
 
-            try
+            using (var context = new DataContext())
             {
-                UpdateEntity(entity, existingEntity);
+                try
+                {
+                    var set = GetDatabaseSet(context);
+                    var entities = GetNavigationalEntities(set);
+                    var existingEntity = entities.FirstOrDefault(e => e.Uid.Equals(uid));
 
-                OnPut(entity, existingEntity);
-
-                Context.SaveChanges();
+                    if (existingEntity == null)
+                    {
+                        Logger.WriteLine(
+                            $"The provided {entity.GetType().Name} object with UID {uid} does not exist in the database. Attempting to add it...");
+                        return Post(entity);
+                    }
+                    UpdateEntity(entity, existingEntity, context);
+                    OnPut(entity, existingEntity, context);
+                    context.SaveChanges();
+                    return Ok(existingEntity);
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    Logger.WriteLine(
+                        $"The provided {typeof(TEntity).Name} object could not be updated. {dbUpdateException.Message}");
+                    return BadRequest(
+                        $"The provided {typeof(TEntity).Name} object could not be updated. {dbUpdateException.Message}");
+                }
+                catch (SqlException sqlException)
+                {
+                    return StatusCode(500, sqlException.Message);
+                }
             }
-            catch (Exception exception)
-            {
-#if DEBUG
-                Logger.WriteLine($"The provided {entity.GetType().Name} object could not be updated. {exception.Message}");
-                throw;
-#else
-                return BadRequest($"The provided {entity.GetType().Name} object could not be updated. {exception.Message}");
-#endif
-            }
-
-            return Ok(true);
         }
 
         /// <summary>
-        /// Adds the specified entity to the database.
+        /// Adds the specified newEntity to the database.
         /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns></returns>
-        public ActionResult<T> Post(T entity)
+        /// <param name="entity">The newEntity.</param>
+        /// <returns>ActionResult&lt;TEntity&gt;.</returns>
+        [HttpPost]
+        public ActionResult<TEntity> Post(TEntity entity)
         {
-            if (!IsDatabaseOnline)
-            {
-                return BadRequest("The server is not available.");
-            }
             if (entity == null)
             {
-                return BadRequest($"The provided {typeof(T).GetType().Name} object is empty! Post denied.");
+                return BadRequest($"The provided {typeof(TEntity).Name} object is empty! Post denied.");
             }
             if (Exist(entity.Uid))
             {
-                return BadRequest($"The provided {typeof(T).GetType().Name} object already exists! Post denied.");
+                return BadRequest($"The provided {typeof(TEntity).Name} object already exists! Post denied.");
             }
 
-            try
+            using (var context = new DataContext())
             {
-                Entities.Add(entity);
-
-                OnPost(entity);
-
-                Context.SaveChanges();
-
+                try
+                {
+                    var set = GetDatabaseSet(context);
+                    set.Add(entity);
+                    OnPost(entity, context);
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    Logger.WriteLine(
+                        $"The provided {typeof(TEntity).Name} object could not be added. {dbUpdateException.Message}");
+                    return BadRequest(
+                        $"The provided {typeof(TEntity).Name} object could not be added. {dbUpdateException.Message}");
+                }
+                catch (SqlException sqlException)
+                {
+                    return StatusCode(500, sqlException.Message);
+                }
                 return Ok(entity);
-            }
-            catch (Exception exception)
-            {
-                Logger.WriteLine($"The provided {typeof(T).GetType().Name} object could not be added. {exception.Message}");
-#if DEBUG
-                throw;
-#else
-                return BadRequest($"The provided {typeof(T).GetType().Name} object could not be added. {exception.Message}");
-#endif
             }
         }
 
         /// <summary>
-        /// Deletes the entity bound to the specified uid from the database.
+        /// Deletes the newEntity bound to the specified uid from the database.
         /// </summary>
         /// <param name="uid">The uid.</param>
-        /// <returns></returns>
+        /// <returns>IActionResult.</returns>
+        [HttpDelete("{uid}")]
         public IActionResult Delete(Guid uid)
         {
-            if (!IsDatabaseOnline)
-            {
-                return BadRequest("The server is not available.");
-            }
-            if (uid == null || uid == Guid.Empty)
+            if (uid == Guid.Empty)
             {
                 return BadRequest($"The provided {uid.GetType().Name} is empty! Deletion denied.");
             }
@@ -196,77 +247,154 @@ namespace CodeShare.WebApi.Controllers
                 return BadRequest($"The provided {uid.GetType().Name} does not exist in the database! Deletion denied.");
             }
 
-            var entity = QueryableEntities.FirstOrDefault(e => e.Uid.Equals(uid));
-
-            if (entity == null)
+            try
             {
-                Logger.WriteLine($"The provided UID {uid} does not exist in the database.");
-                return BadRequest($"The provided UID {uid} does not exist in the database.");
+                using (var context = new DataContext())
+                {
+                    var set = GetDatabaseSet(context);
+                    var entities = GetNavigationalEntities(set);
+                    var entity = entities.FirstOrDefault(e => e.Uid.Equals(uid));
+
+                    if (entity == null)
+                    {
+                        Logger.WriteLine($"The provided UID {uid} does not exist in the database.");
+                        return BadRequest($"The provided UID {uid} does not exist in the database.");
+                    }
+
+                    try
+                    {
+                        set.Remove(entity);
+                        OnDelete(entity, context);
+
+                        context.SaveChanges();
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger.WriteLine($"The provided {uid.GetType().Name} could not be deleted! {exception.Message}");
+                        return BadRequest($"The provided {uid.GetType().Name} could not be deleted! {exception.Message}");
+                    }
+                }
+
+                return Ok();
+            }
+            catch (SqlException e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Patches the specified patch object.
+        /// </summary>
+        /// <param name="patchObject">The patch object.</param>
+        /// <returns>ActionResult&lt;TEntity&gt;.</returns>
+        [HttpPatch]
+        public ActionResult<TEntity> Patch([FromBody] PatchObject patchObject)
+        {
+            if (patchObject.EntityUid == Guid.Empty)
+            {
+                Logger.WriteLine($"The provided {patchObject.EntityUid.GetType().Name} is empty! Patch denied.");
+                return BadRequest($"The provided {patchObject.EntityUid.GetType().Name} is empty! Patch denied.");
+            }
+            if (!Exist(patchObject.EntityUid))
+            {
+                Logger.WriteLine($"The provided {patchObject.EntityUid.GetType().Name} does not exist in the database! Patch denied.");
+                return BadRequest($"The provided {patchObject.EntityUid.GetType().Name} does not exist in the database! Patch denied.");
             }
 
             try
             {
-                Entities.Remove(entity);
+                using (var context = new DataContext())
+                {
+                    var set = GetDatabaseSet(context);
+                    var entities = GetNavigationalEntities(set);
+                    var entity = entities.FirstOrDefault(e => e.Uid.Equals(patchObject.EntityUid));
 
-                OnDelete(entity);
+                    if (entity == null)
+                    {
+                        Logger.WriteLine($"The provided UID {patchObject.EntityUid} does not exist in the database.");
+                        return BadRequest($"The provided UID {patchObject.EntityUid} does not exist in the database.");
+                    }
 
-                Context.SaveChanges();
+                    try
+                    {
+                        patchObject.ApplyChanges(entity);
+                        context.SaveChanges();
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        Logger.WriteLine($"Patch failed. {e.Message}.");
+                        return BadRequest($"Patch failed. {e.Message}.");
+                    }
+
+                    return Ok(entity);
+                }
             }
-            catch (Exception exception)
+            catch (SqlException e)
             {
-                Logger.WriteLine($"The provided {uid.GetType().Name} could not be deleted! {exception.Message}");
-#if DEBUG
-                throw;
-#else
-                return BadRequest($"The provided {uid.GetType().Name} could not be deleted! {exception.Message}");
-#endif
+                return StatusCode(500, e.Message);
             }
-
-            return Ok($"Code {uid} was successfully deleted.");
         }
 
         /// <summary>
-        /// Checks if the entity specified by uid exists in the database.
+        /// Checks if the newEntity specified by uid exists in the database.
         /// </summary>
         /// <param name="uid">The uid.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         protected bool Exist(Guid uid)
         {
-            return IsDatabaseOnline && Entities.Any(e => e.Uid == uid);
+            using (var context = new DataContext())
+            {
+                var set = GetDatabaseSet(context);
+                return set.Any(e => e.Uid == uid);
+            }
         }
 
         /// <summary>
-        /// Updates the properties of the provided entity.
+        /// Updates the properties of the provided newEntity.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="newEntity">The new entity.</param>
-        /// <param name="existingEntity">The existing entity.</param>
-        protected void UpdateEntity(T newEntity, T existingEntity)
+        /// <typeparam name="TEntityProperty">The type of the t entity property.</typeparam>
+        /// <param name="newEntity">The new newEntity.</param>
+        /// <param name="existingEntity">The existing newEntity.</param>
+        /// <param name="context">The current context</param>
+        /// <returns>IActionResult.</returns>
+        protected IActionResult UpdateEntity<TEntityProperty>(TEntityProperty newEntity, TEntityProperty existingEntity, DataContext context) where TEntityProperty : class, IEntity
         {
             if (newEntity == null || existingEntity == null)
             {
-                return;
+                return BadRequest();
             }
 
-            if (newEntity.Uid == null || newEntity.Uid == Guid.Empty || existingEntity.Uid == null || existingEntity.Uid == Guid.Empty || !newEntity.Uid.Equals(existingEntity.Uid))
+            if (newEntity.Uid == Guid.Empty || existingEntity.Uid == Guid.Empty || !newEntity.Uid.Equals(existingEntity.Uid))
             {
-                return;
+                return BadRequest();
             }
 
-            Context.Entry(existingEntity).CurrentValues.SetValues(newEntity);
+            try
+            {
+                context.Entry(existingEntity).CurrentValues.SetValues(newEntity);
+            }
+            catch (SqlException e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok();
         }
 
         /// <summary>
-        /// Updates each property of each entity in the provided entity list.
+        /// Updates each property of each newEntity in the provided newEntity list.
         /// </summary>
-        /// <typeparam name="E"></typeparam>
-        /// <param name="newEntities">The new entities.</param>
-        /// <param name="existingEntities">The existing entities.</param>
-        protected void UpdateEntities<E>(ICollection<E> newEntities, ICollection<E> existingEntities) where E : class, IEntity
+        /// <typeparam name="TEntityProperty">The type of the t entity property.</typeparam>
+        /// <param name="newEntities">The new set.</param>
+        /// <param name="existingEntities">The existing set.</param>
+        /// <param name="context">The current context</param>
+        /// <returns>IActionResult.</returns>
+        protected IActionResult UpdateEntities<TEntityProperty>(ICollection<TEntityProperty> newEntities, ICollection<TEntityProperty> existingEntities, DataContext context) where TEntityProperty : class, IEntity
         {
             if (newEntities == null || existingEntities == null)
             {
-                return;
+                return BadRequest();
             }
 
             foreach (var newEntity in newEntities)
@@ -279,31 +407,17 @@ namespace CodeShare.WebApi.Controllers
                     continue;
                 }
 
-                Context.Entry(existingEntity).CurrentValues.SetValues(newEntity);
-            }
-        }
-
-        protected IActionResult CheckUpdateParameters(Guid uid, T entity)
-        {
-            if (uid == null || uid == Guid.Empty)
-            {
-                Logger.WriteLine($"The provided {uid.GetType().Name} parameter is empty! Put denied.");
-                return BadRequest($"The provided {uid.GetType().Name} parameter is empty! Put denied.");
+                try
+                {
+                    context.Entry(existingEntity).CurrentValues.SetValues(newEntity);
+                }
+                catch (SqlException e)
+                {
+                    return StatusCode(500, e.Message);
+                }
             }
 
-            if (entity == null)
-            {
-                Logger.WriteLine($"The provided {entity.GetType().Name} object is empty! Put denied.");
-                return BadRequest($"The provided {entity.GetType().Name} object is empty! Put denied.");
-            }
-
-            if (uid != entity.Uid)
-            {
-                Logger.WriteLine($"The provided {entity.GetType().Name} object does not match the provided key {uid}. Put denied!");
-                return BadRequest($"The provided {entity.GetType().Name} object does not match the provided key {uid}. Put denied!");
-            }
-
-            else return Ok();
+            return Ok();
         }
     }
 }

@@ -2,8 +2,6 @@
     x:Class="CodeShare.Uwp.Dialogs.SignInDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CodeShare.Uwp"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:utilities="using:CodeShare.Uwp.Utilities"
     xmlns:credentials="using:Windows.Security.Credentials"
     DataContext="{x:Bind ViewModel, Mode=OneWay}">
@@ -12,8 +10,7 @@
         <StackPanel Spacing="24">
             <StackPanel Spacing="12">
                 <TextBlock Text="Choose an account" Style="{StaticResource SubtitleTextBlockStyle}" />
-                <ListView 
-                    Name="StoredUsersList"
+                <ListView
                     ItemsSource="{x:Bind ViewModel.Credentials, Mode=OneWay}"
                     IsItemClickEnabled="True"
                     utilities:ItemClickCommand.Command="{x:Bind ViewModel.LogInCommand, Mode=OneWay}">
@@ -33,7 +30,7 @@
                 <PivotItem Header="Sign in" Padding="0,12,0,0">
                     <StackPanel Spacing="12">
                         <TextBox InputScope="Text" PlaceholderText="User name" Text="{x:Bind ViewModel.SignInName, Mode=TwoWay}"/>
-                        <PasswordBox PlaceholderText="Passord" PasswordChar="*" Password="{x:Bind ViewModel.SignInPassword, Mode=TwoWay}"/>
+                        <PasswordBox PlaceholderText="Password" PasswordChar="*" Password="{x:Bind ViewModel.SignInPassword, Mode=TwoWay}"/>
                         <Button Content="Sign in" Command="{x:Bind ViewModel.SignInCommand}"/>
                     </StackPanel>
                 </PivotItem>

@@ -1,70 +1,59 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-29-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-30-2019
+// ***********************************************************************
+// <copyright file="QuestionCommentsPanel.xaml.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Windows.UI.Xaml;
 using CodeShare.Model;
 using CodeShare.Uwp.Utilities;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using CodeShare.Uwp.Services;
 using CodeShare.RestApi;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using CodeShare.Uwp.ViewModels;
 
 namespace CodeShare.Uwp.Controls
 {
-    public sealed partial class QuestionCommentsPanel : UserControl
+    /// <summary>
+    /// Class QuestionCommentsPanel. This class cannot be inherited.
+    /// Implements the <see cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// Implements the <see cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
+    public sealed partial class QuestionCommentsPanel
     {
-        public static readonly DependencyProperty QuestionProperty = DependencyProperty.Register("Question", typeof(Question), typeof(QuestionCommentsPanel), new PropertyMetadata(default(Question)));
+        /// <summary>
+        /// The view model property
+        /// </summary>
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(QuestionViewModel), typeof(QuestionCommentsPanel), new PropertyMetadata(default(QuestionViewModel)));
 
-        private RelayCommand<Editor> _uploadCommand;
-        public ICommand UploadCommand => _uploadCommand = _uploadCommand ?? new RelayCommand<Editor>(async editor => await UploadCommentAsync(editor));
-
-        public Question Question
+        /// <summary>
+        /// Gets or sets the view model.
+        /// </summary>
+        /// <value>The view model.</value>
+        public QuestionViewModel ViewModel
         {
-            get => GetValue(QuestionProperty) as Question;
-            set => SetValue(QuestionProperty, value);
+            get => GetValue(ViewModelProperty) as QuestionViewModel;
+            set => SetValue(ViewModelProperty, value);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QuestionCommentsPanel"/> class.
+        /// </summary>
         public QuestionCommentsPanel()
         {
             InitializeComponent();
-        }
-
-        public async Task UploadCommentAsync(Editor editor)
-        {
-            if (AuthService.CurrentUser == null)
-            {
-                await NotificationService.DisplayErrorMessage("You are not logged in!");
-                return;
-            }
-
-            if (editor == null || string.IsNullOrWhiteSpace(editor.Rtf))
-            {
-                await NotificationService.DisplayErrorMessage("Can't post empty comment!");
-                return;
-            }
-
-            NavigationService.Lock();
-
-            var comment = new Comment(Question.CommentSection, AuthService.CurrentUser, editor.Rtf);
-
-            if (!await RestApiService<Comment>.Update(comment, comment.Uid))
-            {
-                await NotificationService.DisplayErrorMessage("Something went wrong when posting your comment.");
-                NavigationService.Unlock();
-                return;
-            }
-
-            Question.Reply(AuthService.CurrentUser, comment);
-
-            if (!await RestApiService<Question>.Update(Question, Question.Uid))
-            {
-                await NotificationService.DisplayErrorMessage("Something went wrong when posting your comment.");
-                NavigationService.Unlock();
-                return;
-            }
-
-            editor.Clear();
-            NavigationService.Unlock();
         }
     }
 }

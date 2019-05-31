@@ -1,12 +1,25 @@
-﻿using Newtonsoft.Json;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Extensions
+// Author           : Thomas Angeland
+// Created          : 01-30-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 05-24-2019
+// ***********************************************************************
+// <copyright file="Reflection.cs" company="CodeShare.Extensions">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CodeShare.Extensions
 {
+    /// <summary>
+    /// Class Reflection.
+    /// </summary>
     public static class Reflection
     {
         /// <summary>
@@ -31,16 +44,21 @@ namespace CodeShare.Extensions
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="target">The destination.</param>
+        /// <exception cref="ArgumentNullException">
+        /// source
+        /// or
+        /// target
+        /// </exception>
         public static void CopyProperties(this object source, object target)
         {
             if (source == null)
             {
-                throw new ArgumentNullException("Source object is null");
+                throw new ArgumentNullException(nameof(source));
             }
 
             if (target == null)
             {
-                throw new ArgumentNullException("Target Object is null");
+                throw new ArgumentNullException(nameof(target));
             }
 
             var typeTarget = target.GetType();

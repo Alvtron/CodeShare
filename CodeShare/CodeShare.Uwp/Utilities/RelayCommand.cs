@@ -1,11 +1,24 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : CodeShare.Uwp
+// Author           : Thomas Angeland
+// Created          : 01-24-2019
+//
+// Last Modified By : Thomas Angeland
+// Last Modified On : 01-31-2019
+// ***********************************************************************
+// <copyright file="RelayCommand.cs" company="CodeShare">
+//     Copyright Thomas Angeland ©  2018
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
 namespace CodeShare.Uwp.Utilities
 {
     /// <summary>
-    /// 
+    /// Class RelayCommand.
     /// </summary>
     /// <seealso cref="System.Windows.Input.ICommand" />
     public class RelayCommand : ICommand
@@ -26,14 +39,14 @@ namespace CodeShare.Uwp.Utilities
         public event EventHandler CanExecuteChanged;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RelayCommand"/> class.
+        /// Initializes a new instance of the <see cref="RelayCommand" /> class.
         /// </summary>
         /// <param name="execute">The execute.</param>
         public RelayCommand(Action<object> execute)
             : this(execute, null) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RelayCommand"/> class.
+        /// Initializes a new instance of the <see cref="RelayCommand" /> class.
         /// </summary>
         /// <param name="execute">The execute.</param>
         /// <param name="canExecute">The can execute.</param>
@@ -48,9 +61,7 @@ namespace CodeShare.Uwp.Utilities
         /// Defines the method that determines whether the command can execute in its current state.
         /// </summary>
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
-        /// <returns>
-        /// true if this command can be executed; otherwise, false.
-        /// </returns>
+        /// <returns>true if this command can be executed; otherwise, false.</returns>
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
@@ -68,7 +79,7 @@ namespace CodeShare.Uwp.Utilities
     }
 
     /// <summary>
-    /// 
+    /// Class RelayCommand.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <seealso cref="System.Windows.Input.ICommand" />
@@ -90,14 +101,14 @@ namespace CodeShare.Uwp.Utilities
         public event EventHandler CanExecuteChanged;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RelayCommand{T}"/> class.
+        /// Initializes a new instance of the <see cref="RelayCommand{T}" /> class.
         /// </summary>
         /// <param name="execute">The execute.</param>
         public RelayCommand(Action<T> execute)
             : this(execute, null) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RelayCommand{T}"/> class.
+        /// Initializes a new instance of the <see cref="RelayCommand{T}" /> class.
         /// </summary>
         /// <param name="execute">The execute.</param>
         /// <param name="canExecute">The can execute.</param>
@@ -112,9 +123,7 @@ namespace CodeShare.Uwp.Utilities
         /// Defines the method that determines whether the command can execute in its current state.
         /// </summary>
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
-        /// <returns>
-        /// true if this command can be executed; otherwise, false.
-        /// </returns>
+        /// <returns>true if this command can be executed; otherwise, false.</returns>
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
